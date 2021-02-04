@@ -7,19 +7,31 @@ body {
   color: #572d2d;
   padding: 0;
   margin: 0;
+  font-family: sofia_pro;
+}
+
+main {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 h1 {
   font-family: greasepencil;
   color: #e4842a;
-  transform: rotate(-8deg);
-  font-size: 40px;
+  transform: rotate(-5deg);
+  font-size: 3.3rem;
+  text-align: center;
+  margin-bottom: 0;
+  white-space: nowrap;
 }
 
 h2 {
-  font-family: sofia_pro;
   color: #572d2d;
-  font-size: 40px;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: -1.9rem;
+  line-height: 1;
+  margin-bottom: 0.8rem;
 }
 
 #logo {
@@ -40,7 +52,6 @@ header {
 #left-nav ul {
   list-style: none;
   display: flex;
-  font-family: "sofia_pro";
   padding: 0;
   margin: 0;
   gap: 1.5rem;
@@ -60,7 +71,6 @@ header {
 #left-nav a {
   text-decoration: none;
   color: white;
-  font-family: "sofia_pro";
   font-size: 1.125rem;
 }
 
@@ -114,7 +124,6 @@ header {
   color: white;
   justify-content: space-between;
   align-items: center;
-  font-family: "sofia_pro";
   display: flex;
   padding-left: 3.5rem;
   padding-right: 2rem;
@@ -127,5 +136,21 @@ header {
   margin-left: 1rem;
 }
 
-#language-region {
+#existing-account {
+  background-color: #f5f1ef;
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  padding: 0.75rem;
+  margin: 2rem;
+}
+
+#existing-account a {
+  text-decoration: none;
+  color: #c8102e;
+  transition: color 0.2s;
+}
+
+#existing-account a:hover {
+  color: rgba(174, 11, 38, 1);
 }
