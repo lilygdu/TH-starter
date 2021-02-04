@@ -5,7 +5,6 @@
 body {
   background-color: white;
   color: #572d2d;
-  text-align: center;
   padding: 0;
   margin: 0;
 }
@@ -29,26 +28,43 @@ h2 {
 }
 
 header {
-  height: 4rem;
+  height: 5rem;
   background-color: #c8102e;
   color: white;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 3.5rem;
 }
 
-#top-nav {
+#left-nav ul {
   list-style: none;
   display: flex;
   font-family: "sofia_pro";
-  justify-content: space-evenly;
-  padding: 10px;
+  padding: 0;
+  margin: 0;
+  gap: 1.5rem;
 }
 
-#top-nav a {
+#left-nav,
+#right-header {
+  width: 20rem;
+}
+
+#right-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#left-nav a {
   text-decoration: none;
   color: white;
   font-family: "sofia_pro";
+  font-size: 1.125rem;
+}
+
+#left-nav a:hover {
+  border-bottom: 2px solid white;
 }
 
 #login {
