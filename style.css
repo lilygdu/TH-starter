@@ -10,34 +10,7 @@ body {
   font-family: sofia_pro;
 }
 
-main {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-h1 {
-  font-family: greasepencil;
-  color: #e4842a;
-  transform: rotate(-5deg);
-  font-size: 3.3rem;
-  text-align: center;
-  margin-bottom: 0;
-  white-space: nowrap;
-}
-
-h2 {
-  color: #572d2d;
-  font-size: 3rem;
-  text-align: center;
-  margin-top: -1.9rem;
-  line-height: 1;
-  margin-bottom: 0.8rem;
-}
-
-#logo {
-  height: 100%;
-  width: 150px;
-}
+/* TOP NAV  */
 
 header {
   height: 5rem;
@@ -46,7 +19,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 3.5rem;
+  padding: 0 2rem 0 3.5rem;
+  position: relative;
+}
+
+#logo {
+  height: 39%;
 }
 
 #left-nav ul {
@@ -57,15 +35,18 @@ header {
   gap: 1.5rem;
 }
 
-#left-nav,
-#right-header {
+#left-nav {
   width: 20rem;
+}
+
+#right-header {
+  width: 21.5rem;
 }
 
 #right-header {
   display: flex;
   justify-content: flex-end;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 #left-nav a {
@@ -130,10 +111,45 @@ header {
   font-size: 0.9rem;
 }
 
+#account {
+  display: none;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+}
+
 #change {
   color: white;
   font-weight: 700;
   margin-left: 1rem;
+}
+
+/* MAIN */
+
+main {
+  max-width: 25rem;
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: greasepencil;
+  color: #e4842a;
+  transform: rotate(-5deg);
+  font-size: 3.3rem;
+  text-align: center;
+  margin-bottom: 0;
+  white-space: nowrap;
+  letter-spacing: -2px;
+}
+
+h2 {
+  color: #572d2d;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: -1.9rem;
+  line-height: 1;
+  margin-bottom: 0.8rem;
 }
 
 #existing-account {
@@ -153,4 +169,37 @@ header {
 
 #existing-account a:hover {
   color: rgba(174, 11, 38, 1);
+}
+
+@media only screen and (max-width: 815px) {
+  #left-nav,
+  #right-header,
+  #lower-nav {
+    display: none;
+  }
+  #logo {
+    margin: 0 auto;
+  }
+  header {
+    height: 3.5rem;
+    padding: 0;
+  }
+  #account {
+    display: block;
+  }
+  main {
+    max-width: 20rem;
+  }
+  h1 {
+    font-size: 1.9rem;
+    margin-top: 1.5rem;
+  }
+  h2 {
+    font-size: 1.625rem;
+    margin-top: -0.9rem;
+    margin-bottom: 1.7rem;
+  }
+  #existing-account {
+    margin: 0;
+  }
 }
