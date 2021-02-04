@@ -230,9 +230,12 @@ input:focus {
 }
 
 input[type="checkbox"] {
-  width: 3rem;
-  height: 3rem;
-  margin-top: -0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+input[type="checkbox"] ~ label {
+  flex: 1;
 }
 
 .red {
