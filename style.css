@@ -104,19 +104,27 @@ header {
 }
 
 #lower-nav {
-  height: 40px;
-  background-color: #b20c27;
+  height: 1.9rem;
+  background: linear-gradient(
+    to right,
+    rgba(199, 16, 47, 1) 0%,
+    rgba(174, 11, 38, 1) 50%,
+    rgba(199, 16, 47, 1) 100%
+  );
   color: white;
   justify-content: space-between;
   align-items: center;
   font-family: "sofia_pro";
   display: flex;
-  padding-left: 20px;
+  padding-left: 3.5rem;
+  padding-right: 2rem;
+  font-size: 0.9rem;
 }
 
 #change {
   color: white;
-  font-weight: 500;
+  font-weight: 700;
+  margin-left: 1rem;
 }
 
 #language-region {
