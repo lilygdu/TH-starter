@@ -54,6 +54,7 @@ header {
 #right-header {
   display: flex;
   justify-content: flex-end;
+  gap: 1.5rem;
 }
 
 #left-nav a {
@@ -67,17 +68,34 @@ header {
   border-bottom: 2px solid white;
 }
 
-#login {
-  background-color: white;
-  color: #c8102e;
+.nav-button {
   height: 35px;
   width: 80px;
   font-family: "sofia_pro";
   padding: 5px;
   border-radius: 25px;
   font-size: 14px;
-  align-items: center;
   border-style: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#login {
+  background-color: white;
+  color: #c8102e;
+}
+
+#login:hover {
+  background-color: rgb(247, 219, 224);
+}
+
+#cart {
+  color: white;
+  background-color: #c8102e;
+}
+
+#cart:hover {
+  background-color: rgb(136, 10, 30);
 }
 
 #lower-nav {
