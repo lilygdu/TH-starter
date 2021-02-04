@@ -50,6 +50,57 @@
         <div>Already have an account?</div>
         <a href="#">Sign In</a>
       </div>
+      <form>
+        <div class="form-field">
+          <select name="country" id="country" required>
+            <option value="CAN">Canada</option>
+            <option value="USA">United States</option>
+          </select>
+          <label for="country">Country *</label>
+        </div>
+        <div class="form-field">
+          <input type="email" name="email" id="email" required />
+          <label for="email">Email Address *</label>
+        </div>
+        <div class="form-field">
+          <input type="text" name="name" id="name" required />
+          <label for="name">Name *</label>
+        </div>
+
+        <div id="optional-information">
+          <span>Optional Information</span> <i class="fas fa-angle-down"></i>
+        </div>
+
+        <div class="checkbox-field">
+          <input
+            type="checkbox"
+            name="promotional-emails"
+            id="promotional-emails"
+          />
+          <label for="promotional-emails">
+            Yes! I want to receive promotional emails about special offers and
+            other information about Tim Hortons. (Optional)
+          </label>
+        </div>
+
+        <div class="checkbox-field">
+          <input
+            type="checkbox"
+            name="terms-of-service"
+            id="terms-of-service"
+            required
+          />
+          <label for="terms-of-service">
+            I agree to the following:
+            <span class="red"
+              >Privacy Policy Tims Rewards Terms and Conditions Terms of
+              Service</span
+            >
+          </label>
+        </div>
+
+        <button type="submit">Sign Up</button>
+      </form>
     </main>
   </body>
 </html>
