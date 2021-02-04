@@ -7,7 +7,7 @@ body {
   color: #572d2d;
   padding: 0;
   margin: 0;
-  font-family: sofia_pro;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
 }
 
 /* TOP NAV  */
@@ -62,7 +62,7 @@ header {
 .nav-button {
   height: 35px;
   width: 80px;
-  font-family: "sofia_pro";
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
   padding: 5px;
   border-radius: 25px;
   font-size: 14px;
@@ -169,6 +169,85 @@ h2 {
 
 #existing-account a:hover {
   color: rgba(174, 11, 38, 1);
+}
+
+.form-field {
+  margin: 1rem auto;
+  position: relative;
+}
+
+input[type="text"],
+input[type="email"],
+select {
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  border: 1px solid lightgray;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(87, 45, 45);
+  font-size: 0.9375rem;
+  height: 3.125rem;
+}
+
+select ~ label,
+input[type="email"] ~ label,
+input[type="text"] ~ label {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 1rem;
+  color: darkgray;
+  transition: all 0.2s;
+}
+
+input[type="email"]:focus ~ label,
+input[type="text"]:focus ~ label,
+select ~ label {
+  bottom: 2.4rem;
+  left: 0.5rem;
+  background-color: white;
+  padding: 0.1rem;
+  font-size: 0.75rem;
+}
+
+input:focus {
+  outline-style: none;
+}
+
+#optional-information {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.checkbox-field {
+  margin: 1rem auto;
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: rgb(137, 108, 108);
+}
+
+input[type="checkbox"] {
+  width: 3rem;
+  height: 3rem;
+  margin-top: -0.75rem;
+}
+
+.red {
+  color: #c8102e;
+}
+
+button[type="submit"] {
+  background-color: #c8102e;
+  border: 0;
+  border-radius: 9999rem;
+  padding: 1rem 3rem;
+  color: white;
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  font-size: 1.125rem;
 }
 
 @media only screen and (max-width: 815px) {
