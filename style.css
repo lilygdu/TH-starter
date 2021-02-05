@@ -196,6 +196,11 @@ select {
   height: 3.125rem;
 }
 
+input::placeholder {
+  color: transparent;
+  pointer-events: none;
+}
+
 select ~ label,
 input[type="email"] ~ label,
 input[type="text"] ~ label {
@@ -207,7 +212,9 @@ input[type="text"] ~ label {
 }
 
 input[type="email"]:focus ~ label,
+input[type="email"]:not(:placeholder-shown) ~ label,
 input[type="text"]:focus ~ label,
+input[type="text"]:not(:placeholder-shown) ~ label,
 select ~ label {
   bottom: 2.4rem;
   left: 0.5rem;
