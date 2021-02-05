@@ -11,8 +11,15 @@ body {
 }
 
 /* TOP NAV  */
-
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+#header-top {
   height: 5rem;
   background-color: #c8102e;
   color: white;
@@ -94,7 +101,7 @@ header {
   background-color: rgb(136, 10, 30);
 }
 
-#lower-nav {
+#header-bottom {
   height: 1.9rem;
   background: linear-gradient(
     to right,
@@ -129,7 +136,7 @@ header {
 
 main {
   max-width: 25rem;
-  margin: 0 auto;
+  margin: 8rem auto 0;
 }
 
 h1 {
@@ -331,13 +338,13 @@ footer a {
 @media only screen and (max-width: 815px) {
   #left-nav,
   #right-header,
-  #lower-nav,
+  #header-bottom,
   #not-yours,
   footer {
     display: none;
   }
 
-  header {
+  #header-top {
     height: 3.5rem;
     padding: 0;
   }

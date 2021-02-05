@@ -14,34 +14,36 @@
   </head>
   <body>
     <header>
-      <nav id="left-nav">
-        <ul>
-          <li><a href="#">Order</a></li>
-          <li><a href="#">Catering</a></li>
-          <li>
-            <a href="#">More <i class="fas fa-caret-down"></i></a>
-          </li>
-        </ul>
-      </nav>
-      <img id="logo" src="th-logo.svg" alt="logo" />
-      <div id="right-header">
-        <button class="nav-button" id="login">Log In</button>
-        <button class="nav-button" id="cart">
-          <i class="fas fa-shopping-bag"></i> 0
-        </button>
+      <div id="header-top">
+        <nav id="left-nav">
+          <ul>
+            <li><a href="#">Order</a></li>
+            <li><a href="#">Catering</a></li>
+            <li>
+              <a href="#">More <i class="fas fa-caret-down"></i></a>
+            </li>
+          </ul>
+        </nav>
+        <img id="logo" src="th-logo.svg" alt="logo" />
+        <div id="right-header">
+          <button class="nav-button" id="login">Log In</button>
+          <button class="nav-button" id="cart">
+            <i class="fas fa-shopping-bag"></i> 0
+          </button>
+        </div>
+        <i id="account" class="far fa-user"></i>
       </div>
-      <i id="account" class="far fa-user"></i>
+      <div id="header-bottom">
+        <div id="order-pref">
+          How would you like to receive this order?
+          <span id="change">Change</span>
+        </div>
+        <div id="language-region">
+          <i class="fas fa-globe"></i>
+          EN/CA
+        </div>
+      </div>
     </header>
-    <div id="lower-nav">
-      <div id="order-pref">
-        How would you like to receive this order?
-        <span id="change">Change</span>
-      </div>
-      <div id="language-region">
-        <i class="fas fa-globe"></i>
-        EN/CA
-      </div>
-    </div>
 
     <main>
       <h1>Start earning rewards</h1>
@@ -107,6 +109,7 @@
         Not your computer? Please make sure to log out before you leave
       </p>
     </main>
+
     <footer>
       <div id="footer-grid">
         <div class="footer-tiles">
