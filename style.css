@@ -101,7 +101,7 @@ header {
   background-color: rgb(136, 10, 30);
 }
 
-#lower-nav {
+#header-bottom {
   height: 1.9rem;
   background: linear-gradient(
     to right,
@@ -338,7 +338,7 @@ footer a {
 @media only screen and (max-width: 815px) {
   #left-nav,
   #right-header,
-  #lower-nav,
+  #header-bottom,
   #not-yours,
   footer {
     display: none;
