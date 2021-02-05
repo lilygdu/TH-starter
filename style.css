@@ -329,7 +329,7 @@ footer a {
 
 .social-icons:hover {
   background-color: #c8102e;
-  color: white; 
+  color: white;
   /* How do we get this to work?? */
   border-radius: 100%;
 }
@@ -341,15 +341,19 @@ footer a {
 @media only screen and (max-width: 815px) {
   #left-nav,
   #right-header,
-  #lower-nav {
+  #lower-nav,
+  #not-yours,
+  footer {
     display: none;
   }
-  #logo {
-    margin: 0 auto;
-  }
+
   header {
     height: 3.5rem;
     padding: 0;
+  }
+
+  #logo {
+    margin: 0 auto;
   }
 
   #account {
@@ -373,9 +377,5 @@ footer a {
 
   #existing-account {
     margin: 0;
-  }
-
-  footer {
-    display: none;
   }
 }
