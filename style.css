@@ -11,7 +11,7 @@ body {
 }
 
 /* TOP NAV  */
-#fixed-header {
+header {
   position: fixed;
   top: 0;
   left: 0;
@@ -19,7 +19,7 @@ body {
   z-index: 2;
 }
 
-header {
+#header-top {
   height: 5rem;
   background-color: #c8102e;
   color: white;
@@ -344,7 +344,7 @@ footer a {
     display: none;
   }
 
-  header {
+  #header-top {
     height: 3.5rem;
     padding: 0;
   }
