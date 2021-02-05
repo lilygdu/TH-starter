@@ -314,28 +314,18 @@ footer a {
   gap: 1rem;
 }
 
-.social-icons {
-  display: flex;
-  height: 2rem;
-  width: 2rem;
-  justify-content: center;
-  align-items: center;
-}
-
-.social-icons a {
+#socials a {
   color: #572d2d;
-  margin: 1rem;
-}
-
-.social-icons:hover {
-  background-color: #c8102e;
-  color: white;
-  /* How do we get this to work?? */
   border-radius: 100%;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
 }
 
-.social-icons a:hover {
+#socials a:hover {
   color: white;
+  background-color: #c8102e;
 }
 
 @media only screen and (max-width: 815px) {
