@@ -237,10 +237,14 @@ input:focus {
 
 .checkbox-field {
   margin: 1rem auto;
-  display: flex;
   gap: 0.5rem;
   font-size: 0.75rem;
   color: rgb(137, 108, 108);
+  display: flex;
+}
+
+.checkbox-field label {
+  width: 23rem;
 }
 
 input[type="checkbox"] {
@@ -272,6 +276,11 @@ button[type="submit"] {
   margin: 2rem;
   font-size: 0.75rem;
   text-align: center;
+}
+
+.error-message {
+  color: #c8102e;
+  font-size: 0.7rem;
 }
 
 footer {
