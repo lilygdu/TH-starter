@@ -236,25 +236,19 @@ input:focus {
 }
 
 .checkbox-field {
-  margin: auto;
   gap: 0.5rem;
   font-size: 0.75rem;
   color: rgb(137, 108, 108);
   display: flex;
-  position: relative;
 }
 
-.checkbox-field label {
-  width: 23rem;
+.checkbox-field > div {
+  flex: 1;
 }
 
 input[type="checkbox"] {
   width: 1.5rem;
   height: 1.5rem;
-}
-
-input[type="checkbox"] ~ label {
-  flex: 1;
 }
 
 .red a {
