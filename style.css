@@ -78,7 +78,7 @@ header {
   transition: background-color 0.2s;
 }
 
-.nav-button:focus {
+button:focus {
   outline-style: none;
   box-shadow: 0px 0px 0px 4px rgb(255, 180, 180);
 }
@@ -179,7 +179,7 @@ h2 {
 }
 
 .form-field {
-  margin: 1rem auto;
+  margin: 1.5rem auto;
   position: relative;
 }
 
@@ -236,11 +236,12 @@ input:focus {
 }
 
 .checkbox-field {
-  margin: 1rem auto;
+  margin: auto;
   gap: 0.5rem;
   font-size: 0.75rem;
   color: rgb(137, 108, 108);
   display: flex;
+  position: relative;
 }
 
 .checkbox-field label {
@@ -281,6 +282,11 @@ button[type="submit"] {
 .error-message {
   color: #c8102e;
   font-size: 0.7rem;
+  position: absolute;
+}
+
+.checkbox-field .error-message {
+  position: static;
 }
 
 footer {
