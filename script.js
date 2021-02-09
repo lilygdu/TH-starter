@@ -14,8 +14,10 @@ function validate(input) {
   if (!submitted) return;
   let errorMessage = "";
   if (input.checkValidity()) {
+    input.classList.add("valid");
     input.classList.remove("invalid");
   } else {
+    input.classList.remove("valid");
     input.classList.add("invalid");
     if (input.type === "email") {
       if (input.value === "") {
