@@ -87,34 +87,42 @@
         <div id="optional-information">
           <span>Optional Information</span> <i class="fas fa-angle-down"></i>
         </div>
-
-        <div class="checkbox-field">
-          <input
-            type="checkbox"
-            name="promotional-emails"
-            id="promotional-emails"
-          />
-          <label for="promotional-emails">
-            Yes! I want to receive promotional emails about special offers and
-            other information about Tim Hortons. (Optional)
-          </label>
+        <div class="form-field">
+          <div class="checkbox-field">
+            <input
+              type="checkbox"
+              name="promotional-emails"
+              id="promotional-emails"
+            />
+            <div class="label-container">
+              <label for="promotional-emails">
+                Yes! I want to receive promotional emails about special offers
+                and other information about Tim Hortons. (Optional)
+              </label>
+              <div class="error-message"></div>
+            </div>
+          </div>
         </div>
-        <div class="checkbox-field" id="privacy">
-          <input
-            type="checkbox"
-            name="terms-of-service"
-            id="terms-of-service"
-            required
-          />
-          <label for="terms-of-service">
-            I agree to the following:
-            <span class="red"
-              ><a href="#">Privacy Policy,</a><br />
-              <a href="#">Tims Rewards Terms and Conditions,</a>
-              <a href="#">Terms of Service</a></span
-            >
-          </label>
-          <div class="error-message"></div>
+        <div class="form-field">
+          <div class="checkbox-field" id="privacy">
+            <input
+              type="checkbox"
+              name="terms-of-service"
+              id="terms-of-service"
+              required
+            />
+            <div class="label-container">
+              <label for="terms-of-service">
+                I agree to the following:
+                <span class="red"
+                  ><a href="#">Privacy Policy,</a><br />
+                  <a href="#">Tims Rewards Terms and Conditions,</a>
+                  <a href="#">Terms of Service</a></span
+                >
+              </label>
+              <div class="error-message"></div>
+            </div>
+          </div>
         </div>
 
         <button type="submit">Sign Up</button>
