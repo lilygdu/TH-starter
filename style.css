@@ -78,7 +78,7 @@ header {
   transition: background-color 0.2s;
 }
 
-.nav-button:focus {
+button:focus {
   outline-style: none;
   box-shadow: 0px 0px 0px 4px rgb(255, 180, 180);
 }
@@ -179,7 +179,7 @@ h2 {
 }
 
 .form-field {
-  margin: 1rem auto;
+  margin: 2rem auto;
   position: relative;
 }
 
@@ -194,6 +194,16 @@ select {
   color: rgb(87, 45, 45);
   font-size: 0.9375rem;
   height: 3.125rem;
+}
+
+input[type="text"].invalid,
+input[type="email"].invalid {
+  border-color: #c8102e;
+}
+
+input[type="text"].valid,
+input[type="email"].valid {
+  border-color: rgb(120, 164, 69);
 }
 
 input::placeholder {
@@ -236,19 +246,18 @@ input:focus {
 }
 
 .checkbox-field {
-  margin: 1rem auto;
-  display: flex;
   gap: 0.5rem;
   font-size: 0.75rem;
   color: rgb(137, 108, 108);
+  display: flex;
 }
 
 input[type="checkbox"] {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1rem;
+  height: 1rem;
 }
 
-input[type="checkbox"] ~ label {
+input[type="checkbox"] ~ .label-container {
   flex: 1;
 }
 
@@ -272,6 +281,16 @@ button[type="submit"] {
   margin: 2rem;
   font-size: 0.75rem;
   text-align: center;
+}
+
+.error-message {
+  color: #c8102e;
+  font-size: 0.7rem;
+  position: absolute;
+}
+
+.checkbox-field .error-message {
+  position: static;
 }
 
 footer {
