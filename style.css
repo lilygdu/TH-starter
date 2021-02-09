@@ -196,6 +196,16 @@ select {
   height: 3.125rem;
 }
 
+input[type="text"].invalid,
+input[type="email"].invalid {
+  border-color: #c8102e;
+}
+
+input[type="text"].valid,
+input[type="email"].valid {
+  border-color: rgb(120, 164, 69);
+}
+
 input::placeholder {
   color: transparent;
   pointer-events: none;
