@@ -2,9 +2,9 @@
 
 This repo is set up with the TH logo and font faces, plus font awesome icons.
 
-Font faces are declared in `fonts.css`. Feel free to look at how this is implemented, but you shouldn't need to edit this file.
+Font faces are declared in `css/fonts.css`. Feel free to look at how this is implemented, but you shouldn't need to edit this file.
 
-You will see examples of how the font faces can be used in `styles.css`. You can edit this file in any way you see fit.
+You will see examples of how the font faces can be used in `css/styles.css`. You can edit this file in any way you see fit.
 
 ## To run
 
@@ -12,7 +12,7 @@ You will see examples of how the font faces can be used in `styles.css`. You can
 npx serve
 ```
 
-![demo](demo.png)
+![demo](images/demo.png)
 
 ## This repo is read only for students
 

@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+  color: #572d2d;
+  padding: 0;
+  margin: 0;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+}
+
+button:focus {
+  outline-style: none;
+  box-shadow: 0px 0px 0px 4px rgb(255, 180, 180);
+}
