@@ -1,0 +1,179 @@
+main {
+  max-width: 25rem;
+  margin: 8rem auto 0;
+}
+
+h1 {
+  font-family: greasepencil;
+  color: #e4842a;
+  transform: rotate(-5deg);
+  font-size: 3.3rem;
+  text-align: center;
+  margin-bottom: 0;
+  white-space: nowrap;
+  letter-spacing: -2px;
+}
+
+h2 {
+  color: #572d2d;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: -1.9rem;
+  line-height: 1;
+  margin-bottom: 0.8rem;
+}
+
+#existing-account {
+  background-color: #f5f1ef;
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  padding: 0.75rem;
+  margin: 2rem;
+}
+
+#existing-account a {
+  text-decoration: none;
+  color: #c8102e;
+  transition: color 0.2s;
+}
+
+#existing-account a:hover {
+  color: rgba(174, 11, 38, 1);
+}
+
+.form-field {
+  margin: 2rem auto;
+  position: relative;
+}
+
+input[type="text"],
+input[type="email"],
+select {
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  border: 1px solid lightgray;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(87, 45, 45);
+  font-size: 0.9375rem;
+  height: 3.125rem;
+}
+
+input[type="text"].invalid,
+input[type="email"].invalid {
+  border-color: #c8102e;
+}
+
+input[type="text"].valid,
+input[type="email"].valid {
+  border-color: rgb(120, 164, 69);
+}
+
+input::placeholder {
+  color: transparent;
+  pointer-events: none;
+}
+
+select ~ label,
+input[type="email"] ~ label,
+input[type="text"] ~ label {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 1rem;
+  color: darkgray;
+  transition: all 0.2s;
+}
+
+input[type="email"]:focus ~ label,
+input[type="email"]:not(:placeholder-shown) ~ label,
+input[type="text"]:focus ~ label,
+input[type="text"]:not(:placeholder-shown) ~ label,
+select ~ label {
+  bottom: 2.4rem;
+  left: 0.5rem;
+  background-color: white;
+  padding: 0.1rem;
+  font-size: 0.75rem;
+}
+
+input:focus {
+  outline-style: none;
+}
+
+#optional-information {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.checkbox-field {
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: rgb(137, 108, 108);
+  display: flex;
+}
+
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+}
+
+input[type="checkbox"] ~ .label-container {
+  flex: 1;
+}
+
+.red a {
+  text-decoration: none;
+  color: #c8102e;
+}
+
+button[type="submit"] {
+  background-color: #c8102e;
+  border: 0;
+  border-radius: 9999rem;
+  padding: 1rem 3rem;
+  color: white;
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  font-size: 1.125rem;
+}
+
+#not-yours {
+  margin: 2rem;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.error-message {
+  color: #c8102e;
+  font-size: 0.7rem;
+  position: absolute;
+}
+
+.checkbox-field .error-message {
+  position: static;
+}
+
+@media only screen and (max-width: 815px) {
+  main {
+    max-width: 20rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    margin-top: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.625rem;
+    margin-top: -0.9rem;
+    margin-bottom: 1.7rem;
+  }
+
+  #existing-account {
+    margin: 0;
+  }
+}
