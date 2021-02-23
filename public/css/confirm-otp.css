@@ -1,0 +1,60 @@
+main {
+  max-width: 25rem;
+  margin: 8rem auto 0;
+}
+
+h1 {
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  color: #572d2d;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 0;
+  white-space: nowrap;
+  letter-spacing: -2px;
+}
+
+h2 {
+  color: #572d2d;
+  font-size: 1.3rem;
+  text-align: center;
+  margin-top: -1.9rem;
+  line-height: 1;
+  margin-bottom: 0.8rem;
+  font-weight: normal;
+}
+
+input[type="text"] select {
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  border: 1px solid lightgray;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(87, 45, 45);
+  font-size: 0.9375rem;
+  height: 3.125rem;
+}
+
+input[type="text"].invalid {
+  border-color: #c8102e;
+}
+
+@media only screen and (max-width: 815px) {
+  main {
+    max-width: 20rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    margin-top: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.625rem;
+    margin-top: -0.9rem;
+    margin-bottom: 1.7rem;
+  }
+
+  #existing-account {
+    margin: 0;
+  }
+}

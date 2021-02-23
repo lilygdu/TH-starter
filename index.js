@@ -64,4 +64,27 @@ app.post("/signup", async (request, response) => {
   response.json({ email: insertResult.rows[0].email });
 });
 
+app.post("/confirm-otp", async (request, response) => {
+  const { email, otp } = request.body;
+  const match = await db.query(
+    `
+    SELECT * from th_users WHERE email = $1 and otp = $2;
+  `,
+    [email, otp]
+  );
+
+  const user = match.rows[0];
+
+  if (user) {
+    delete user.otp;
+    response.json(user);
+  } else {
+    response
+      .status(401)
+      .json({
+        message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
+      });
+  }
+});
+
 app.listen(port, () => console.log(`API running on port ${port} 🚀`));

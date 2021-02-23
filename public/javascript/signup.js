@@ -24,6 +24,8 @@ async function handleSubmit(event) {
 
   if (response.ok) {
     localStorage.setItem("email", data.email);
+    // email OTP to user... maybe with emailJS?
+    window.location = "/confirm-otp.html";
   } else {
     errors = data;
     inputs.forEach((input) => validate(input));
