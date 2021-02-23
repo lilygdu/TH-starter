@@ -22,7 +22,7 @@ app.post("/signup", async (request, response) => {
   const errors = {};
 
   if (!emailRegex.test(email)) {
-    errors.email = "That doesn't look like a valid email";
+    errors.email = "That doesn't look like a valid email.";
   }
   if (!email) {
     errors.email = "Email is a required field.";
@@ -43,7 +43,7 @@ app.post("/signup", async (request, response) => {
     [email]
   );
   if (queryResult.rows.length > 0) {
-    errors.email = `A account with the given email already exists.`;
+    errors.email = `An account with the given email already exists.`;
   }
 
   if (Object.keys(errors).length > 0) {
@@ -61,7 +61,9 @@ app.post("/signup", async (request, response) => {
     [email, name, country, dob, !!tos_consent, !!email_consent]
   );
 
-  response.json(insertResult.rows[0]);
+  const user = { ...insertResult.rows[0] };
+  delete user.otp;
+  response.json(user);
 });
 
 app.listen(port, () => console.log(`API running on port ${port} 🚀`));
