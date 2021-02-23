@@ -30,10 +30,7 @@ async function handleSubmit(event) {
     }
   } else {
     errors = data;
-    for (const attribute of attributes) {
-      const input = form.querySelector(`#${attribute}`);
-      validate(input);
-    }
+    inputs.forEach((input) => validate(input));
   }
 }
 
