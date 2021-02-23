@@ -20,14 +20,10 @@ async function handleSubmit(event) {
     body,
     headers: { "Content-Type": "application/json" },
   });
-
   const data = await response.json();
-  const attributes = Object.keys(data).filter((attribute) => data[attribute]);
 
   if (response.ok) {
-    for (const attribute of attributes) {
-      localStorage.setItem(attribute, data[attribute]);
-    }
+    localStorage.setItem("email", data.email);
   } else {
     errors = data;
     inputs.forEach((input) => validate(input));

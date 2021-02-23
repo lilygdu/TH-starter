@@ -57,13 +57,11 @@ app.post("/signup", async (request, response) => {
       $1, $2, $3, $4, $5, $6, 
       (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6)) 
     ) 
-    RETURNING *;`,
+    RETURNING email;`,
     [email, name, country, dob, !!tos_consent, !!email_consent]
   );
 
-  const user = { ...insertResult.rows[0] };
-  delete user.otp;
-  response.json(user);
+  response.json({ email: insertResult.rows[0].email });
 });
 
 app.listen(port, () => console.log(`API running on port ${port} 🚀`));
