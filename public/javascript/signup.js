@@ -32,9 +32,7 @@ async function handleSubmit(event) {
     errors = data;
     for (const attribute of attributes) {
       const input = form.querySelector(`#${attribute}`);
-      input.classList.add("invalid");
-      input.closest(".form-field").querySelector(".error-message").textContent =
-        errors[attribute];
+      validate(input);
     }
   }
 }
