@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import db from "./db.js";
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 app.use(express.json());
 app.use(express.static("public"));
