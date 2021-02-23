@@ -1,5 +1,4 @@
 import express from "express";
-import { v4 as uuidv4 } from "uuid";
 import db from "./db.js";
 
 const app = express();
@@ -20,37 +19,35 @@ app.post("/signup", async (request, response) => {
     email_consent,
   } = request.body;
 
+  const errors = {};
+
+  if (!emailRegex.test(email)) {
+    errors.email = "That doesn't look like a valid email";
+  }
+  if (!email) {
+    errors.email = "Email is a required field.";
+  }
+  if (!country) {
+    errors.country = "Country is a required field.";
+  }
+  if (!name) {
+    errors.name = "Name is a required field.";
+  }
+  if (!tos_consent) {
+    errors.tos_consent =
+      "You must agree to the privacy policy and terms of service before signing up.";
+  }
+
   const queryResult = await db.query(
     `SELECT * FROM th_users WHERE email = $1;`,
     [email]
   );
-
   if (queryResult.rows.length > 0) {
-    response
-      .status(401)
-      .json({ message: `A user with the email ${email} already exists.` });
-    return;
+    errors.email = `A account with the given email already exists.`;
   }
 
-  if (!email || !emailRegex.test(email)) {
-    response
-      .status(400)
-      .json({ message: `That doesn't look like a valid email.` });
-    return;
-  }
-
-  if (!country) {
-    response.status(400).json({ message: `country is required.` });
-    return;
-  }
-
-  if (!name) {
-    response.status(400).json({ message: `name is required.` });
-    return;
-  }
-
-  if (!tos_consent) {
-    response.status(400).json({ message: `tos consent is required.` });
+  if (Object.keys(errors).length > 0) {
+    response.status(401).json(errors);
     return;
   }
 
@@ -58,8 +55,7 @@ app.post("/signup", async (request, response) => {
     `INSERT INTO th_users (email, name, country, dob, tos_consent, email_consent, otp) 
     VALUES(
       $1, $2, $3, $4, $5, $6, 
-      (SELECT string_agg(shuffle('0123456789')::char, '')
-      FROM generate_series(1, 6)) 
+      (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6)) 
     ) 
     RETURNING *;`,
     [email, name, country, dob, !!tos_consent, !!email_consent]
