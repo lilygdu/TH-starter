@@ -15,7 +15,7 @@ displayVerificationMessage();
 async function validateCodeInput() {
   const body = JSON.stringify({
     email: localStorage.getItem("email"),
-    otp: form.input.value,
+    otp: form.code.value,
   });
 
   const response = await fetch(`/confirm-otp`, {
@@ -24,6 +24,7 @@ async function validateCodeInput() {
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
+  console.log(data);
 }
 
 input.addEventListener("input", validateCodeInput);
