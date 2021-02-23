@@ -3,6 +3,16 @@ import pg from "pg";
 const pool = new pg.Pool();
 
 pool.query(`
+  create or replace function shuffle(text)
+  returns text language sql as $$
+    select string_agg(ch, '')
+    from (
+      select substr($1, i, 1) ch
+      from generate_series(1, length($1)) i
+      order by random()
+    ) s
+  $$;
+
   CREATE TABLE IF NOT EXISTS th_users(                                       
     id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
     email VARCHAR(256) UNIQUE NOT NULL,
