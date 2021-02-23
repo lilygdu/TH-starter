@@ -1,14 +1,41 @@
 const form = document.querySelector("#form");
-const inputs = form.querySelectorAll("input");
+const inputs = form.querySelectorAll("select, input");
 let submitted = false;
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
   event.preventDefault();
   submitted = true;
 
-  inputs.forEach((input) => {
-    validate(input);
+  const body = JSON.stringify({
+    email: form.email.value,
+    country: form.country.value,
+    name: form.name.value,
+    email_consent: form.email_consent.checked,
+    tos_consent: form.tos_consent.checked,
   });
+
+  const response = await fetch(`/signup`, {
+    method: "POST",
+    body,
+    headers: { "Content-Type": "application/json" },
+  });
+
+  const data = await response.json();
+  console.log(data);
+  const attributes = Object.keys(data).filter((attribute) => data[attribute]);
+
+  if (response.ok) {
+    for (const attribute of attributes) {
+      localStorage.setItem(attribute, data[attribute]);
+    }
+  } else {
+    for (const attribute of attributes) {
+      const input = form.querySelector(`#${attribute}`);
+      input.classList.add("invalid");
+      input.closest(".form-field").querySelector(".error-message").textContent =
+        data[attribute];
+    }
+  }
 }
 
 function validate(input) {
