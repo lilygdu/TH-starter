@@ -1,6 +1,7 @@
 const instructions = document.querySelector("#instructions");
+const input = document.querySelector("input");
 
-function displayVerficationMessage() {
+function displayVerificationMessage() {
   const email = localStorage.getItem("email");
   if (!email) {
     window.location = "/";
@@ -9,4 +10,20 @@ function displayVerficationMessage() {
   instructions.textContent = `We just sent an email with login instructions to ${email}`;
 }
 
-displayVerficationMessage();
+displayVerificationMessage();
+
+async function validateCodeInput() {
+  const body = JSON.stringify({
+    email: localStorage.getItem("email"),
+    otp: form.input.value,
+  });
+
+  const response = await fetch(`/confirm-otp`, {
+    method: "POST",
+    body,
+    headers: { "Content-Type": "application/json" },
+  });
+  const data = await response.json();
+}
+
+input.addEventListener("input", validateCodeInput);

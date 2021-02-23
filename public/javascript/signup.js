@@ -20,6 +20,7 @@ async function handleSubmit(event) {
     body,
     headers: { "Content-Type": "application/json" },
   });
+
   const data = await response.json();
 
   if (response.ok) {
@@ -61,4 +62,5 @@ function validate(input) {
 inputs.forEach((input) =>
   input.addEventListener("input", () => validate(input))
 );
+
 form.addEventListener("submit", handleSubmit);
