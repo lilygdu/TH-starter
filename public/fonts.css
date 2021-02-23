@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "sofia_pro";
+  src: url("sofia_pro_black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "sofia_pro";
+  src: url("sofia_pro_bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "sofia_pro";
+  src: url("sofia_pro_regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "greasepencil";
+  src: url("greasepencil.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,391 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+  color: #572d2d;
+  padding: 0;
+  margin: 0;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+}
+
+/* TOP NAV  */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+#header-top {
+  height: 5rem;
+  background-color: #c8102e;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem 0 3.5rem;
+  position: relative;
+}
+
+#logo {
+  height: 39%;
+}
+
+#left-nav ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  gap: 1.5rem;
+}
+
+#left-nav {
+  width: 20rem;
+}
+
+#right-header {
+  width: 21.5rem;
+}
+
+#right-header {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+#left-nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.125rem;
+}
+
+#left-nav a:hover {
+  border-bottom: 2px solid white;
+}
+
+.nav-button {
+  height: 35px;
+  width: 80px;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  padding: 5px;
+  border-radius: 25px;
+  font-size: 14px;
+  border-style: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nav-button:focus {
+  outline-style: none;
+  box-shadow: 0px 0px 0px 4px rgb(255, 180, 180);
+}
+
+#login {
+  background-color: white;
+  color: #c8102e;
+}
+
+#login:hover {
+  background-color: rgb(247, 219, 224);
+}
+
+#cart {
+  color: white;
+  background-color: #c8102e;
+}
+
+#cart:hover {
+  background-color: rgb(136, 10, 30);
+}
+
+#header-bottom {
+  height: 1.9rem;
+  background: linear-gradient(
+    to right,
+    rgba(199, 16, 47, 1) 0%,
+    rgba(174, 11, 38, 1) 50%,
+    rgba(199, 16, 47, 1) 100%
+  );
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  padding-left: 3.5rem;
+  padding-right: 2rem;
+  font-size: 0.9rem;
+}
+
+#account {
+  display: none;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+}
+
+#change {
+  color: white;
+  font-weight: 700;
+  margin-left: 1rem;
+}
+
+/* MAIN */
+
+main {
+  max-width: 25rem;
+  margin: 8rem auto 0;
+}
+
+h1 {
+  font-family: greasepencil;
+  color: #e4842a;
+  transform: rotate(-5deg);
+  font-size: 3.3rem;
+  text-align: center;
+  margin-bottom: 0;
+  white-space: nowrap;
+  letter-spacing: -2px;
+}
+
+h2 {
+  color: #572d2d;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: -1.9rem;
+  line-height: 1;
+  margin-bottom: 0.8rem;
+}
+
+#existing-account {
+  background-color: #f5f1ef;
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 7px;
+  padding: 0.75rem;
+  margin: 2rem;
+}
+
+#existing-account a {
+  text-decoration: none;
+  color: #c8102e;
+  transition: color 0.2s;
+}
+
+#existing-account a:hover {
+  color: rgba(174, 11, 38, 1);
+}
+
+.form-field {
+  margin: 1rem auto;
+  position: relative;
+}
+
+input[type="text"],
+input[type="email"],
+select {
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  border: 1px solid lightgray;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(87, 45, 45);
+  font-size: 0.9375rem;
+  height: 3.125rem;
+}
+
+input::placeholder {
+  color: transparent;
+  pointer-events: none;
+}
+
+select ~ label,
+input[type="email"] ~ label,
+input[type="text"] ~ label {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 1rem;
+  color: darkgray;
+  transition: all 0.2s;
+}
+
+input[type="email"]:focus ~ label,
+input[type="email"]:not(:placeholder-shown) ~ label,
+input[type="text"]:focus ~ label,
+input[type="text"]:not(:placeholder-shown) ~ label,
+select ~ label {
+  bottom: 2.4rem;
+  left: 0.5rem;
+  background-color: white;
+  padding: 0.1rem;
+  font-size: 0.75rem;
+}
+
+input:focus {
+  outline-style: none;
+}
+
+#optional-information {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid lightgray;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.checkbox-field {
+  margin: 1rem auto;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: rgb(137, 108, 108);
+  display: flex;
+}
+
+
+input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+input[type="checkbox"] ~ label {
+  flex: 1;
+}
+
+.red a {
+  text-decoration: none;
+  color: #c8102e;
+}
+
+button[type="submit"] {
+  background-color: #c8102e;
+  border: 0;
+  border-radius: 9999rem;
+  padding: 1rem 3rem;
+  color: white;
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  font-size: 1.125rem;
+}
+
+#not-yours {
+  margin: 2rem;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.error-message {
+  color: #c8102e;
+  font-size: 0.7rem;
+}
+
+footer {
+  padding: 0 5rem 3rem 5rem;
+  background-color: #f4f4f4;
+  margin-top: 7rem;
+}
+
+h5 {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
+
+#footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+}
+
+.footer-tiles {
+  padding: 3rem 0;
+  border-bottom: 1px solid rgb(228, 227, 227);
+}
+
+.footer-tiles-3 {
+  margin-top: 1.5rem;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+.upper-footer-link {
+  color: #c8102e;
+}
+
+.upper-footer-link:hover {
+  text-decoration: underline;
+}
+
+.bottom-footer-link {
+  color: #572d2d;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.bottom-footer-link:hover {
+  text-decoration: underline;
+}
+
+#socials {
+  display: flex;
+  margin-left: -0.7rem;
+  gap: 1rem;
+}
+
+#socials a {
+  color: #572d2d;
+  border-radius: 100%;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+}
+
+#socials a:hover {
+  color: white;
+  background-color: #c8102e;
+}
+
+@media only screen and (max-width: 815px) {
+  #left-nav,
+  #right-header,
+  #header-bottom,
+  #not-yours,
+  footer {
+    display: none;
+  }
+
+  #header-top {
+    height: 3.5rem;
+    padding: 0;
+  }
+
+  #logo {
+    margin: 0 auto;
+  }
+
+  #account {
+    display: block;
+  }
+
+  main {
+    max-width: 20rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    margin-top: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.625rem;
+    margin-top: -0.9rem;
+    margin-bottom: 1.7rem;
+  }
+
+  #existing-account {
+    margin: 0;
+  }
+}
