@@ -31,6 +31,7 @@ app.post("/signup", async (request, response) => {
       .json({ message: `That doesn't look like a valid email.` });
     return;
   }
+
   if (!password || password.length < 8) {
     response
       .status(400)
