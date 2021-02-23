@@ -11,7 +11,14 @@ app.use(express.static("public"));
 const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
 
 app.post("/signup", async (request, response) => {
-  const { email, password } = request.body;
+  const {
+    email,
+    name,
+    country,
+    dob,
+    tos_consent,
+    email_consent,
+  } = request.body;
 
   const queryResult = await db.query(
     `SELECT * FROM th_users WHERE email = $1;`,
@@ -32,17 +39,32 @@ app.post("/signup", async (request, response) => {
     return;
   }
 
-  if (!password || password.length < 8) {
-    response
-      .status(400)
-      .json({ message: `Password must be at least 8 characters.` });
+  if (!country) {
+    response.status(400).json({ message: `country is required.` });
+    return;
+  }
+
+  if (!name) {
+    response.status(400).json({ message: `name is required.` });
+    return;
+  }
+
+  if (!tos_consent) {
+    response.status(400).json({ message: `tos consent is required.` });
     return;
   }
 
   const insertResult = await db.query(
-    `INSERT INTO th_users (email, password) VALUES($1, $2) RETURNING * `,
-    [email, password]
+    `INSERT INTO th_users (email, name, country, dob, tos_consent, email_consent, otp) 
+    VALUES(
+      $1, $2, $3, $4, $5, $6, 
+      (SELECT string_agg(shuffle('0123456789')::char, '')
+      FROM generate_series(1, 6)) 
+    ) 
+    RETURNING *;`,
+    [email, name, country, dob, !!tos_consent, !!email_consent]
   );
+
   response.json(insertResult.rows[0]);
 });
 
