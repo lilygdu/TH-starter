@@ -1,6 +1,7 @@
 const form = document.querySelector("#form");
 const inputs = form.querySelectorAll("select, input");
 let submitted = false;
+let errors = {};
 
 async function handleSubmit(event) {
   event.preventDefault();
@@ -21,7 +22,6 @@ async function handleSubmit(event) {
   });
 
   const data = await response.json();
-  console.log(data);
   const attributes = Object.keys(data).filter((attribute) => data[attribute]);
 
   if (response.ok) {
@@ -29,11 +29,12 @@ async function handleSubmit(event) {
       localStorage.setItem(attribute, data[attribute]);
     }
   } else {
+    errors = data;
     for (const attribute of attributes) {
       const input = form.querySelector(`#${attribute}`);
       input.classList.add("invalid");
       input.closest(".form-field").querySelector(".error-message").textContent =
-        data[attribute];
+        errors[attribute];
     }
   }
 }
@@ -55,13 +56,8 @@ function validate(input) {
       } else {
         errorMessage = "That doesn't look like a valid email.";
       }
-    }
-    if (input.type === "text") {
-      errorMessage = "Name is a required field.";
-    }
-    if (input.type === "checkbox") {
-      errorMessage =
-        "You must agree to the privacy policy and terms of service before signing up.";
+    } else {
+      errorMessage = errors[input.id];
     }
   }
   input
