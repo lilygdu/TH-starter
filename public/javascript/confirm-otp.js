@@ -1,5 +1,6 @@
 const instructions = document.querySelector("#instructions");
 const input = document.querySelector("input");
+const errorMessage = document.querySelector("#error-message");
 
 function displayVerificationMessage() {
   const email = localStorage.getItem("email");
@@ -24,7 +25,12 @@ async function validateCodeInput() {
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  console.log(data);
+
+  if (response.ok) {
+    window.location = "/index.html";
+  } else {
+    errorMessage.textContent = data.message;
+  }
 }
 
 input.addEventListener("input", validateCodeInput);

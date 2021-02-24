@@ -79,11 +79,9 @@ app.post("/confirm-otp", async (request, response) => {
     delete user.otp;
     response.json(user);
   } else {
-    response
-      .status(401)
-      .json({
-        message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
-      });
+    response.status(401).json({
+      message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
+    });
   }
 });
 
