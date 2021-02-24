@@ -2,12 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="images/favicon.ico" />
     <link rel="stylesheet" href="css/fonts.css" />
+    <link rel="stylesheet" href="css/confirm-otp.css" />
     <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/signup.css" />
     <link rel="stylesheet" href="css/footer.css" />
     <script
       src="https://kit.fontawesome.com/0a079e4901.js"
@@ -15,6 +16,7 @@
     ></script>
     <title>Tim Hortons - Sign Up</title>
   </head>
+
   <body>
     <header>
       <div id="header-top">
@@ -47,90 +49,25 @@
         </div>
       </div>
     </header>
-
     <main>
-      <h1>Start earning rewards</h1>
-      <h2>Create an Account</h2>
-      <div id="existing-account">
-        <div>Already have an account?</div>
-        <a href="#">Sign In</a>
+      <h1>Verify with code</h1>
+      <h2 id="instructions"></h2>
+      <div id="enter-code">
+        <div>Enter Verification Code Below:</div>
       </div>
       <form id="form" novalidate>
         <div class="form-field">
-          <select name="country" id="country" required>
-            <option value="CAN">Canada</option>
-            <option value="USA">United States</option>
-          </select>
-          <label for="country">Country *</label>
-          <div class="error-message"></div>
-        </div>
-        <div class="form-field">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-            required
-          />
-
-          <label for="email">Email Address *</label>
-          <div class="error-message"></div>
-        </div>
-        <div class="form-field">
           <input
             type="text"
-            name="name"
-            id="name"
-            placeholder="Name"
+            name="code"
+            id="code"
+            autocomplete="off"
             required
           />
-          <label for="name">Name *</label>
-          <div class="error-message"></div>
+          <div id="error-message"></div>
         </div>
-
-        <div id="optional-information">
-          <span>Optional Information</span> <i class="fas fa-angle-down"></i>
-        </div>
-        <div class="form-field">
-          <div class="checkbox-field">
-            <input type="checkbox" name="email_consent" id="email_consent" />
-            <div class="label-container">
-              <label for="email_consent">
-                Yes! I want to receive promotional emails about special offers
-                and other information about Tim Hortons. (Optional)
-              </label>
-              <div class="error-message"></div>
-            </div>
-          </div>
-        </div>
-        <div class="form-field">
-          <div class="checkbox-field" id="privacy">
-            <input
-              type="checkbox"
-              name="tos_consent"
-              id="tos_consent"
-              required
-            />
-            <div class="label-container">
-              <label for="tos_consent">
-                I agree to the following:
-                <span class="red">
-                  <a href="#">Privacy Policy,</a><br />
-                  <a href="#">Tims Rewards Terms and Conditions,</a>
-                  <a href="#">Terms of Service</a>
-                </span>
-              </label>
-              <div class="error-message"></div>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit">Sign Up</button>
       </form>
-
-      <p id="not-yours">
-        Not your computer? Please make sure to log out before you leave
-      </p>
+      <p id="no-code">Didn't receive a code?</p>
     </main>
 
     <footer>
@@ -181,6 +118,6 @@
       </div>
     </footer>
 
-    <script src="javascript/signup.js"></script>
+    <script src="javascript/confirm-otp.js"></script>
   </body>
 </html>

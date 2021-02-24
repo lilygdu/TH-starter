@@ -1,0 +1,97 @@
+main {
+  max-width: 25rem;
+  margin: 14.5rem auto 0;
+  height: 32rem;
+  text-align: center;
+  gap: 1rem;
+}
+
+h1 {
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  color: #572d2d;
+  font-size: 3.5rem;
+  text-align: center;
+  margin-bottom: 0;
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+h2 {
+  color: #572d2d;
+  font-size: 1.1rem;
+  text-align: center;
+  line-height: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: normal;
+}
+/* 
+.bold {
+  font-weight: bold;
+} */
+
+input[type="text"] select {
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  border: 1px solid lightgray;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(87, 45, 45);
+  font-size: 0.9375rem;
+  height: 3.125rem;
+}
+
+input[type="text"].invalid {
+  border-color: #c8102e;
+}
+
+#enter-code {
+  font-size: 1.1rem;
+}
+
+#code {
+  height: 3rem;
+  width: 25rem;
+  background-color: rgb(216, 215, 215);
+  border: 1px transparent;
+  border-radius: 5px;
+  margin: 0.7rem 0;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  letter-spacing: 1.5rem;
+}
+
+#code:focus {
+  outline: 1px solid #c8102e;
+}
+
+#error-message {
+  color: #c8102e;
+  font-size: 1rem;
+}
+
+#no-code {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+@media only screen and (max-width: 815px) {
+  main {
+    max-width: 20rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    margin-top: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.625rem;
+    margin-top: -0.9rem;
+    margin-bottom: 1.7rem;
+  }
+
+  #existing-account {
+    margin: 0;
+  }
+}

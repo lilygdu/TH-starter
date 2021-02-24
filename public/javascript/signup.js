@@ -22,12 +22,11 @@ async function handleSubmit(event) {
   });
 
   const data = await response.json();
-  const attributes = Object.keys(data).filter((attribute) => data[attribute]);
 
   if (response.ok) {
-    for (const attribute of attributes) {
-      localStorage.setItem(attribute, data[attribute]);
-    }
+    localStorage.setItem("email", data.email);
+    // email OTP to user... maybe with emailJS?
+    window.location = "/confirm-otp.html";
   } else {
     errors = data;
     inputs.forEach((input) => validate(input));
@@ -63,4 +62,5 @@ function validate(input) {
 inputs.forEach((input) =>
   input.addEventListener("input", () => validate(input))
 );
+
 form.addEventListener("submit", handleSubmit);

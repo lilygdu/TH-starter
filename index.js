@@ -57,13 +57,32 @@ app.post("/signup", async (request, response) => {
       $1, $2, $3, $4, $5, $6, 
       (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6)) 
     ) 
-    RETURNING *;`,
+    RETURNING email;`,
     [email, name, country, dob, !!tos_consent, !!email_consent]
   );
 
-  const user = { ...insertResult.rows[0] };
-  delete user.otp;
-  response.json(user);
+  response.json({ email: insertResult.rows[0].email });
+});
+
+app.post("/confirm-otp", async (request, response) => {
+  const { email, otp } = request.body;
+  const match = await db.query(
+    `
+    SELECT * from th_users WHERE email = $1 and otp = $2;
+  `,
+    [email, otp]
+  );
+
+  const user = match.rows[0];
+
+  if (user) {
+    delete user.otp;
+    response.json(user);
+  } else {
+    response.status(401).json({
+      message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
+    });
+  }
 });
 
 app.listen(port, () => console.log(`API running on port ${port} 🚀`));
