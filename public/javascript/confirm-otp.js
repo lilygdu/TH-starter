@@ -8,12 +8,16 @@ function displayVerificationMessage() {
     window.location = "/";
   }
 
-  instructions.textContent = `We just sent an email with login instructions to ${email}`;
+  instructions.innerHTML = `We just sent an email with login instructions to <b>${email}</b>`;
 }
 
 displayVerificationMessage();
 
 async function validateCodeInput() {
+  if (form.code.value.length < 6) {
+    return;
+  }
+
   const body = JSON.stringify({
     email: localStorage.getItem("email"),
     otp: form.code.value,
@@ -29,6 +33,7 @@ async function validateCodeInput() {
   if (response.ok) {
     window.location = "/index.html";
   } else {
+    form.code.classList.add("invalid");
     errorMessage.textContent = data.message;
   }
 }

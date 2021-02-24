@@ -24,8 +24,17 @@ async function handleSubmit(event) {
   const data = await response.json();
 
   if (response.ok) {
-    localStorage.setItem("email", data.email);
-    // email OTP to user... maybe with emailJS?
+    const { email, otp } = data;
+    localStorage.setItem("email", email);
+    const todayDate = new Date().toISOString().slice(0, 10);
+
+    const emailParams = {
+      code: otp,
+      to_email: email,
+      current_date: todayDate,
+    };
+
+    await emailjs.send("service_e33zu43", "template_yx0d6ek", emailParams);
     window.location = "/confirm-otp.html";
   } else {
     errors = data;
@@ -38,21 +47,26 @@ function validate(input) {
     return;
   }
   let errorMessage = "";
-  if (input.checkValidity()) {
-    input.classList.add("valid");
-    input.classList.remove("invalid");
-  } else {
-    input.classList.add("invalid");
-    input.classList.remove("valid");
-    if (input.type === "email") {
+  if (input.type === "email") {
+    if (!input.checkValidity() || errors.email) {
+      input.classList.add("invalid");
+      input.classList.remove("valid");
       if (input.value === "") {
         errorMessage = "Email is a required field.";
       } else {
         errorMessage = "That doesn't look like a valid email.";
       }
-    } else {
-      errorMessage = errors[input.id];
+      if (errors.email) {
+        errorMessage = errors.email;
+      }
     }
+  } else if (input.checkValidity()) {
+    input.classList.add("valid");
+    input.classList.remove("invalid");
+  } else {
+    input.classList.add("invalid");
+    input.classList.remove("valid");
+    errorMessage = errors[input.id];
   }
   input
     .closest(".form-field")
