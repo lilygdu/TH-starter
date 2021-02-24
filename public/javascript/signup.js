@@ -24,8 +24,16 @@ async function handleSubmit(event) {
   const data = await response.json();
 
   if (response.ok) {
-    localStorage.setItem("email", data.email);
-    // email OTP to user... maybe with emailJS?
+    const { email, otp } = data;
+    const todayDate = new Date().toISOString().slice(0, 10);
+
+    const emailParams = {
+      code: `${otp}`,
+      to_email: `${email}`,
+      current_date: `${todayDate}`,
+    };
+
+    emailjs.send("service_e33zu43", "template_yx0d6ek", emailParams);
     window.location = "/confirm-otp.html";
   } else {
     errors = data;

@@ -57,11 +57,14 @@ app.post("/signup", async (request, response) => {
       $1, $2, $3, $4, $5, $6, 
       (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6)) 
     ) 
-    RETURNING email;`,
+    RETURNING email AND otp;`,
     [email, name, country, dob, !!tos_consent, !!email_consent]
   );
 
-  response.json({ email: insertResult.rows[0].email });
+  response.json({
+    email: insertResult.rows[0].email,
+    otp: insertResult.rows[0].otp,
+  });
 });
 
 app.post("/confirm-otp", async (request, response) => {
