@@ -76,18 +76,14 @@ header {
   font-size: 0.9rem;
 }
 
-#account {
-  display: none;
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  font-size: 1.5rem;
-}
-
 #change {
   color: white;
   font-weight: 700;
   margin-left: 1rem;
+}
+
+#account {
+  width: 3rem;
 }
 
 @media only screen and (max-width: 815px) {
@@ -104,9 +100,5 @@ header {
 
   #logo-link {
     margin: 0 auto;
-  }
-
-  #account {
-    display: block;
   }
 }

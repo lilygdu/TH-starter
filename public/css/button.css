@@ -7,8 +7,10 @@
   font-family: sofia_pro, Helvetica, Arial, sans-serif;
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
-  display: block;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.125rem;
 }
 
 .button:focus {
@@ -48,9 +50,9 @@
 
 .button.md {
   font-size: 0.9rem;
-  width: 5.5rem;
-  padding: 0.25rem;
   height: 2.25rem;
+  width: 5.5rem;
+  padding: unset;
 }
 
 .button.lg {
