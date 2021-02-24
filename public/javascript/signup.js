@@ -33,7 +33,6 @@ async function handleSubmit(event) {
       to_email: email,
       current_date: todayDate,
     };
-    console.log({ emailjs });
     emailjs
       .send("service_e33zu43", "template_yx0d6ek", emailParams)
       .then(() => {
