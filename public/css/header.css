@@ -53,36 +53,6 @@ header {
   border-bottom: 2px solid white;
 }
 
-.nav-button {
-  height: 35px;
-  width: 80px;
-  font-family: sofia_pro, Helvetica, Arial, sans-serif;
-  padding: 5px;
-  border-radius: 25px;
-  font-size: 14px;
-  border-style: none;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-#login {
-  background-color: white;
-  color: #c8102e;
-}
-
-#login:hover {
-  background-color: rgb(247, 219, 224);
-}
-
-#cart {
-  color: white;
-  background-color: #c8102e;
-}
-
-#cart:hover {
-  background-color: rgb(136, 10, 30);
-}
-
 #header-bottom {
   height: 1.9rem;
   background: linear-gradient(
@@ -117,8 +87,7 @@ header {
 @media only screen and (max-width: 815px) {
   #left-nav,
   #right-header,
-  #header-bottom,
-  #not-yours {
+  #header-bottom {
     display: none;
   }
 

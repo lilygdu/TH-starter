@@ -1,0 +1,63 @@
+.button {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 9999rem;
+  border-color: #c8102e;
+  padding: 1rem 3rem;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  display: block;
+}
+
+.button:focus {
+  outline-style: none;
+  box-shadow: 0px 0px 0px 4px rgb(255, 180, 180);
+}
+
+.button.primary {
+  background-color: #c8102e;
+  color: white;
+}
+
+.button.primary:hover {
+  border-color: rgb(136, 10, 30);
+  background-color: rgb(136, 10, 30);
+}
+
+.button.inverse {
+  color: #c8102e;
+  background-color: white;
+}
+
+.button.inverse:hover {
+  background-color: rgb(247, 219, 224);
+}
+
+.button.md {
+  font-size: 0.9rem;
+  width: 5.5rem;
+  padding: 0.25rem;
+  height: 2.25rem;
+}
+
+.button.lg {
+  font-size: 1.25rem;
+  padding: 0.75rem 3rem;
+}
+
+.button.full-width {
+  width: 100%;
+}
+
+a.button {
+  text-decoration: none;
+}
+
+.button[disabled],
+.button[disabled]:hover {
+  color: gray;
+  border-color: #ececec;
+  background-color: #ececec;
+  cursor: not-allowed;
+}

@@ -1,9 +1,7 @@
 main {
-  max-width: 25rem;
   margin: 14.5rem auto 0;
-  height: 32rem;
+  max-width: 25rem;
   text-align: center;
-  gap: 1rem;
 }
 
 h1 {

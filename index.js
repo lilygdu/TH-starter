@@ -71,7 +71,7 @@ app.post("/confirm-otp", async (request, response) => {
   const { email, otp } = request.body;
   const match = await db.query(
     `
-    SELECT * from th_users WHERE email = $1 and otp = $2;
+    SELECT * FROM th_users WHERE email = $1 AND otp = $2;
   `,
     [email, otp]
   );
@@ -84,6 +84,34 @@ app.post("/confirm-otp", async (request, response) => {
   } else {
     response.status(401).json({
       message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
+    });
+  }
+});
+
+app.post("/signin", async (request, response) => {
+  const { email } = request.body;
+  const match = await db.query(`SELECT * FROM th_users WHERE email = $1;`, [
+    email,
+  ]);
+  const user = match.rows[0];
+  if (user) {
+    const updateResult = await db.query(
+      `
+      UPDATE th_users
+      SET otp = (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6)) 
+      WHERE email = $1
+      RETURNING email, otp;
+      `,
+      [email]
+    );
+    response.json(updateResult.rows[0]);
+  } else if (!emailRegex.test(email)) {
+    response.status(401).json({
+      message: `That doesn't look like a valid email.`,
+    });
+  } else {
+    response.status(401).json({
+      message: `This user does not exist.`,
     });
   }
 });
