@@ -33,11 +33,9 @@ async function handleSubmit(event) {
       to_email: email,
       current_date: todayDate,
     };
-    emailjs
-      .send("service_e33zu43", "template_yx0d6ek", emailParams)
-      .then(() => {
-        window.location = "/confirm-otp.html";
-      });
+
+    await emailjs.send("service_e33zu43", "template_yx0d6ek", emailParams);
+    window.location = "/confirm-otp.html";
   } else {
     errors = data;
     inputs.forEach((input) => validate(input));
