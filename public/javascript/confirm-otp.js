@@ -14,6 +14,10 @@ function displayVerificationMessage() {
 displayVerificationMessage();
 
 async function validateCodeInput() {
+  if (form.code.value.length < 6) {
+    return;
+  }
+
   const body = JSON.stringify({
     email: localStorage.getItem("email"),
     otp: form.code.value,
