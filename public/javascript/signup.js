@@ -47,21 +47,26 @@ function validate(input) {
     return;
   }
   let errorMessage = "";
-  if (input.checkValidity()) {
-    input.classList.add("valid");
-    input.classList.remove("invalid");
-  } else {
-    input.classList.add("invalid");
-    input.classList.remove("valid");
-    if (input.type === "email") {
+  if (input.type === "email") {
+    if (!input.checkValidity() || errors.email) {
+      input.classList.add("invalid");
+      input.classList.remove("valid");
       if (input.value === "") {
         errorMessage = "Email is a required field.";
       } else {
         errorMessage = "That doesn't look like a valid email.";
       }
-    } else {
-      errorMessage = errors[input.id];
+      if (errors.email) {
+        errorMessage = errors.email;
+      }
     }
+  } else if (input.checkValidity()) {
+    input.classList.add("valid");
+    input.classList.remove("invalid");
+  } else {
+    input.classList.add("invalid");
+    input.classList.remove("valid");
+    errorMessage = errors[input.id];
   }
   input
     .closest(".form-field")
