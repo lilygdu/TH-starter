@@ -8,6 +8,7 @@
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
   display: block;
+  text-align: center;
 }
 
 .button:focus {
@@ -26,11 +27,22 @@
 }
 
 .button.inverse {
+  border-color: white;
   color: #c8102e;
   background-color: white;
 }
 
 .button.inverse:hover {
+  border-color: rgb(247, 219, 224);
+  background-color: rgb(247, 219, 224);
+}
+
+.button.outline {
+  color: #c8102e;
+  background-color: white;
+}
+
+.button.outline:hover {
   background-color: rgb(247, 219, 224);
 }
 
