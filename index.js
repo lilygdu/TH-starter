@@ -57,7 +57,7 @@ app.post("/signup", async (request, response) => {
       $1, $2, $3, $4, $5, $6, 
       (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6)) 
     ) 
-    RETURNING email AND otp;`,
+    RETURNING email, otp;`,
     [email, name, country, dob, !!tos_consent, !!email_consent]
   );
 

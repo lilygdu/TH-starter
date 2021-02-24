@@ -25,16 +25,20 @@ async function handleSubmit(event) {
 
   if (response.ok) {
     const { email, otp } = data;
+    localStorage.setItem("email", email);
     const todayDate = new Date().toISOString().slice(0, 10);
 
     const emailParams = {
-      code: `${otp}`,
-      to_email: `${email}`,
-      current_date: `${todayDate}`,
+      code: otp,
+      to_email: email,
+      current_date: todayDate,
     };
-
-    emailjs.send("service_e33zu43", "template_yx0d6ek", emailParams);
-    window.location = "/confirm-otp.html";
+    console.log({ emailjs });
+    emailjs
+      .send("service_e33zu43", "template_yx0d6ek", emailParams)
+      .then(() => {
+        window.location = "/confirm-otp.html";
+      });
   } else {
     errors = data;
     inputs.forEach((input) => validate(input));
