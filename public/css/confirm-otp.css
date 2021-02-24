@@ -23,11 +23,8 @@ h2 {
   line-height: 1.5rem;
   margin-bottom: 2rem;
   font-weight: normal;
+  height: 3rem;
 }
-/* 
-.bold {
-  font-weight: bold;
-} */
 
 input[type="text"] select {
   width: 100%;
@@ -62,7 +59,12 @@ input[type="text"].invalid {
 }
 
 #code:focus {
-  outline: 1px solid #c8102e;
+  outline: none;
+  border: 1px solid #c8102e;
+}
+
+#code.invalid {
+  color: #c8102e;
 }
 
 #error-message {
