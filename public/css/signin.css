@@ -15,8 +15,13 @@ h1 {
 
 #no-account {
   margin-top: 1rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
   font-weight: bold;
+}
+
+#not-yours {
+  margin-top: 1rem;
+  font-size: 0.75rem;
 }
 
 @media only screen and (max-width: 815px) {

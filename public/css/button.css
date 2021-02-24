@@ -7,7 +7,10 @@
   font-family: sofia_pro, Helvetica, Arial, sans-serif;
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.125rem;
 }
 
 .button:focus {
@@ -26,19 +29,36 @@
 }
 
 .button.inverse {
+  border-color: white;
   color: #c8102e;
   background-color: white;
 }
 
 .button.inverse:hover {
+  border-color: rgb(247, 219, 224);
   background-color: rgb(247, 219, 224);
+}
+
+.button.outline {
+  color: #c8102e;
+  background-color: white;
+}
+
+.button.outline:hover {
+  background-color: rgb(247, 219, 224);
+}
+
+.button.outline:active,
+.button.inverse:active {
+  background-color: #c8102e;
+  color: white;
 }
 
 .button.md {
   font-size: 0.9rem;
-  width: 5.5rem;
-  padding: 0.25rem;
   height: 2.25rem;
+  width: 5.5rem;
+  padding: unset;
 }
 
 .button.lg {

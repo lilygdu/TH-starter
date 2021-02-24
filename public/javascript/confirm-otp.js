@@ -31,6 +31,7 @@ async function validateCodeInput() {
   const data = await response.json();
 
   if (response.ok) {
+    localStorage.setItem("userId", data.id);
     window.location = "/index.html";
   } else {
     form.code.classList.add("invalid");

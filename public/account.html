@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="images/favicon.ico" />
     <link rel="stylesheet" href="css/fonts.css" />
-    <link rel="stylesheet" href="css/signin.css" />
     <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/floating-inputs.css" />
@@ -35,6 +34,9 @@
           <img id="logo" src="images/th-logo.svg" alt="logo" />
         </a>
         <div id="right-header">
+          <a id="account" href="/account.html" class="button primary md hidden"
+            ><i class="far fa-user"></i
+          ></a>
           <a href="/signin.html" class="button inverse md" id="login">Log In</a>
           <button class="button primary md" id="cart">
             <i class="fas fa-shopping-bag"></i> 0
@@ -52,40 +54,9 @@
         </div>
       </div>
     </header>
+
     <main>
-      <h1>Sign In</h1>
-      <div id="enter-email"></div>
-      <form id="form" novalidate>
-        <div class="form-field">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            autocomplete="off"
-            placeholder="Email"
-            required
-          />
-          <label for="email">Email Address *</label>
-          <div class="error-message"></div>
-        </div>
-        <div class="button-wrapper">
-          <button
-            type="submit"
-            id="sign-in-button"
-            class="button primary full-width lg"
-            disabled
-          >
-            Sign In
-          </button>
-        </div>
-      </form>
-      <p id="no-account">Don't have an account yet?</p>
-      <div class="button-wrapper">
-        <a href="/signup.html" class="button outline full-width lg">Sign Up</a>
-      </div>
-      <p id="not-yours">
-        Not your computer? Please make sure to log out before you leave
-      </p>
+      <h1>Account</h1>
     </main>
 
     <footer>
@@ -135,13 +106,7 @@
         <div class="footer-tiles-3"><i class="fas fa-globe"></i> EN/CA</div>
       </div>
     </footer>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"
-    ></script>
-    <script type="text/javascript">
-      emailjs.init("user_C0PNrF65QnYy5WbnUlyV7");
-    </script>
-    <script src="javascript/signin.js"></script>
+    <script src="javascript/user.js"></script>
+    <script src="javascript/protected.js"></script>
   </body>
 </html>

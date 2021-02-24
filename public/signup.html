@@ -29,14 +29,15 @@
             </li>
           </ul>
         </nav>
-        <img id="logo" src="images/th-logo.svg" alt="logo" />
+        <a id="logo-link" href="/">
+          <img id="logo" src="images/th-logo.svg" alt="logo" />
+        </a>
         <div id="right-header">
-          <button class="button inverse md" id="login">Log In</button>
+          <a href="/signin.html" class="button inverse md" id="login">Log In</a>
           <button class="button primary md" id="cart">
             <i class="fas fa-shopping-bag"></i> 0
           </button>
         </div>
-        <i id="account" class="far fa-user"></i>
       </div>
       <div id="header-bottom">
         <div id="order-pref">
@@ -55,7 +56,7 @@
       <h2>Create an Account</h2>
       <div id="existing-account">
         <div>Already have an account?</div>
-        <a href="#">Sign In</a>
+        <a href="/signin.html">Sign In</a>
       </div>
       <form id="form" novalidate>
         <div class="form-field">
