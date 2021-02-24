@@ -48,6 +48,12 @@
   background-color: rgb(247, 219, 224);
 }
 
+.button.outline:active,
+.button.inverse:active {
+  background-color: #c8102e;
+  color: white;
+}
+
 .button.md {
   font-size: 0.9rem;
   height: 2.25rem;
