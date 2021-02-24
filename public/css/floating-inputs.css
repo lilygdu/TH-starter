@@ -1,0 +1,53 @@
+input[type="text"],
+input[type="email"],
+select {
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  border: 1px solid lightgray;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(87, 45, 45);
+  font-size: 0.9375rem;
+  height: 3.125rem;
+}
+
+input[type="text"].invalid,
+input[type="email"].invalid {
+  border-color: #c8102e;
+}
+
+input[type="text"].valid,
+input[type="email"].valid {
+  border-color: rgb(120, 164, 69);
+}
+
+input::placeholder {
+  color: transparent;
+  pointer-events: none;
+}
+
+select ~ label,
+input[type="email"] ~ label,
+input[type="text"] ~ label {
+  position: absolute;
+  bottom: 0.8rem;
+  left: 1rem;
+  color: darkgray;
+  transition: all 0.2s;
+}
+
+input[type="email"]:focus ~ label,
+input[type="email"]:not(:placeholder-shown) ~ label,
+input[type="text"]:focus ~ label,
+input[type="text"]:not(:placeholder-shown) ~ label,
+select ~ label {
+  bottom: 2.4rem;
+  left: 0.5rem;
+  background-color: white;
+  padding: 0.1rem;
+  font-size: 0.75rem;
+}
+
+input:focus {
+  outline-style: none;
+}

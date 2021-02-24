@@ -1,0 +1,18 @@
+main {
+  margin: 10rem auto 0;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+button[type="submit"] {
+  background-color: #c8102e;
+  border: 0;
+  border-radius: 9999rem;
+  padding: 1rem 3rem;
+  color: white;
+  width: 100%;
+  font-family: sofia_pro, Helvetica, Arial, sans-serif;
+  font-size: 1.125rem;
+}
