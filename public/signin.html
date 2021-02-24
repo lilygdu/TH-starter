@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/floating-inputs.css" />
     <link rel="stylesheet" href="css/footer.css" />
-    <link rel="stylesheet" href="css/main-size-and-centering.css" />
+    <link rel="stylesheet" href="css/button.css" />
     <script
       src="https://kit.fontawesome.com/0a079e4901.js"
       crossorigin="anonymous"
@@ -61,14 +61,27 @@
             name="email"
             id="email"
             autocomplete="off"
+            placeholder="Email"
             required
           />
-          <div id="error-message"></div>
-          <button type="submit" id="sign-in-button">Sign In</button>
+          <label for="email">Email Address*</label>
+          <div class="error-message"></div>
+        </div>
+        <div class="button-wrapper">
+          <button
+            type="submit"
+            id="sign-in-button"
+            class="button primary full-width lg"
+            disabled
+          >
+            Sign In
+          </button>
         </div>
       </form>
-      <p id="no-code">Don't have an account yet?</p>
-      <a href="/signup.html" class="button">Sign Up</a>
+      <p id="no-account">Don't have an account yet?</p>
+      <div class="button-wrapper">
+        <a href="/signup.html" class="button inverse full-width lg">Sign Up</a>
+      </div>
       <p id="not-yours">
         Not your computer? Please make sure to log out before you leave
       </p>

@@ -1,18 +1,36 @@
 main {
   margin: 10rem auto 0;
+  max-width: 25rem;
+  text-align: center;
 }
 
 h1 {
   font-size: 3rem;
 }
 
-button[type="submit"] {
-  background-color: #c8102e;
-  border: 0;
-  border-radius: 9999rem;
-  padding: 1rem 3rem;
-  color: white;
-  width: 100%;
-  font-family: sofia_pro, Helvetica, Arial, sans-serif;
-  font-size: 1.125rem;
+.button-wrapper {
+  width: 85%;
+  margin: 0 auto;
+}
+
+#no-account {
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 815px) {
+  #not-yours {
+    display: none;
+  }
+  main {
+    margin-top: 6rem;
+    max-width: 20rem;
+  }
+  .button-wrapper {
+    width: 100%;
+  }
+  h1 {
+    font-size: 2rem;
+  }
 }

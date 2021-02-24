@@ -1,5 +1,6 @@
 main {
   margin: 8rem auto 0;
+  max-width: 25rem;
 }
 
 h1 {
@@ -39,11 +40,6 @@ h2 {
 
 #existing-account a:hover {
   color: rgba(174, 11, 38, 1);
-}
-
-.form-field {
-  margin: 2rem auto;
-  position: relative;
 }
 
 #optional-information {
@@ -90,12 +86,6 @@ button[type="submit"] {
   margin: 2rem;
   font-size: 0.75rem;
   text-align: center;
-}
-
-.error-message {
-  color: #c8102e;
-  font-size: 0.7rem;
-  position: absolute;
 }
 
 .checkbox-field .error-message {

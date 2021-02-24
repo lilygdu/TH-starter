@@ -1,5 +1,6 @@
 const form = document.querySelector("#form");
-const errorMessage = document.querySelector("#error-message");
+const errorMessage = document.querySelector(".error-message");
+const signInButton = document.querySelector("#sign-in-button");
 
 async function handleSignInSubmit(event) {
   event.preventDefault();
@@ -25,8 +26,18 @@ async function handleSignInSubmit(event) {
     await emailjs.send("service_e33zu43", "template_yx0d6ek", emailParams);
     window.location = "/confirm-otp.html";
   } else {
+    form.email.classList.add("invalid");
     errorMessage.textContent = data.message;
   }
 }
 
+function handleInput() {
+  if (form.email.value === "") {
+    signInButton.disabled = true;
+  } else {
+    signInButton.disabled = false;
+  }
+}
+
 form.addEventListener("submit", handleSignInSubmit);
+form.email.addEventListener("input", handleInput);

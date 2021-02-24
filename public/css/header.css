@@ -117,8 +117,7 @@ header {
 @media only screen and (max-width: 815px) {
   #left-nav,
   #right-header,
-  #header-bottom,
-  #not-yours {
+  #header-bottom {
     display: none;
   }
 
