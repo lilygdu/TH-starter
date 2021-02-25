@@ -1,4 +1,7 @@
-const categories = document.querySelector("#categories");
+const categorySection = document.querySelector("#categories");
+const menuElement = document.querySelector("h1");
+let categories = [];
+let categoryCards = [];
 
 const query = `
   query {
@@ -23,7 +26,13 @@ async function fetchCategories() {
     }
   );
   const data = await response.json();
-  categories.innerHTML = data.data.allCategory.map(renderCategory).join("");
+  categories = data.data.allCategory;
+}
+
+function showCategories() {
+  categorySection.innerHTML = categories.map(renderCategory).join("");
+  menuElement.classList.remove("hidden");
+  categoryCards = document.querySelectorAll(".category");
 }
 
 const renderCategory = (category) => `
@@ -33,4 +42,9 @@ const renderCategory = (category) => `
   </a>
 `;
 
-fetchCategories();
+async function initialPageLoad() {
+  await fetchCategories();
+  showCategories();
+}
+
+initialPageLoad();
