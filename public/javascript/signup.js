@@ -1,6 +1,6 @@
 const form = document.querySelector("#form");
 const inputs = form.querySelectorAll("select, input");
-const signupButton = document.querySelector("#sign-up");
+const signUpButton = document.querySelector("#sign-up");
 let submitted = false;
 let errors = {};
 
@@ -8,9 +8,9 @@ async function handleSubmit(event) {
   event.preventDefault();
   submitted = true;
 
-  signupButton.disabled = true;
-  signupButton.classList.add("loading", "white");
-  signupButton.innerHTML = `
+  signUpButton.disabled = true;
+  signUpButton.classList.add("loading", "white");
+  signUpButton.innerHTML = `
     <span><i class="fas fa-circle dot"></i></span>
     <span><i class="fas fa-circle dot"></i></span>
     <span><i class="fas fa-circle dot"></i></span>
@@ -48,9 +48,9 @@ async function handleSubmit(event) {
   } else {
     errors = data;
     inputs.forEach((input) => validate(input));
-    signupButton.disabled = false;
-    signupButton.classList.remove("loading", "white");
-    signupButton.innerHTML = "Sign Up";
+    signUpButton.disabled = false;
+    signUpButton.classList.remove("loading", "white");
+    signUpButton.innerHTML = "Sign Up";
   }
 }
 

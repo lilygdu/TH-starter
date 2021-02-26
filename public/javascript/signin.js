@@ -4,6 +4,14 @@ const signInButton = document.querySelector("#sign-in-button");
 
 async function handleSignInSubmit(event) {
   event.preventDefault();
+
+  signInButton.disabled = true;
+  signInButton.classList.add("loading", "white");
+  signInButton.innerHTML = `
+    <span><i class="fas fa-circle dot"></i></span>
+    <span><i class="fas fa-circle dot"></i></span>
+    <span><i class="fas fa-circle dot"></i></span>
+  `;
   const response = await fetch("/signin", {
     method: "POST",
     body: JSON.stringify({ email: form.email.value }),
@@ -28,6 +36,9 @@ async function handleSignInSubmit(event) {
   } else {
     form.email.classList.add("invalid");
     errorMessage.textContent = data.message;
+    signInButton.disabled = false;
+    signInButton.classList.remove("loading", "white");
+    signInButton.innerHTML = "Sign In";
   }
 }
 
