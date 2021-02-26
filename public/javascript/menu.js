@@ -40,6 +40,11 @@ function showCategories() {
 
 function blurUp(image) {
   image.classList.remove("hidden");
+  const preview = image.closest(".image-wrapper").querySelector(".preview");
+  preview.addEventListener("transitionend", () => {
+    preview.classList.add("not-visible");
+  });
+  preview.classList.add("transparent");
 }
 
 const renderCategory = (category) => `
@@ -48,6 +53,7 @@ const renderCategory = (category) => `
       <img 
         src="${category.primaryImage.asset.metadata.lqip}" 
         alt="${category.name}-preview" 
+        class="preview"
         loading="lazy" 
       />
       <img 
