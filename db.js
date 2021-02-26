@@ -6,6 +6,8 @@ const pool = new pg.Pool({
 });
 
 pool.query(`
+  create extension if not exists "uuid-ossp";
+
   create or replace function shuffle(text)
   returns text language sql as $$
     select string_agg(ch, '')
