@@ -70,60 +70,40 @@ app.post("/signup", async (request, response) => {
 app.post("/confirm-otp", async (request, response) => {
   const { email, otp } = request.body;
   const match = await db.query(
-    `
-    SELECT * FROM th_users WHERE email = $1 AND otp = $2;
-  `,
-    [email, otp]
+    `SELECT * FROM th_users 
+    WHERE email = $1 AND otp = $2 AND account_locked = $3;`,
+    [email, otp, false]
   );
-
-  const user = match.rows[0];
-
-  if (user) {
-    delete user.otp;
-    response.json(user);
+  const matchingUser = match.rows[0];
+  if (matchingUser) {
+    delete matchingUser.otp;
+    response.json(matchingUser);
   } else {
-    const numAttempts = await db.query(
-      `SELECT failed_attempts from th_users WHERE email = $1
-      `
+    const failedAttemptsResult = await db.query(
+      `SELECT failed_attempts from th_users WHERE email = $1;`,
+      [email]
     );
-    if (numAttempts < 5) {
-      numAttempts += 1;
-      const addAttempt = await db.query(
-        `
-        UPDATE th_users
-        SET failed_attempts = $1 
-        WHERE email = $2
-        RETURNING email, failed_attempts;
-        `,
-        [numAttempts, email]
-      );
-      response.status(401).json({
-        message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
-      });
-    } else {
+    const failedUser = failedAttemptsResult.rows[0];
+    if (!failedUser) {
+      response.status(401).json({ message: "No such user" });
+      return;
+    }
+    const failedAttempts = failedUser.failed_attempts + 1;
+    await db.query(
+      `UPDATE th_users
+      SET failed_attempts = $1, account_locked = $2
+      WHERE email = $3;`,
+      [failedAttempts, failedAttempts >= 5, email]
+    );
+    if (failedAttempts >= 5) {
       response.status(401).json({
         message: `You've reached the maximum login attempts we allow, please contact customer service.`,
       });
-      const lockAccount = await db.query(
-        `
-        UPDATE th_users
-        SET account_locked = TRUE 
-        WHERE email = $1
-        RETURNING email, account_locked;
-        `,
-        [email]
-      );
+    } else {
+      response.status(401).json({
+        message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
+      });
     }
-    //do something
-    const resetAttempts = await db.query(
-      `
-        UPDATE th_users
-        SET failed_attempts = 0 
-        WHERE email = $1
-        RETURNING email, failed_attempts;
-        `,
-      [email]
-    );
   }
 });
 
@@ -137,7 +117,7 @@ app.post("/signin", async (request, response) => {
     const updateResult = await db.query(
       `
       UPDATE th_users
-      SET otp = (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6)) 
+      SET otp = (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6))
       WHERE email = $1
       RETURNING email, otp;
       `,
