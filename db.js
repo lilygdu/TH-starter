@@ -21,7 +21,9 @@ pool.query(`
     name VARCHAR(256) NOT NULL,
     email_consent BOOLEAN NOT NULL,
     tos_consent BOOLEAN NOT NULL,
-    dob DATE
+    dob DATE,
+    failed_attempts INTEGER DEFAULT 0 NOT NULL,
+    account_locked BOOLEAN DEFAULT FALSE NOT NULL
   );
 `);
 

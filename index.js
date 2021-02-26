@@ -81,9 +81,38 @@ app.post("/confirm-otp", async (request, response) => {
   if (user) {
     delete user.otp;
     response.json(user);
-  } else {
-    response.status(401).json({
-      message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
+  }else{
+    const numAttempts = await db.query(
+      `SELECT failed_attempts from th_users WHERE email = $1
+      `
+    )
+    if(numAttempts < 5){
+      numAttempts += 1;
+      const addAttempt = await db.query(
+        `
+        UPDATE th_users
+        SET failed_attempts = $1 
+        WHERE email = $2
+        RETURNING email, failed_attempts;
+        `,
+        [numAttempts, email]
+      )
+      response.status(401).json({
+      message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`
+      })
+    }else{
+      response.status(401).json({
+        message: `You've reached the maximum login attempts we allow, please contact customer service.`
+      })
+      const lockAccount =  await db.query(
+        `
+        UPDATE th_users
+        SET account_locked = TRUE 
+        WHERE email = $1
+        RETURNING email, account_locked;
+        `,
+        [email]
+      )}
     });
   }
 });
