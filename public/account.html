@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/button.css" />
     <link rel="stylesheet" href="css/account.css" />
+    <link rel="stylesheet" href="css/dialog.css" />
     <script
       src="https://kit.fontawesome.com/0a079e4901.js"
       crossorigin="anonymous"
@@ -149,7 +150,18 @@
         <div class="footer-tiles-3"><i class="fas fa-globe"></i> EN/CA</div>
       </div>
     </footer>
+    <dialog>
+      <div id="modal">
+        <h2>Sign Out</h2>
+        <p>Are you sure you want to sign out?</p>
+        <div id="modal-buttons">
+          <button class="button primary lg" id="confirm">Yes</button>
+          <button class="button outline lg" id="cancel">No</button>
+        </div>
+      </div>
+    </dialog>
     <script src="javascript/user.js"></script>
     <script src="javascript/protected.js"></script>
+    <script src="javascript/signout.js"></script>
   </body>
 </html>
