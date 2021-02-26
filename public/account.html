@@ -11,11 +11,13 @@
     <link rel="stylesheet" href="css/floating-inputs.css" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/button.css" />
+    <link rel="stylesheet" href="css/account.css" />
+    <link rel="stylesheet" href="css/dialog.css" />
     <script
       src="https://kit.fontawesome.com/0a079e4901.js"
       crossorigin="anonymous"
     ></script>
-    <title>Tim Hortons - Sign In</title>
+    <title>Tim Hortons - My Account</title>
   </head>
 
   <body>
@@ -60,15 +62,54 @@
 
     <main>
       <h1>Account</h1>
+      <section id="account-options">
+        <ul>
+          <li>
+            <a href="#">
+              <span>Tims Rewards</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>Account Info</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>Payment Methods</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>Recent Orders</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span>Communications Preferences</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" id="sign-out-link">
+              <span>Sign Out</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+        </ul>
+      </section>
     </main>
 
     <footer>
       <div id="footer-grid">
         <div class="footer-tiles">
           <h5>Careers</h5>
-          Come join the team<br /><a href="#" class="upper-footer-link"
-            >Browse Opportunities</a
-          >
+          Come join the team<br />
+          <a href="#" class="upper-footer-link">Browse Opportunities</a>
         </div>
         <div class="footer-tiles">
           <h5>Community</h5>
@@ -109,7 +150,18 @@
         <div class="footer-tiles-3"><i class="fas fa-globe"></i> EN/CA</div>
       </div>
     </footer>
+    <dialog>
+      <div id="modal">
+        <h2>Sign Out</h2>
+        <p>Are you sure you want to sign out?</p>
+        <div id="modal-buttons">
+          <button class="button primary lg" id="confirm">Yes</button>
+          <button class="button outline lg" id="cancel">No</button>
+        </div>
+      </div>
+    </dialog>
     <script src="javascript/user.js"></script>
     <script src="javascript/protected.js"></script>
+    <script src="javascript/signout.js"></script>
   </body>
 </html>
