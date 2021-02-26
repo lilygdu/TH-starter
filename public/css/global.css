@@ -14,3 +14,11 @@ body {
   visibility: hidden !important;
   opacity: 0 !important;
 }
+
+.transparent {
+  opacity: 0 !important;
+}
+
+.not-visible {
+  visibility: hidden !important;
+}
