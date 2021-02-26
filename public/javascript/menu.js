@@ -10,6 +10,9 @@ const query = `
       primaryImage {
         asset {
           url
+          metadata {
+            lqip
+          }
         }
       }
     } 
@@ -35,9 +38,26 @@ function showCategories() {
   categoryCards = document.querySelectorAll(".category");
 }
 
+function blurUp(image) {
+  image.classList.remove("hidden");
+}
+
 const renderCategory = (category) => `
   <a href="#" class="category">
-    <img src="${category.primaryImage.asset.url}" alt="${category.name}" />
+    <div class="image-wrapper">
+      <img 
+        src="${category.primaryImage.asset.metadata.lqip}" 
+        alt="${category.name}-preview" 
+        loading="lazy" 
+      />
+      <img 
+        src="${category.primaryImage.asset.url}" 
+        alt="${category.name}" 
+        class="hidden"
+        onload="blurUp(this)"
+        loading="lazy"
+      />
+    </div>
     <h2>${category.name}</h2>
   </a>
 `;

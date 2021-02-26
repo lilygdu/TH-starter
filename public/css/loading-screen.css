@@ -1,15 +1,10 @@
-.hidden {
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
 #loading {
-  display: flex !important;
+  display: flex;
   gap: 0.5rem;
-  justify-content: center !important;
+  justify-content: center;
   color: #c8102e;
-  margin: 3rem auto 0 auto;
-  min-height: 40rem;
+  margin: 20rem auto;
+  grid-column: 1 / -1;
 }
 
 .dot {
