@@ -71,17 +71,6 @@ input[type="checkbox"] ~ .label-container {
   color: #c8102e;
 }
 
-button[type="submit"] {
-  background-color: #c8102e;
-  border: 0;
-  border-radius: 9999rem;
-  padding: 1rem 3rem;
-  color: white;
-  width: 100%;
-  font-family: sofia_pro, Helvetica, Arial, sans-serif;
-  font-size: 1.125rem;
-}
-
 #not-yours {
   margin: 2rem;
   font-size: 0.75rem;
