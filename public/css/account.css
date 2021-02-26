@@ -1,0 +1,26 @@
+main {
+  margin: 11.5rem auto 0;
+  max-width: 30rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin: 1rem auto;
+}
+
+#account-options a {
+  display: flex;
+  justify-content: space-between;
+  color: rgb(118, 117, 109);
+  height: 4rem;
+  border-bottom: 1px solid rgb(220, 220, 220);
+  text-decoration: none;
+  align-items: center;
+  width: 100%;
+}
+
+#account-options ul {
+  list-style-type: none;
+  padding: 0;
+}
