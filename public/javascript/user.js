@@ -5,8 +5,8 @@ function checkUser() {
   const isLoggedIn =
     !!localStorage.getItem("userId") && localStorage.getItem("email");
   if (isLoggedIn) {
-    loginButton.classList.add("hidden");
-    accountButton.classList.remove("hidden");
+    loginButton.classList.add("display-none");
+    accountButton.classList.remove("display-none");
   }
 }
 
