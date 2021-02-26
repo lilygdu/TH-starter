@@ -1,6 +1,7 @@
 const instructions = document.querySelector("#instructions");
 const input = document.querySelector("input");
 const errorMessage = document.querySelector("#error-message");
+const formField = document.querySelector(".form-field");
 
 function displayVerificationMessage() {
   const email = localStorage.getItem("email");
@@ -32,6 +33,7 @@ async function validateCodeInput() {
 
   if (response.ok) {
     localStorage.setItem("userId", data.id);
+    setLoading(formField, "red");
     window.location = "/index.html";
   } else {
     form.code.classList.add("invalid");

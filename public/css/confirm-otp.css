@@ -24,21 +24,6 @@ h2 {
   height: 3rem;
 }
 
-input[type="text"] select {
-  width: 100%;
-  font-family: sofia_pro, Helvetica, Arial, sans-serif;
-  border: 1px solid lightgray;
-  padding: 0.5rem 2.5rem 0.5rem 1rem;
-  border-radius: 0.2rem;
-  color: rgb(87, 45, 45);
-  font-size: 0.9375rem;
-  height: 3.125rem;
-}
-
-input[type="text"].invalid {
-  border-color: #c8102e;
-}
-
 #enter-code {
   font-size: 1.1rem;
 }
@@ -47,7 +32,7 @@ input[type="text"].invalid {
   height: 3rem;
   width: 25rem;
   background-color: rgb(216, 215, 215);
-  border: 1px transparent;
+  border: 1px solid transparent;
   border-radius: 5px;
   margin: 0.7rem 0;
   text-align: center;
@@ -57,12 +42,13 @@ input[type="text"].invalid {
 }
 
 #code:focus {
-  outline: none;
   border: 1px solid #c8102e;
+  outline: 0;
 }
 
 #code.invalid {
   color: #c8102e;
+  border-color: #c8102e;
 }
 
 #error-message {

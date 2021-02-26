@@ -4,6 +4,7 @@ const signInButton = document.querySelector("#sign-in-button");
 
 async function handleSignInSubmit(event) {
   event.preventDefault();
+  setLoading(signInButton, "white");
   const response = await fetch("/signin", {
     method: "POST",
     body: JSON.stringify({ email: form.email.value }),
@@ -28,6 +29,7 @@ async function handleSignInSubmit(event) {
   } else {
     form.email.classList.add("invalid");
     errorMessage.textContent = data.message;
+    stopLoading(signInButton, "Sign In");
   }
 }
 
