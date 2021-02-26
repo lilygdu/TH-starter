@@ -52,6 +52,7 @@
 .button.inverse:active {
   background-color: #c8102e;
   color: white;
+  border-color: #c8102e;
 }
 
 .button.md {
