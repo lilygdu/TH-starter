@@ -7,14 +7,7 @@ let errors = {};
 async function handleSubmit(event) {
   event.preventDefault();
   submitted = true;
-
-  signUpButton.disabled = true;
-  signUpButton.classList.add("loading", "white");
-  signUpButton.innerHTML = `
-    <span><i class="fas fa-circle dot"></i></span>
-    <span><i class="fas fa-circle dot"></i></span>
-    <span><i class="fas fa-circle dot"></i></span>
-  `;
+  setLoading(signUpButton, "white");
 
   const body = JSON.stringify({
     email: form.email.value,
@@ -48,9 +41,7 @@ async function handleSubmit(event) {
   } else {
     errors = data;
     inputs.forEach((input) => validate(input));
-    signUpButton.disabled = false;
-    signUpButton.classList.remove("loading", "white");
-    signUpButton.innerHTML = "Sign Up";
+    stopLoading(signUpButton, "Sign Up");
   }
 }
 

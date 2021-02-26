@@ -33,12 +33,7 @@ async function validateCodeInput() {
 
   if (response.ok) {
     localStorage.setItem("userId", data.id);
-    formField.classList.add("loading", "red");
-    formField.innerHTML = `
-    <span><i class="fas fa-circle dot"></i></span>
-    <span><i class="fas fa-circle dot"></i></span>
-    <span><i class="fas fa-circle dot"></i></span>
-  `;
+    setLoading(formField, "red");
     window.location = "/index.html";
   } else {
     form.code.classList.add("invalid");
