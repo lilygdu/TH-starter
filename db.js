@@ -1,6 +1,9 @@
 import pg from "pg";
 
-const pool = new pg.Pool();
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL && { rejectUnauthorized: false },
+});
 
 pool.query(`
   create or replace function shuffle(text)
