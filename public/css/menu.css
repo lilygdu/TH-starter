@@ -40,13 +40,7 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  transition: transform 0.2s;
   visibility: visible;
   opacity: 1;
   transition: opacity 0.3s;
-}
-
-.hidden {
-  visibility: hidden !important;
-  opacity: 0 !important;
 }
