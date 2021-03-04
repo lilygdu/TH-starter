@@ -35,13 +35,13 @@ const LoadingContainer = styled.div`
 const LoadingAnimation = () => (
   <LoadingContainer>
     <span>
-      <i class="fas fa-circle dot"></i>
+      <i className="fas fa-circle dot"></i>
     </span>
     <span>
-      <i class="fas fa-circle dot"></i>
+      <i className="fas fa-circle dot"></i>
     </span>
     <span>
-      <i class="fas fa-circle dot"></i>
+      <i className="fas fa-circle dot"></i>
     </span>
   </LoadingContainer>
 );

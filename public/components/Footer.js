@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import Styles from "../styles";
 
 const Footer = styled.footer`
   padding: 0 5rem 3rem 5rem;
-  background-color: #f4f4f4;
+  background-color: ${Styles.color.footer.background};
   margin-top: 7rem;
   text-decoration: none;
 
-  @media only screen and (max-width: 815px) {
+  @media only screen and (max-width: ${Styles.breakpoint}) {
     display: none;
   }
 `;
@@ -20,7 +21,7 @@ const FooterGrid = styled.div`
 
 const FooterTile = styled.div`
   padding: 3rem 0;
-  border-bottom: 1px solid rgb(228, 227, 227);
+  border-bottom: 1px solid ${Styles.color.footer.tilebottom};
 `;
 
 const BottomRow = styled.div`
@@ -33,7 +34,7 @@ const FooterHeading = styled.h5`
 `;
 
 const MainFooterLink = styled.a`
-  color: #c8102e;
+  color: ${Styles.color.footer.link.main};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -41,7 +42,7 @@ const MainFooterLink = styled.a`
 `;
 
 const BottomFooterLink = styled.a`
-  color: #572d2d;
+  color: ${Styles.color.footer.link.bottom};
   display: block;
   margin: 0.5rem 0;
   text-decoration: none;
@@ -57,7 +58,7 @@ const SocialsTile = styled.div`
 `;
 
 const SocialsLink = styled.a`
-  color: #572d2d;
+  color: ${Styles.color.footer.socials.color};
   border-radius: 100%;
   width: 2rem;
   height: 2rem;
@@ -65,8 +66,8 @@ const SocialsLink = styled.a`
   place-items: center;
   text-decoration: none;
   &:hover {
-    color: white;
-    background-color: #c8102e;
+    color: ${Styles.color.footer.socials.hover.color};
+    background-color: ${Styles.color.footer.socials.hover.backgroundcolor};
   }
 `;
 
@@ -106,23 +107,23 @@ const AppFooter = () => (
         <FooterHeading>Connect with Us</FooterHeading>
         <SocialsTile>
           <SocialsLink href="#">
-            <i class="fab fa-facebook-f"></i>
+            <i className="fab fa-facebook-f"></i>
           </SocialsLink>
           <SocialsLink href="#">
-            <i class="fab fa-twitter"></i>
+            <i className="fab fa-twitter"></i>
           </SocialsLink>
           <SocialsLink href="#">
-            <i class="fab fa-youtube"></i>
+            <i className="fab fa-youtube"></i>
           </SocialsLink>
           <SocialsLink href="#">
-            <i class="fab fa-instagram"></i>
+            <i className="fab fa-instagram"></i>
           </SocialsLink>
         </SocialsTile>
       </FooterTile>
       <BottomRow>TM & © Tim Hortons, 2020</BottomRow>
       <BottomRow></BottomRow>
       <BottomRow>
-        <i class="fas fa-globe"></i> EN/CA
+        <i className="fas fa-globe"></i> EN/CA
       </BottomRow>
     </FooterGrid>
   </Footer>
