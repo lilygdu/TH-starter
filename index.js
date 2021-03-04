@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static("dist"));
 
 const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
 
