@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Styles from "../styles";
+import LoadingAnimation from "./LoadingAnimation";
 
 const BaseButton = styled.button`
   font-family: ${Styles.fontFamily.default};
@@ -72,9 +73,13 @@ const BaseButton = styled.button`
 `;
 
 const Button = ({ variant, fullWidth, size, as, href, disabled, children }) => {
+  const [loading, setLoading] = React.useState(false);
+
   const handleClick = (event) => {
-    if (as === "a" && disabled) {
+    if (disabled) {
       event.preventDefault();
+    } else {
+      setLoading(true);
     }
   };
 
@@ -88,7 +93,7 @@ const Button = ({ variant, fullWidth, size, as, href, disabled, children }) => {
       href={href}
       disabled={disabled}
     >
-      {children}
+      {loading ? <LoadingAnimation /> : children}
     </BaseButton>
   );
 };
