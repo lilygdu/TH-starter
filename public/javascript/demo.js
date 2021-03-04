@@ -2,28 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Colors from "../components/Colors";
 
 const PageDemo = () => {
   return (
     <>
       <Header />
-      <main>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-        <p>Hello</p>
-      </main>
+      <h1>Our Beautiful Colors</h1>
+      <Colors />
       <Footer />
     </>
   );

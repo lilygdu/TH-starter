@@ -1,9 +1,12 @@
+import palette from "./palette";
+
 export default {
+  breakpoint: "815px",
   fontFamily: {
     default: "sofia_pro, Helvetica, Arial, sans-serif",
   },
   boxShadow: {
-    button: "0px 0px 0px 4px rgb(255, 180, 180)",
+    button: `0px 0px 0px 4px ${palette.red.one}`,
   },
   fontSize: {
     button: {
@@ -36,53 +39,79 @@ export default {
     },
   },
   color: {
+    header: {
+      top: {
+        background: palette.red.three,
+        gradient: {
+          middle: palette.red.four,
+          sides: palette.red.three,
+        },
+      },
+      text: palette.white,
+    },
+    footer: {
+      background: palette.gray.one,
+      tilebottom: palette.gray.three,
+      link: {
+        main: palette.red.four,
+        bottom: palette.brown.three,
+        socials: palette.brown.three,
+      },
+      socials: {
+        color: palette.brown.three,
+        hover: {
+          background: palette.red.three,
+          color: palette.white,
+        },
+      },
+    },
     button: {
       primary: {
-        background: "#c8102e",
-        text: "white",
-        border: "#c8102e",
+        background: palette.red.three,
+        text: palette.white,
+        border: palette.red.three,
         hover: {
-          background: "rgb(136, 10, 30)",
-          border: "rgb(136, 10, 30)",
+          background: palette.red.five,
+          border: palette.red.five,
         },
         active: {
-          background: "#c8102e",
-          text: "white",
-          border: "#c8102e",
+          background: palette.red.three,
+          text: palette.white,
+          border: palette.red.three,
         },
       },
       inverse: {
-        background: "white",
-        border: "white",
-        text: "#c8102e",
+        background: palette.white,
+        border: palette.white,
+        text: palette.red.three,
         hover: {
-          background: "rgb(247, 219, 224)",
-          border: "rgb(247, 219, 224)",
+          background: palette.red.one,
+          border: palette.red.one,
         },
         active: {
-          background: "#c8102e",
-          text: "white",
-          border: "#c8102e",
+          background: palette.red.three,
+          text: palette.white,
+          border: palette.red.three,
         },
       },
       outline: {
-        background: "white",
-        border: "#c8102e",
-        text: "#c8102e",
+        background: palette.white,
+        border: palette.red.three,
+        text: palette.red.three,
         hover: {
-          background: "rgb(247, 219, 224)",
-          border: "#c8102e",
+          background: palette.red.one,
+          border: palette.red.three,
         },
         active: {
-          background: "#c8102e",
-          text: "white",
-          border: "#c8102e",
+          background: palette.red.three,
+          text: palette.white,
+          border: palette.red.three,
         },
       },
       disabled: {
-        background: "#ececec",
-        text: "gray",
-        border: "#ececec",
+        background: palette.gray.two,
+        text: palette.gray.five,
+        border: palette.gray.two,
       },
     },
   },
