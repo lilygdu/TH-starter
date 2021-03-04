@@ -5,9 +5,8 @@ import GlobalStyles from "../components/GlobalStyles";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Styles from "../styles";
-
-import { fetchCategories } from "../utils/menu";
 import LoadingAnimation from "../components/LoadingAnimation";
+import { fetchCategories } from "../utils/menu";
 import Category from "../components/Category";
 
 const Main = styled.main`

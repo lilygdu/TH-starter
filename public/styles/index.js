@@ -74,6 +74,16 @@ export default {
         text: palette.brown.three,
       },
     },
+    account: {
+      link: {
+        text: palette.gray.six,
+        bottomborder: palette.gray.four,
+      },
+      modal: {
+        background: palette.brown.one,
+        text: palette.brown.three,
+      },
+    },
     button: {
       primary: {
         background: palette.red.three,
