@@ -1,13 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import styled from "styled-components";
-import GlobalStyles from "../components/GlobalStyles";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import Styles from "../styles";
-
-import { fetchCategories } from "../utils/menu";
 import LoadingAnimation from "../components/LoadingAnimation";
+import { fetchCategories } from "../utils/menu";
 import Category from "../components/Category";
 
 const Main = styled.main`
@@ -42,30 +37,25 @@ const Menu = () => {
   }, []);
 
   return (
-    <>
-      <GlobalStyles />
-      <Header />
-      <Main>
-        <MenuHeading>{categories.length > 0 && "Menu"}</MenuHeading>
-        <Categories>
-          {categories.length === 0 && (
-            <LoadingContainer>
-              <LoadingAnimation />
-            </LoadingContainer>
-          )}
-          {categories.map((category) => (
-            <Category
-              key={category._id}
-              name={category.name}
-              image={category.primaryImage.asset.url}
-              lqip={category.primaryImage.asset.metadata.lqip}
-            />
-          ))}
-        </Categories>
-      </Main>
-      <Footer />
-    </>
+    <Main>
+      <MenuHeading>{categories.length > 0 && "Menu"}</MenuHeading>
+      <Categories>
+        {categories.length === 0 && (
+          <LoadingContainer>
+            <LoadingAnimation />
+          </LoadingContainer>
+        )}
+        {categories.map((category) => (
+          <Category
+            key={category._id}
+            name={category.name}
+            image={category.primaryImage.asset.url}
+            lqip={category.primaryImage.asset.metadata.lqip}
+          />
+        ))}
+      </Categories>
+    </Main>
   );
 };
 
-ReactDOM.render(<Menu />, document.querySelector("#root"));
+export default Menu;
