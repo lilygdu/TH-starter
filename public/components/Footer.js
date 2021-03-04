@@ -58,7 +58,7 @@ const SocialsTile = styled.div`
 `;
 
 const SocialsLink = styled.a`
-  color: ${Styles.color.footer.socials.color};
+  color: ${Styles.color.footer.socials.text};
   border-radius: 100%;
   width: 2rem;
   height: 2rem;
@@ -66,7 +66,7 @@ const SocialsLink = styled.a`
   place-items: center;
   text-decoration: none;
   &:hover {
-    color: ${Styles.color.footer.socials.hover.color};
+    color: ${Styles.color.footer.socials.hover.text};
     background-color: ${Styles.color.footer.socials.hover.backgroundcolor};
   }
 `;

@@ -39,6 +39,10 @@ export default {
     },
   },
   color: {
+    loading: {
+      red: palette.red.three,
+      white: palette.white,
+    },
     header: {
       top: {
         background: palette.red.three,
@@ -58,11 +62,16 @@ export default {
         socials: palette.brown.three,
       },
       socials: {
-        color: palette.brown.three,
+        text: palette.brown.three,
         hover: {
           background: palette.red.three,
-          color: palette.white,
+          text: palette.white,
         },
+      },
+    },
+    menu: {
+      category: {
+        text: palette.brown.three,
       },
     },
     button: {
