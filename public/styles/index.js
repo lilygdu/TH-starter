@@ -7,24 +7,30 @@ export default {
   },
   fontSize: {
     button: {
+      sm: "0.9rem",
       md: "0.9rem",
       lg: "1.25rem",
     },
   },
   size: {
     button: {
+      sm: {
+        width: "3rem",
+        height: "2.25rem",
+      },
       md: {
         width: "5.5rem",
         height: "2.25rem",
       },
       lg: {
         width: "initial",
-        height: "intiial",
+        height: "initial",
       },
     },
   },
   padding: {
     button: {
+      sm: "initial",
       md: "initial",
       lg: "0.75rem 3rem",
     },
