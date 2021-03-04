@@ -72,13 +72,22 @@ const BaseButton = styled.button`
   }
 `;
 
-const Button = ({ variant, fullWidth, size, as, href, disabled, children }) => {
+const Button = ({
+  variant,
+  fullWidth,
+  size,
+  as,
+  to,
+  disabled,
+  children,
+  loadOnClick = false,
+}) => {
   const [loading, setLoading] = React.useState(false);
 
   const handleClick = (event) => {
     if (disabled) {
       event.preventDefault();
-    } else {
+    } else if (loadOnClick) {
       setLoading(true);
     }
   };
@@ -90,7 +99,7 @@ const Button = ({ variant, fullWidth, size, as, href, disabled, children }) => {
       fullWidth={fullWidth}
       size={size}
       as={as}
-      href={href}
+      to={to}
       disabled={disabled}
     >
       {loading ? <LoadingAnimation /> : children}

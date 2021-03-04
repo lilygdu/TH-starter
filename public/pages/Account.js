@@ -1,10 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import styled from "styled-components";
-import GlobalStyles from "../components/GlobalStyles";
-import Header from "../components/Header";
-
-import Footer from "../components/Footer";
 import Styles from "../styles";
 import BaseButton from "../components/Button";
 
@@ -119,8 +114,6 @@ const Account = () => {
 
   return (
     <>
-      <GlobalStyles />
-      <Header />
       <Main>
         <AccountHeading>Account</AccountHeading>
         <AccountOptions>
@@ -188,9 +181,8 @@ const Account = () => {
           </ModalButtonWrapper>
         </Modal>
       </Dialog>
-      <Footer />
     </>
   );
 };
 
-ReactDOM.render(<Account />, document.querySelector("#root"));
+export default Account;

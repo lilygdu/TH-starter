@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./Button";
 import Logo from "url:../images/th-logo.svg";
@@ -46,7 +47,7 @@ const NavList = styled.ul`
 
 const NavListItem = styled.li``;
 
-const NavLink = styled.a`
+const NavLink = styled(Link)`
   text-decoration: none;
   color: ${Styles.color.header.text};
   font-size: 1.125rem;
@@ -56,7 +57,7 @@ const NavLink = styled.a`
   }
 `;
 
-const HeaderLogoLink = styled.a`
+const HeaderLogoLink = styled(Link)`
   height: 100%;
   display: flex;
   align-items: center;
@@ -115,28 +116,28 @@ const AppHeader = ({ isLoggedIn }) => {
         <HeaderLeftNav>
           <NavList>
             <NavListItem>
-              <NavLink href="#">Order</NavLink>
+              <NavLink to="#">Order</NavLink>
             </NavListItem>
             <NavListItem>
-              <NavLink href="#">Catering</NavLink>
+              <NavLink to="#">Catering</NavLink>
             </NavListItem>
             <NavListItem>
-              <NavLink href="#">
+              <NavLink to="#">
                 More <i className="fas fa-caret-down"></i>
               </NavLink>
             </NavListItem>
           </NavList>
         </HeaderLeftNav>
-        <HeaderLogoLink href="/">
+        <HeaderLogoLink to="/">
           <HeaderLogoImage src={Logo} alt="logo" />
         </HeaderLogoLink>
         <HeaderRight>
           {isLoggedIn ? (
-            <Button href="/account.html" as="a" variant="primary" size="sm">
+            <Button as={Link} to="/account" variant="primary" size="sm">
               <i className="far fa-user"></i>
             </Button>
           ) : (
-            <Button as="a" href="/signin.html" variant="inverse" size="md">
+            <Button as={Link} to="/signin" variant="inverse" size="md">
               Log In
             </Button>
           )}
