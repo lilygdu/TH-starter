@@ -44,6 +44,7 @@ export default {
       invalid: palette.red.three,
       default: palette.gray.four,
       label: palette.gray.five,
+      background: palette.white,
     },
     loading: {
       red: palette.red.three,
