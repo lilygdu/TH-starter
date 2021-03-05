@@ -8,6 +8,7 @@ import Menu from "./pages/Menu";
 import Account from "./pages/Account";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import ConfirmOTP from "./pages/ConfirmOTP";
 
 const App = () => (
   <BrowserRouter>
@@ -25,6 +26,9 @@ const App = () => (
       </Route>
       <Route path="/signup" exact>
         <SignUp />
+      </Route>
+      <Route path="/confirm-otp" exact>
+        <ConfirmOTP />
       </Route>
     </Switch>
     <Footer />
