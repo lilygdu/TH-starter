@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Button from "./Button";
 import Logo from "url:../images/th-logo.svg";
 import Styles from "../styles";
+import { UserContext } from "../context/UserContext";
 
 const Header = styled.header`
   position: fixed;
@@ -109,7 +110,8 @@ const ChangeServiceMode = styled.span`
   margin-left: 1rem;
 `;
 
-const AppHeader = ({ isLoggedIn }) => {
+const AppHeader = () => {
+  const { isLoggedIn } = React.useContext(UserContext);
   return (
     <Header>
       <HeaderTop>
