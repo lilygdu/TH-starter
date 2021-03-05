@@ -7,6 +7,7 @@ import GlobalStyles from "./components/GlobalStyles";
 import Menu from "./pages/Menu";
 import Account from "./pages/Account";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 const App = () => (
   <BrowserRouter>
@@ -21,6 +22,9 @@ const App = () => (
       </Route>
       <Route path="/signin" exact>
         <SignIn />
+      </Route>
+      <Route path="/signup" exact>
+        <SignUp />
       </Route>
     </Switch>
     <Footer />

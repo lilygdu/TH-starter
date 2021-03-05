@@ -65,6 +65,7 @@ const FloatingFormField = ({
   onChange,
   autoComplete,
   children,
+  required = false,
 }) => (
   <FormField>
     <FloatingInput
@@ -77,6 +78,7 @@ const FloatingFormField = ({
       errorMessage={errorMessage}
       type={element === "input" ? type : undefined}
       autoComplete={element === "input" ? autoComplete : undefined}
+      required={required}
     >
       {children}
     </FloatingInput>
