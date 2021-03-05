@@ -42,7 +42,6 @@ const Category = ({ name, image, lqip }) => {
         <Image
           src={lqip}
           alt={`${name}-preview`}
-          className="preview"
           loading="lazy"
           isHidden={imageLoaded}
         />

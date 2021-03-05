@@ -39,6 +39,12 @@ export default {
     },
   },
   color: {
+    input: {
+      valid: palette.green.one,
+      invalid: palette.red.three,
+      default: palette.green.four,
+      label: palette.gray.five,
+    },
     loading: {
       red: palette.red.three,
       white: palette.white,
