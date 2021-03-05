@@ -16,6 +16,7 @@
     "start": "parcel watch public/*.html & node index.js"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "parcel": "^2.0.0-beta.1"
   }
 }

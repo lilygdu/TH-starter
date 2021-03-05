@@ -6,17 +6,21 @@ import Footer from "./components/Footer";
 import GlobalStyles from "./components/GlobalStyles";
 import Menu from "./pages/Menu";
 import Account from "./pages/Account";
+import SignIn from "./pages/SignIn";
 
 const App = () => (
   <BrowserRouter>
     <GlobalStyles />
-    <Header isLoggedIn />
+    <Header />
     <Switch>
       <Route path="/" exact>
         <Menu />
       </Route>
       <Route path="/account" exact>
         <Account />
+      </Route>
+      <Route path="/signin" exact>
+        <SignIn />
       </Route>
     </Switch>
     <Footer />

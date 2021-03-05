@@ -74,9 +74,7 @@ const FloatingFormField = ({
       value={value}
       onChange={onChange}
       isValid={isValid}
-    >
-      {children}
-    </FloatingInput>
+    />
     <label htmlFor={label}>{label}</label>
     <ErrorMessage>{errorMessage}</ErrorMessage>
   </FormField>
