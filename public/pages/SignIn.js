@@ -72,7 +72,7 @@ const SignIn = () => {
           <Button
             variant="primary"
             size="lg"
-            fullWidth
+            $fullWidth
             disabled={email.length === 0}
           >
             Sign In
@@ -81,7 +81,7 @@ const SignIn = () => {
       </form>
       <NoAccountText>Don't have an account yet?</NoAccountText>
       <ButtonWrapper>
-        <Button as={Link} to="/signup" variant="outline" size="lg" fullWidth>
+        <Button to="/signup" variant="outline" size="lg" $fullWidth>
           Sign Up
         </Button>
       </ButtonWrapper>

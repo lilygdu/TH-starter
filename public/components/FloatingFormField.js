@@ -30,12 +30,12 @@ const FloatingInput = styled.input`
 
   & ~ label {
     position: absolute;
-    color: darkgray;
+    color: ${Styles.color.input.label};
     transition: all 0.2s;
     bottom: ${({ floatLabel }) => (floatLabel ? "2.4rem" : "0.8rem")};
     left: ${({ floatLabel }) => (floatLabel ? "0.5rem" : "1rem")};
     background-color: ${({ floatLabel }) =>
-      floatLabel ? "white" : "transparent"};
+      floatLabel ? Styles.color.input.background : "transparent"};
     padding: ${({ floatLabel }) => (floatLabel ? "0.1rem" : "initial")};
     font-size: ${({ floatLabel }) => (floatLabel ? "0.75rem" : "initial")};
   }
@@ -43,7 +43,7 @@ const FloatingInput = styled.input`
   &:focus ~ label {
     bottom: 2.4rem;
     left: 0.5rem;
-    background-color: white;
+    background-color: ${Styles.color.input.background};
     padding: 0.1rem;
     font-size: 0.75rem;
   }

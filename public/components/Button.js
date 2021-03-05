@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Styles from "../styles";
 import LoadingAnimation from "./LoadingAnimation";
+import { Link } from "react-router-dom";
 
 const BaseButton = styled.button`
   font-family: ${Styles.fontFamily.default};
@@ -21,8 +22,8 @@ const BaseButton = styled.button`
   // depends on size
   font-size: ${({ size }) => Styles.fontSize.button[size]};
   height: ${({ size }) => Styles.size.button[size].height};
-  width: ${({ size, fullWidth }) =>
-    fullWidth ? "100%" : Styles.size.button[size].width};
+  width: ${({ size, $fullWidth }) =>
+    $fullWidth ? "100%" : Styles.size.button[size].width};
   padding: ${({ size }) => Styles.padding.button[size]};
 
   // depends on variant
@@ -74,9 +75,8 @@ const BaseButton = styled.button`
 
 const Button = ({
   variant,
-  fullWidth,
+  $fullWidth,
   size,
-  as,
   to,
   disabled,
   children,
@@ -96,9 +96,9 @@ const Button = ({
     <BaseButton
       onClick={handleClick}
       variant={variant}
-      fullWidth={fullWidth}
+      $fullWidth={$fullWidth}
       size={size}
-      as={as}
+      as={to && Link}
       to={to}
       disabled={disabled}
     >

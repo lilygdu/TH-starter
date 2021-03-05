@@ -133,11 +133,11 @@ const AppHeader = ({ isLoggedIn }) => {
         </HeaderLogoLink>
         <HeaderRight>
           {isLoggedIn ? (
-            <Button as={Link} to="/account" variant="primary" size="sm">
+            <Button to="/account" variant="primary" size="sm">
               <i className="far fa-user"></i>
             </Button>
           ) : (
-            <Button as={Link} to="/signin" variant="inverse" size="md">
+            <Button to="/signin" variant="inverse" size="md">
               Log In
             </Button>
           )}

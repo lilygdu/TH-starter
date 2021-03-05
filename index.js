@@ -1,6 +1,7 @@
 import express from "express";
+import dirname from "es-dirname";
+import path from "path";
 import db from "./db.js";
-
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -133,6 +134,10 @@ app.post("/signin", async (request, response) => {
       message: `This user does not exist.`,
     });
   }
+});
+
+app.get("/*", (_request, response) => {
+  response.sendFile(path.join(dirname(), "dist", "index.html"));
 });
 
 app.listen(port, () => console.log(`API running on port ${port} 🚀`));
