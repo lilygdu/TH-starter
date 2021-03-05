@@ -63,6 +63,7 @@ const FloatingFormField = ({
   label = "",
   value,
   onChange,
+  autoComplete,
   children,
 }) => (
   <FormField>
@@ -70,10 +71,12 @@ const FloatingFormField = ({
       id={label}
       as={element}
       floatLabel={element === "select" || value !== ""}
-      type={element === "input" ? type : undefined}
       value={value}
       onChange={onChange}
       isValid={isValid}
+      errorMessage={errorMessage}
+      type={element === "input" ? type : undefined}
+      autoComplete={element === "input" ? autoComplete : undefined}
     >
       {children}
     </FloatingInput>

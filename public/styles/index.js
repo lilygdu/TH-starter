@@ -42,7 +42,7 @@ export default {
     input: {
       valid: palette.green.one,
       invalid: palette.red.three,
-      default: palette.green.four,
+      default: palette.gray.four,
       label: palette.gray.five,
     },
     loading: {
