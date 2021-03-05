@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Styles from "../styles";
 import Button from "../components/Button";
 import FloatingFormField from "../components/FloatingFormField";
-import { Link } from "react-router-dom";
+import CheckBoxField from "../components/CheckBoxField";
 
 const Main = styled.main`
   margin: 8rem auto 0;
@@ -69,28 +70,6 @@ const OptionalInformation = styled.div`
     ${Styles.color.signup.optionalinformation.bottomborder};
   margin-top: 2rem;
   margin-bottom: 2rem;
-`;
-
-const CheckBoxField = styled.div`
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  color: ${Styles.color.signup.checkboxfield.text};
-  display: flex;
-`;
-
-const CheckBoxLabel = styled.label``;
-
-const CheckBox = styled.input`
-  width: 1rem;
-  height: 1rem;
-`;
-
-const CheckBoxLabelContainer = styled.div`
-  flex: 1;
-`;
-
-const CheckBoxErrorMessage = styled.div`
-  position: static;
 `;
 
 const TOSLink = styled.a`
@@ -165,48 +144,31 @@ const SignUp = () => {
           <span>Optional Information</span>{" "}
           <i className="fas fa-angle-down"></i>
         </OptionalInformation>
-        <FormField>
-          <CheckBoxField>
-            <CheckBox
-              type="checkbox"
-              name="email_consent"
-              id="email_consent"
-              checked={emailConsent}
-              onChange={() => setEmailConsent(!emailConsent)}
-            />
-            <CheckBoxLabelContainer>
-              <CheckBoxLabel htmlFor="email_consent">
-                Yes! I want to receive promotional emails about special offers
-                and other information about Tim Hortons. (Optional)
-              </CheckBoxLabel>
-              <CheckBoxErrorMessage></CheckBoxErrorMessage>
-            </CheckBoxLabelContainer>
-          </CheckBoxField>
-        </FormField>
-        <FormField>
-          <CheckBoxField>
-            <CheckBox
-              type="checkbox"
-              name="tos_consent"
-              id="tos_consent"
-              checked={tosConsent}
-              onChange={() => setTosConsent(!tosConsent)}
-              required
-            />
-            <CheckBoxLabelContainer>
-              <CheckBoxLabel htmlFor="tos_consent">
-                I agree to the following:
-                <span>
-                  <TOSLink to="#"> Privacy Policy,</TOSLink>
-                  <br />
-                  <TOSLink to="#">Tims Rewards Terms and Conditions, </TOSLink>
-                  <TOSLink to="#">Terms of Service</TOSLink>
-                </span>
-              </CheckBoxLabel>
-              <CheckBoxErrorMessage></CheckBoxErrorMessage>
-            </CheckBoxLabelContainer>
-          </CheckBoxField>
-        </FormField>
+        <CheckBoxField
+          name="email_consent"
+          value={emailConsent}
+          onChange={() => setEmailConsent(!emailConsent)}
+          label={
+            "Yes! I want to receive promotional emails about special offers and other information about Tim Hortons. (Optional)"
+          }
+        />
+        <CheckBoxField
+          name="tos_consent"
+          value={tosConsent}
+          onChange={() => setTosConsent(!tosConsent)}
+          errorMessage=""
+          label={
+            <>
+              I agree to the following:
+              <span>
+                <TOSLink to="#"> Privacy Policy,</TOSLink>
+                <br />
+                <TOSLink to="#">Tims Rewards Terms and Conditions, </TOSLink>
+                <TOSLink to="#">Terms of Service</TOSLink>
+              </span>
+            </>
+          }
+        />
         <Button variant="primary" size="lg" $fullWidth>
           Sign Up
         </Button>
