@@ -113,6 +113,14 @@ export default {
         bottomborder: palette.gray.four,
       },
     },
+    confirmOTP: {
+      heading: {
+        text: palette.brown.three,
+      },
+      input: {
+        background: palette.gray.three,
+      },
+    },
     button: {
       primary: {
         background: palette.red.three,

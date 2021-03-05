@@ -67,7 +67,7 @@ const SocialsLink = styled.a`
   text-decoration: none;
   &:hover {
     color: ${Styles.color.footer.socials.hover.text};
-    background-color: ${Styles.color.footer.socials.hover.backgroundcolor};
+    background-color: ${Styles.color.footer.socials.hover.background};
   }
 `;
 
