@@ -4,6 +4,7 @@ export default {
   breakpoint: "815px",
   fontFamily: {
     default: "sofia_pro, Helvetica, Arial, sans-serif",
+    display: "greasepencil",
   },
   boxShadow: {
     button: `0px 0px 0px 4px ${palette.red.one}`,
@@ -89,6 +90,27 @@ export default {
       modal: {
         background: palette.brown.one,
         text: palette.brown.three,
+      },
+    },
+    signup: {
+      createaccount: {
+        text: palette.brown.three,
+      },
+      earnrewards: {
+        text: palette.orange.one,
+      },
+      link: {
+        text: palette.red.three,
+      },
+      existingaccount: {
+        background: palette.brown.one,
+        link: palette.red.four,
+      },
+      checkboxfield: {
+        text: palette.brown.two,
+      },
+      optionalinformation: {
+        bottomborder: palette.gray.four,
       },
     },
     button: {
