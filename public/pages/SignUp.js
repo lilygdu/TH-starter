@@ -14,7 +14,7 @@ const Main = styled.main`
 `;
 
 const EarnRewardsHeading = styled.h1`
-  font-family: ${Styles.fontFamily.display.greasepencil};
+  font-family: ${Styles.fontFamily.display};
   color: ${Styles.color.signup.earnrewards.text};
   transform: rotate(-5deg);
   font-size: 3.3rem;
@@ -52,7 +52,8 @@ const ExistingAccount = styled.div`
     margin: 0;
   }
 `;
-const ExistingAccountLink = styled.a`
+
+const SignInLink = styled(Link)`
   text-decoration: none;
   color: ${Styles.color.signup.link.text};
   transition: color 0.2s;
@@ -70,25 +71,36 @@ const OptionalInformation = styled.div`
   margin-bottom: 2rem;
 `;
 
-const CheckboxField = styled.div`
+const CheckBoxField = styled.div`
   gap: 0.5rem;
   font-size: 0.75rem;
   color: ${Styles.color.signup.checkboxfield.text};
   display: flex;
 `;
 
-// input[type="checkbox"] {
-//   width: 1rem;
-//   height: 1rem;
-// }
+const CheckBoxLabel = styled.label``;
 
-// input[type="checkbox"] ~ .label-container {
-//   flex: 1;
-// }
+const CheckBox = styled.input`
+  width: 1rem;
+  height: 1rem;
+`;
+
+const CheckBoxLabelContainer = styled.div`
+  flex: 1;
+`;
+
+const CheckBoxErrorMessage = styled.div`
+  position: static;
+`;
 
 const TOSLink = styled.a`
   text-decoration: none;
   color: ${Styles.color.signup.link.text};
+`;
+
+const FormField = styled.div`
+  margin: 2rem auto;
+  position: relative;
 `;
 
 const NotYourComputer = styled.p`
@@ -101,10 +113,6 @@ const NotYourComputer = styled.p`
   }
 `;
 
-// .checkbox-field .error-message {
-//   position: static;
-// }
-
 const SignUp = () => {
   const [country, setCountry] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -116,11 +124,11 @@ const SignUp = () => {
       <CreateAccountHeading>Create an Account</CreateAccountHeading>
       <ExistingAccount>
         <div>Already have an account?</div>
-        <a to="/signin.html">Sign In</a>
+        <SignInLink to="/signin">Sign In</SignInLink>
       </ExistingAccount>
-      <form noValidate onSubmit={handleSubmit}>
+      <form noValidate>
         <FloatingFormField
-          type="select"
+          element="select"
           label="Country *"
           value={country}
           onChange={(event) => setCountry(event.target.value)}
@@ -132,8 +140,8 @@ const SignUp = () => {
           <option value="USA">United States</option>
         </FloatingFormField>
         <FloatingFormField
-          type="text"
-          label="Email *"
+          type="email"
+          label="Email Address *"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           isValid={false}
@@ -152,43 +160,44 @@ const SignUp = () => {
           required={true}
         />
         <OptionalInformation>
-          <span>Optional Information</span> <i class="fas fa-angle-down"></i>
+          <span>Optional Information</span>{" "}
+          <i className="fas fa-angle-down"></i>
         </OptionalInformation>
-        <div class="form-field">
-          <div class="checkbox-field">
-            <input type="checkbox" name="email_consent" id="email_consent" />
-            <div class="label-container">
-              <label for="email_consent">
+        <FormField>
+          <CheckBoxField>
+            <CheckBox type="checkbox" name="email_consent" id="email_consent" />
+            <CheckBoxLabelContainer>
+              <CheckBoxLabel htmlFor="email_consent">
                 Yes! I want to receive promotional emails about special offers
                 and other information about Tim Hortons. (Optional)
-              </label>
-              <div class="error-message"></div>
-            </div>
-          </div>
-        </div>
-        <div class="form-field">
-          <div class="checkbox-field" id="privacy">
-            <input
+              </CheckBoxLabel>
+              <CheckBoxErrorMessage></CheckBoxErrorMessage>
+            </CheckBoxLabelContainer>
+          </CheckBoxField>
+        </FormField>
+        <FormField>
+          <CheckBoxField>
+            <CheckBox
               type="checkbox"
               name="tos_consent"
               id="tos_consent"
               required
             />
-            <div class="label-container">
-              <label for="tos_consent">
+            <CheckBoxLabelContainer>
+              <CheckBoxLabel htmlFor="tos_consent">
                 I agree to the following:
                 <span>
-                  <TOSLink to="#">Privacy Policy,</TOSLink>
+                  <TOSLink to="#"> Privacy Policy,</TOSLink>
                   <br />
-                  <TOSLink to="#">Tims Rewards Terms and Conditions,</TOSLink>
+                  <TOSLink to="#">Tims Rewards Terms and Conditions, </TOSLink>
                   <TOSLink to="#">Terms of Service</TOSLink>
                 </span>
-              </label>
-              <div class="error-message"></div>
-            </div>
-          </div>
-        </div>
-        <Button variant="primary" size="lg" fullWidth>
+              </CheckBoxLabel>
+              <CheckBoxErrorMessage></CheckBoxErrorMessage>
+            </CheckBoxLabelContainer>
+          </CheckBoxField>
+        </FormField>
+        <Button variant="primary" size="lg" $fullWidth>
           Sign Up
         </Button>
       </form>
