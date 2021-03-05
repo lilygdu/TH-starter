@@ -50,7 +50,7 @@ const FloatingInput = styled.input`
 `;
 
 const ErrorMessage = styled.div`
-  color: #c8102e;
+  color: ${Styles.color.input.invalid};
   font-size: 0.7rem;
   position: absolute;
 `;
