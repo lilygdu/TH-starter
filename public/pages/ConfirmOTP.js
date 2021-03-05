@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import Styles from "../styles";
+import { UserContext } from "../context/UserContext";
+import { confirmOTP } from "../utils/user";
 
 const Main = styled.main`
   margin: 14.5rem auto 0;
@@ -77,35 +80,61 @@ const DidNotReceiveCode = styled.p`
 `;
 
 const ConfirmOTP = () => {
+  const { userEmail, setUserID } = React.useContext(UserContext);
   const codeRef = React.useRef();
+  const [code, setCode] = React.useState("");
+  const history = useHistory();
 
   React.useEffect(() => {
     codeRef.current?.focus();
   }, []);
 
+  React.useEffect(() => {
+    if (!userEmail) {
+      history.push("/signin");
+    }
+  });
+
+  const handleChange = async (input) => {
+    setCode(input);
+    if (input.length === 6) {
+      const { response, data } = await confirmOTP({
+        otp: input,
+        email: userEmail,
+      });
+      if (response.ok) {
+        const { id } = data;
+        setUserID(id);
+        history.push("/");
+      } else {
+        // show a problem in the ui
+      }
+    }
+  };
+
   return (
     <Main>
       <VerifyCodeHeading>Verify with code</VerifyCodeHeading>
       <CodeSentHeading>
-        We just sent an email with login instructions to <b>YOUR EMAIL</b>
+        We just sent an email with login instructions to <b>{userEmail}</b>
       </CodeSentHeading>
       <EnterCode>
         <div>Enter Verification Code Below:</div>
       </EnterCode>
-      <form noValidate>
-        <Code
-          type="text"
-          name="code"
-          id="code"
-          autoComplete="off"
-          maxLength="6"
-          spellCheck="false"
-          required
-          invalid=""
-          ref={codeRef}
-        />
-        <ErrorMessage></ErrorMessage>
-      </form>
+      <Code
+        type="text"
+        name="code"
+        id="code"
+        autoComplete="off"
+        maxLength="6"
+        spellCheck="false"
+        required
+        invalid=""
+        value={code}
+        onChange={(event) => handleChange(event.target.value)}
+        ref={codeRef}
+      />
+      <ErrorMessage></ErrorMessage>
       <DidNotReceiveCode>Didn't receive a code?</DidNotReceiveCode>
     </Main>
   );

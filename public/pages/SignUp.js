@@ -96,7 +96,7 @@ const NotYourComputer = styled.p`
 `;
 
 const SignUp = () => {
-  const [country, setCountry] = React.useState("");
+  const [country, setCountry] = React.useState("CAN");
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
   const [emailConsent, setEmailConsent] = React.useState(false);
