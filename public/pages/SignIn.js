@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Styles from "../styles";
 import Button from "../components/Button";
-import Form from "../components/FloatingFormField";
+import FloatingFormField from "../components/FloatingFormField";
+import { Link } from "react-router-dom";
 
 const Main = styled.main`
   margin: 10rem auto 0;
@@ -22,16 +23,6 @@ const Heading = styled.h1`
     font-size: 2rem;
   }
 `;
-
-const EnterEmail = styled.div``;
-
-const SignInForm = styled(Form)``;
-
-const SignInFormInput = styled.input``;
-
-const SignInFormField = styled.div``;
-
-const SignInFormLabel = styled.label``;
 
 const ButtonWrapper = styled.div`
   width: 85%;
@@ -57,40 +48,40 @@ const NotYourComputer = styled.p`
   }
 `;
 
-const ErrorMessage = styled.div``;
-
 const SignIn = () => {
+  const [email, setEmail] = React.useState("");
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(`Trying to sign in ${email}`);
+  };
+
   return (
     <Main>
       <Heading>Sign In</Heading>
-      <EnterEmail></EnterEmail>
-      <SignInForm novalidate>
-        <SignInFormField>
-          <SignInFormInput
-            type="email"
-            name="email"
-            autoComplete="off"
-            placeholder="Email"
-            required
-          />
-          <SignInFormLabel>Email Address *</SignInFormLabel>
-          <ErrorMessage></ErrorMessage>
-        </SignInFormField>
+      <form noValidate onSubmit={handleSubmit}>
+        <FloatingFormField
+          type="email"
+          label="Email Address *"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          isValid={false}
+          autoComplete="off"
+          errorMessage={""}
+        />
         <ButtonWrapper>
           <Button
-            // onClick={() => set()}
             variant="primary"
             size="lg"
-            fullwidth
-            disabled
+            fullWidth
+            disabled={email.length === 0}
           >
             Sign In
           </Button>
         </ButtonWrapper>
-      </SignInForm>
+      </form>
       <NoAccountText>Don't have an account yet?</NoAccountText>
       <ButtonWrapper>
-        <Button href="/signup.html" variant="outline" size="lg" fullwidth>
+        <Button as={Link} to="/signup" variant="outline" size="lg" fullWidth>
           Sign Up
         </Button>
       </ButtonWrapper>
