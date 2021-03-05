@@ -117,6 +117,8 @@ const SignUp = () => {
   const [country, setCountry] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
+  const [emailConsent, setEmailConsent] = React.useState(false);
+  const [tosConsent, setTosConsent] = React.useState(false);
 
   return (
     <Main>
@@ -165,7 +167,13 @@ const SignUp = () => {
         </OptionalInformation>
         <FormField>
           <CheckBoxField>
-            <CheckBox type="checkbox" name="email_consent" id="email_consent" />
+            <CheckBox
+              type="checkbox"
+              name="email_consent"
+              id="email_consent"
+              checked={emailConsent}
+              onChange={() => setEmailConsent(!emailConsent)}
+            />
             <CheckBoxLabelContainer>
               <CheckBoxLabel htmlFor="email_consent">
                 Yes! I want to receive promotional emails about special offers
@@ -181,6 +189,8 @@ const SignUp = () => {
               type="checkbox"
               name="tos_consent"
               id="tos_consent"
+              checked={tosConsent}
+              onChange={() => setTosConsent(!tosConsent)}
               required
             />
             <CheckBoxLabelContainer>
