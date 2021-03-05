@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Styles from "../styles";
 import Button from "../components/Button";
 import FloatingFormField from "../components/FloatingFormField";
 import CheckBoxField from "../components/CheckBoxField";
+import { signUp } from "../utils/user";
+import { sendOTPEmail } from "../utils/email";
+import { UserContext } from "../context/UserContext";
 
 const Main = styled.main`
   margin: 8rem auto 0;
@@ -93,11 +96,32 @@ const NotYourComputer = styled.p`
 `;
 
 const SignUp = () => {
-  const [country, setCountry] = React.useState("");
+  const [country, setCountry] = React.useState("CAN");
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
   const [emailConsent, setEmailConsent] = React.useState(false);
   const [tosConsent, setTosConsent] = React.useState(false);
+  const history = useHistory();
+  const { setUserEmail } = React.useContext(UserContext);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { response, data } = await signUp({
+      email,
+      name,
+      country,
+      emailConsent,
+      tosConsent,
+    });
+    if (response.ok) {
+      const { email, otp } = data;
+      setUserEmail(email);
+      await sendOTPEmail({ otp, email });
+      history.push("/confirm-otp");
+    } else {
+      // show errors on form...
+    }
+  };
 
   return (
     <Main>
@@ -107,7 +131,7 @@ const SignUp = () => {
         <div>Already have an account?</div>
         <SignInLink to="/signin">Sign In</SignInLink>
       </ExistingAccount>
-      <form noValidate>
+      <form noValidate onSubmit={handleSubmit}>
         <FloatingFormField
           element="select"
           label="Country *"

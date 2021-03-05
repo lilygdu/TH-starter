@@ -9,29 +9,32 @@ import Account from "./pages/Account";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ConfirmOTP from "./pages/ConfirmOTP";
+import UserContextProvider from "./context/UserContext";
 
 const App = () => (
   <BrowserRouter>
     <GlobalStyles />
-    <Header />
-    <Switch>
-      <Route path="/" exact>
-        <Menu />
-      </Route>
-      <Route path="/account" exact>
-        <Account />
-      </Route>
-      <Route path="/signin" exact>
-        <SignIn />
-      </Route>
-      <Route path="/signup" exact>
-        <SignUp />
-      </Route>
-      <Route path="/confirm-otp" exact>
-        <ConfirmOTP />
-      </Route>
-    </Switch>
-    <Footer />
+    <UserContextProvider>
+      <Header />
+      <Switch>
+        <Route path="/" exact>
+          <Menu />
+        </Route>
+        <Route path="/account" exact>
+          <Account />
+        </Route>
+        <Route path="/signin" exact>
+          <SignIn />
+        </Route>
+        <Route path="/signup" exact>
+          <SignUp />
+        </Route>
+        <Route path="/confirm-otp" exact>
+          <ConfirmOTP />
+        </Route>
+      </Switch>
+      <Footer />
+    </UserContextProvider>
   </BrowserRouter>
 );
 
