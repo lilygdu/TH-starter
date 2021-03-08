@@ -81,10 +81,13 @@ const Button = ({
   disabled,
   children,
   isLoading = false,
+  onClick,
 }) => {
   const handleClick = (event) => {
     if (disabled) {
       event.preventDefault();
+    } else if (onClick) {
+      onClick(event);
     }
   };
 

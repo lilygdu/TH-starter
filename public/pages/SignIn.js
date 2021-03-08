@@ -71,8 +71,8 @@ const SignIn = () => {
       history.push("/confirm-otp");
     } else {
       setEmailError(data.email);
+      setIsButtonLoading(false);
     }
-    setIsButtonLoading(false);
   };
 
   const handleEmailChange = (event) => {

@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import Styles from "../styles";
 import BaseButton from "../components/Button";
+import { UserContext } from "../context/UserContext";
 
 const Main = styled.main`
   margin: 11.5rem auto 0;
@@ -38,8 +40,8 @@ const AccountOptionsText = styled.span``;
 
 const Dialog = styled.dialog`
   display: grid !important;
-  opacity: ${({ dialogOpen }) => (dialogOpen ? 1 : 0)};
-  visibility: ${({ dialogOpen }) => (dialogOpen ? "visible" : "hidden")};
+  opacity: ${({ open }) => (open ? 1 : 0)};
+  visibility: ${({ open }) => (open ? "visible" : "hidden")};
   position: fixed;
   top: 0;
   left: 0;
@@ -83,34 +85,26 @@ const ModalButton = styled(BaseButton)`
 
 const Account = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const { redirectIfNotLoggedIn, setUserEmail, setUserID } = React.useContext(
+    UserContext
+  );
+  const history = useHistory();
 
-  //protected.js
-  // if (!localStorage.getItem("userId") || !localStorage.getItem("email")) {
-  //   window.location = "/signin.html";
-  // }
-  //---------------------------------------
-  //users.js
-  // const loginButton = document.querySelector("#login");
-  // const accountButton = document.querySelector("#account");
+  React.useEffect(() => {
+    redirectIfNotLoggedIn();
+  }, []);
 
-  // function checkUser() {
-  //   const isLoggedIn =
-  //     !!localStorage.getItem("userId") && localStorage.getItem("email");
-  //   if (isLoggedIn) {
-  //     loginButton.classList.add("display-none");
-  //     accountButton.classList.remove("display-none");
-  //   }
-  // }
-  // checkUser();
-  //---------------------------------------
-  //signout.js
-  // function handleConfirmSignOut() {
-  //   localStorage.clear();
-  //   window.location = "/";
-  // }
+  const handleAccountOptionsLinkClick = (event) => {
+    event.preventDefault();
+    setDialogOpen(true);
+  };
 
-  // confirmButton.addEventListener("click", handleConfirmSignOut);
-  // dialog.addEventListener("transitionend", () => confirmButton.focus());
+  const signOut = () => {
+    localStorage.clear();
+    setUserEmail(null);
+    setUserID(null);
+    history.push("/signin");
+  };
 
   return (
     <>
@@ -153,7 +147,7 @@ const Account = () => {
             <AccountOptionsItem>
               <AccountOptionsLink
                 href="#"
-                onClick={() => setDialogOpen(true)}
+                onClick={handleAccountOptionsLinkClick}
                 dialogOpen={dialogOpen}
               >
                 <AccountOptionsText>Sign Out</AccountOptionsText>
@@ -163,12 +157,12 @@ const Account = () => {
           </AccountOptionsList>
         </AccountOptions>
       </Main>
-      <Dialog onClick={() => setDialogOpen(false)}>
+      <Dialog onClick={() => setDialogOpen(false)} open={dialogOpen}>
         <Modal>
           <DialogHeading>Sign Out</DialogHeading>
           <DialogText>Are you sure you want to sign out?</DialogText>
           <ModalButtonWrapper>
-            <ModalButton variant="primary" size="lg">
+            <ModalButton variant="primary" size="lg" onClick={signOut}>
               Yes
             </ModalButton>
             <ModalButton
