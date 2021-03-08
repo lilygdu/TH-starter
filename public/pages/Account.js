@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Styles from "../styles";
 import BaseButton from "../components/Button";
+import { UserContext } from "../context/UserContext";
 
 const Main = styled.main`
   margin: 11.5rem auto 0;
@@ -111,6 +112,13 @@ const Account = () => {
 
   // confirmButton.addEventListener("click", handleConfirmSignOut);
   // dialog.addEventListener("transitionend", () => confirmButton.focus());
+
+  const SignOut = () => {
+    const [userID, setUserID] = React.useState(localStorage.setItem(""));
+    const [userEmail, setUserEmail] = React.useState(localStorage.setItem(""));
+    const history = useHistory();
+    history.push("/");
+  };
 
   return (
     <>
