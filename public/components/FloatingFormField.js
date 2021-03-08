@@ -66,25 +66,39 @@ const FloatingFormField = ({
   autoComplete,
   children,
   required = false,
-}) => (
-  <FormField>
-    <FloatingInput
-      id={label}
-      as={element}
-      floatLabel={element === "select" || value !== ""}
-      value={value}
-      onChange={onChange}
-      isValid={isValid}
-      errorMessage={errorMessage}
-      type={element === "input" ? type : undefined}
-      autoComplete={element === "input" ? autoComplete : undefined}
-      required={required}
-    >
-      {children}
-    </FloatingInput>
-    <label htmlFor={label}>{label}</label>
-    <ErrorMessage>{errorMessage}</ErrorMessage>
-  </FormField>
-);
+}) => {
+  const [requiredError, setRequiredError] = React.useState("");
+
+  const handleBlur = () => {
+    if (required && !value) {
+      setRequiredError(`${label} is a required field.`);
+    }
+  };
+
+  return (
+    <FormField>
+      <FloatingInput
+        id={label}
+        as={element}
+        floatLabel={element === "select" || value !== ""}
+        value={value}
+        onChange={onChange}
+        onBlur={handleBlur}
+        isValid={!!requiredError && isValid}
+        errorMessage={errorMessage || requiredError}
+        type={element === "input" ? type : undefined}
+        autoComplete={element === "input" ? autoComplete : undefined}
+        required={required}
+      >
+        {children}
+      </FloatingInput>
+      <label htmlFor={label}>
+        {label}
+        {required && " *"}
+      </label>
+      <ErrorMessage>{errorMessage || requiredError}</ErrorMessage>
+    </FormField>
+  );
+};
 
 export default FloatingFormField;

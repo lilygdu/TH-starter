@@ -101,8 +101,13 @@ const SignUp = () => {
   const [name, setName] = React.useState("");
   const [emailConsent, setEmailConsent] = React.useState(false);
   const [tosConsent, setTosConsent] = React.useState(false);
-  const history = useHistory();
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
+  const [nameErrorMessage, setNameErrorMessage] = React.useState("");
+  const [tosConsentErrorMessage, setTosConsentErrorMessage] = React.useState(
+    ""
+  );
   const { setUserEmail } = React.useContext(UserContext);
+  const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -119,7 +124,9 @@ const SignUp = () => {
       await sendOTPEmail({ otp, email });
       history.push("/confirm-otp");
     } else {
-      // show errors on form...
+      setEmailErrorMessage(data.email || "");
+      setNameErrorMessage(data.name || "");
+      setTosConsentErrorMessage(data.tos_consent || "");
     }
   };
 
@@ -134,7 +141,7 @@ const SignUp = () => {
       <form noValidate onSubmit={handleSubmit}>
         <FloatingFormField
           element="select"
-          label="Country *"
+          label="Country"
           value={country}
           onChange={(event) => setCountry(event.target.value)}
           isValid={false}
@@ -146,21 +153,21 @@ const SignUp = () => {
         </FloatingFormField>
         <FloatingFormField
           type="email"
-          label="Email Address *"
+          label="Email Address"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           isValid={false}
-          errorMessage={""}
+          errorMessage={emailErrorMessage}
           autoComplete="off"
           required={true}
         />
         <FloatingFormField
           type="text"
-          label="Name *"
+          label="Name"
           value={name}
           onChange={(event) => setName(event.target.value)}
           isValid={false}
-          errorMessage={""}
+          errorMessage={nameErrorMessage}
           autoComplete="off"
           required={true}
         />
@@ -180,7 +187,7 @@ const SignUp = () => {
           name="tos_consent"
           value={tosConsent}
           onChange={() => setTosConsent(!tosConsent)}
-          errorMessage=""
+          errorMessage={tosConsentErrorMessage}
           label={
             <>
               I agree to the following:
