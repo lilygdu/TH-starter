@@ -6,6 +6,7 @@ import FloatingFormField from "../components/FloatingFormField";
 import { useHistory } from "react-router-dom";
 import { sendOTPEmail } from "../utils/email";
 import { signIn } from "../utils/user";
+import { UserContext } from "../context/UserContext";
 
 const Main = styled.main`
   margin: 10rem auto 0;
@@ -51,6 +52,7 @@ const NotYourComputer = styled.p`
 `;
 
 const SignIn = () => {
+  const { setUserEmail } = React.useContext(UserContext);
   const [email, setEmail] = React.useState("");
   const history = useHistory();
 
@@ -59,8 +61,6 @@ const SignIn = () => {
     const { response, data } = await signIn({
       email,
     });
-    // check if email exists
-    // console.log(`Trying to sign in ${email}`);
     if (response.ok) {
       const { email, otp } = data;
       setUserEmail(email);

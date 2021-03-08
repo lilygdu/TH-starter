@@ -30,8 +30,6 @@ export const confirmOTP = async ({ otp, email }) => {
   return { response, data };
 };
 
-// morning activity added below
-
 export const signIn = async ({ email }) => {
   const response = await fetch(`/signin`, {
     method: "POST",
