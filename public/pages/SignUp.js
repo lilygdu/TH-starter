@@ -200,7 +200,7 @@ const SignUp = () => {
             </>
           }
         />
-        <Button variant="primary" size="lg" $fullWidth>
+        <Button variant="primary" size="lg" $fullWidth type="submit">
           Sign Up
         </Button>
       </form>

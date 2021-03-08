@@ -39,8 +39,8 @@ const AccountOptionsText = styled.span``;
 
 const Dialog = styled.dialog`
   display: grid !important;
-  opacity: ${({ dialogOpen }) => (dialogOpen ? 1 : 0)};
-  visibility: ${({ dialogOpen }) => (dialogOpen ? "visible" : "hidden")};
+  opacity: ${({ open }) => (open ? 1 : 0)};
+  visibility: ${({ open }) => (open ? "visible" : "hidden")};
   position: fixed;
   top: 0;
   left: 0;
@@ -84,6 +84,24 @@ const ModalButton = styled(BaseButton)`
 
 const Account = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
+  const { redirectIfNotLoggedIn, setUserEmail, setUserID } = React.useContext(
+    UserContext
+  );
+
+  React.useEffect(() => {
+    redirectIfNotLoggedIn();
+  }, []);
+
+  const handleAccountOptionsLinkClick = (event) => {
+    event.preventDefault();
+    setDialogOpen(true);
+  };
+
+  const signOut = () => {
+    localStorage.clear();
+    setUserEmail(null);
+    setUserID(null);
+  };
 
   //protected.js
   // if (!localStorage.getItem("userId") || !localStorage.getItem("email")) {
@@ -112,13 +130,6 @@ const Account = () => {
 
   // confirmButton.addEventListener("click", handleConfirmSignOut);
   // dialog.addEventListener("transitionend", () => confirmButton.focus());
-
-  const SignOut = () => {
-    const [userID, setUserID] = React.useState(localStorage.setItem(""));
-    const [userEmail, setUserEmail] = React.useState(localStorage.setItem(""));
-    const history = useHistory();
-    history.push("/");
-  };
 
   return (
     <>
@@ -161,7 +172,7 @@ const Account = () => {
             <AccountOptionsItem>
               <AccountOptionsLink
                 href="#"
-                onClick={() => setDialogOpen(true)}
+                onClick={handleAccountOptionsLinkClick}
                 dialogOpen={dialogOpen}
               >
                 <AccountOptionsText>Sign Out</AccountOptionsText>
@@ -171,12 +182,12 @@ const Account = () => {
           </AccountOptionsList>
         </AccountOptions>
       </Main>
-      <Dialog onClick={() => setDialogOpen(false)}>
+      <Dialog onClick={() => setDialogOpen(false)} open={dialogOpen}>
         <Modal>
           <DialogHeading>Sign Out</DialogHeading>
           <DialogText>Are you sure you want to sign out?</DialogText>
           <ModalButtonWrapper>
-            <ModalButton variant="primary" size="lg">
+            <ModalButton variant="primary" size="lg" onClick={signOut}>
               Yes
             </ModalButton>
             <ModalButton
