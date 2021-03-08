@@ -98,11 +98,11 @@ app.post("/confirm-otp", async (request, response) => {
     );
     if (failedAttempts >= 5) {
       response.status(401).json({
-        message: `You've reached the maximum login attempts we allow, please contact customer service.`,
+        otp: `You've reached the maximum login attempts we allow, please contact customer service.`,
       });
     } else {
       response.status(401).json({
-        message: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
+        otp: `The code you entered doesn't match the code we sent. Check your messages and try typing it in again.`,
       });
     }
   }
