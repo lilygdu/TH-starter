@@ -141,7 +141,7 @@ const SignUp = () => {
       <form noValidate onSubmit={handleSubmit}>
         <FloatingFormField
           element="select"
-          label="Country *"
+          label="Country"
           value={country}
           onChange={(event) => setCountry(event.target.value)}
           isValid={false}
@@ -153,7 +153,7 @@ const SignUp = () => {
         </FloatingFormField>
         <FloatingFormField
           type="email"
-          label="Email Address *"
+          label="Email Address"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           isValid={false}
@@ -163,7 +163,7 @@ const SignUp = () => {
         />
         <FloatingFormField
           type="text"
-          label="Name *"
+          label="Name"
           value={name}
           onChange={(event) => setName(event.target.value)}
           isValid={false}

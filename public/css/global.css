@@ -10,9 +10,12 @@ body {
   font-family: sofia_pro, Helvetica, Arial, sans-serif;
 }
 
-.display-none {
+/* DELETE THIS CODE WHEN REACT CONVERSION IS DONE */
+
+/* .display-none {
   display: none !important;
 }
+
 
 .hidden {
   visibility: hidden !important;
@@ -25,4 +28,4 @@ body {
 
 .not-visible {
   visibility: hidden !important;
-}
+} */
