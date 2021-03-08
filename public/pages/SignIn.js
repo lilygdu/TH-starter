@@ -54,6 +54,7 @@ const NotYourComputer = styled.p`
 const SignIn = () => {
   const { setUserEmail } = React.useContext(UserContext);
   const [email, setEmail] = React.useState("");
+  const [emailError, setEmailError] = React.useState("");
   const history = useHistory();
 
   const handleSubmit = async (event) => {
@@ -67,10 +68,13 @@ const SignIn = () => {
       await sendOTPEmail({ otp, email });
       history.push("/confirm-otp");
     } else {
-      // show error:
-      // "This user does not exist"
-      // "That doesn't look like a valid email"
+      setEmailError(data.email);
     }
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+    setEmailError("");
   };
 
   return (
@@ -81,10 +85,9 @@ const SignIn = () => {
           type="email"
           label="Email Address *"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          isValid={false}
+          onChange={handleEmailChange}
           autoComplete="off"
-          errorMessage={""}
+          errorMessage={emailError}
         />
         <ButtonWrapper>
           <Button

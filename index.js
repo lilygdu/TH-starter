@@ -127,11 +127,11 @@ app.post("/signin", async (request, response) => {
     response.json(updateResult.rows[0]);
   } else if (!emailRegex.test(email)) {
     response.status(401).json({
-      message: `That doesn't look like a valid email.`,
+      email: `That doesn't look like a valid email.`,
     });
   } else {
     response.status(401).json({
-      message: `This user does not exist.`,
+      email: `This user does not exist.`,
     });
   }
 });
