@@ -29,3 +29,15 @@ export const confirmOTP = async ({ otp, email }) => {
   const data = await response.json();
   return { response, data };
 };
+
+export const signIn = async ({ email }) => {
+  const response = await fetch(`/signin`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+    }),
+  });
+  const data = await response.json();
+  return { response, data };
+};
