@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import Styles from "../styles";
 import BaseButton from "../components/Button";
 import { UserContext } from "../context/UserContext";
@@ -87,6 +88,7 @@ const Account = () => {
   const { redirectIfNotLoggedIn, setUserEmail, setUserID } = React.useContext(
     UserContext
   );
+  const history = useHistory();
 
   React.useEffect(() => {
     redirectIfNotLoggedIn();
@@ -101,35 +103,8 @@ const Account = () => {
     localStorage.clear();
     setUserEmail(null);
     setUserID(null);
+    history.push("/signin");
   };
-
-  //protected.js
-  // if (!localStorage.getItem("userId") || !localStorage.getItem("email")) {
-  //   window.location = "/signin.html";
-  // }
-  //---------------------------------------
-  //users.js
-  // const loginButton = document.querySelector("#login");
-  // const accountButton = document.querySelector("#account");
-
-  // function checkUser() {
-  //   const isLoggedIn =
-  //     !!localStorage.getItem("userId") && localStorage.getItem("email");
-  //   if (isLoggedIn) {
-  //     loginButton.classList.add("display-none");
-  //     accountButton.classList.remove("display-none");
-  //   }
-  // }
-  // checkUser();
-  //---------------------------------------
-  //signout.js
-  // function handleConfirmSignOut() {
-  //   localStorage.clear();
-  //   window.location = "/";
-  // }
-
-  // confirmButton.addEventListener("click", handleConfirmSignOut);
-  // dialog.addEventListener("transitionend", () => confirmButton.focus());
 
   return (
     <>

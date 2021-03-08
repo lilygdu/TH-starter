@@ -10,7 +10,7 @@ const UserContextProvider = ({ children }) => {
   );
   const history = useHistory();
   const isLoggedIn = !!userEmail && !!userID;
-  // console.log({ isLoggedIn });
+
   React.useEffect(() => {
     if (userEmail) {
       localStorage.setItem("email", userEmail);
