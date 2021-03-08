@@ -80,15 +80,11 @@ const Button = ({
   to,
   disabled,
   children,
-  loadOnClick = false,
+  isLoading = false,
 }) => {
-  const [loading, setLoading] = React.useState(false);
-
   const handleClick = (event) => {
     if (disabled) {
       event.preventDefault();
-    } else if (loadOnClick) {
-      setLoading(true);
     }
   };
 
@@ -102,7 +98,7 @@ const Button = ({
       to={to}
       disabled={disabled}
     >
-      {loading ? <LoadingAnimation /> : children}
+      {isLoading ? <LoadingAnimation /> : children}
     </BaseButton>
   );
 };

@@ -81,8 +81,9 @@ const DidNotReceiveCode = styled.p`
 
 const ConfirmOTP = () => {
   const { userEmail, setUserID } = React.useContext(UserContext);
-  const codeRef = React.useRef();
   const [code, setCode] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const codeRef = React.useRef();
   const history = useHistory();
 
   React.useEffect(() => {
@@ -107,7 +108,7 @@ const ConfirmOTP = () => {
         setUserID(id);
         history.push("/");
       } else {
-        // show a problem in the ui
+        setErrorMessage(data.otp);
       }
     }
   };
@@ -129,12 +130,12 @@ const ConfirmOTP = () => {
         maxLength="6"
         spellCheck="false"
         required
-        invalid=""
+        invalid={!!errorMessage}
         value={code}
         onChange={(event) => handleChange(event.target.value)}
         ref={codeRef}
       />
-      <ErrorMessage></ErrorMessage>
+      <ErrorMessage>{errorMessage}</ErrorMessage>
       <DidNotReceiveCode>Didn't receive a code?</DidNotReceiveCode>
     </Main>
   );

@@ -55,10 +55,12 @@ const SignIn = () => {
   const { setUserEmail } = React.useContext(UserContext);
   const [email, setEmail] = React.useState("");
   const [emailError, setEmailError] = React.useState("");
+  const [isButtonLoading, setIsButtonLoading] = React.useState(false);
   const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsButtonLoading(true);
     const { response, data } = await signIn({
       email,
     });
@@ -70,6 +72,7 @@ const SignIn = () => {
     } else {
       setEmailError(data.email);
     }
+    setIsButtonLoading(false);
   };
 
   const handleEmailChange = (event) => {
@@ -95,6 +98,7 @@ const SignIn = () => {
             size="lg"
             $fullWidth
             disabled={email.length === 0}
+            isLoading={isButtonLoading}
           >
             Sign In
           </Button>
