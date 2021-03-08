@@ -112,7 +112,6 @@ const ChangeServiceMode = styled.span`
 
 const AppHeader = () => {
   const { isLoggedIn } = React.useContext(UserContext);
-  console.log({ isLoggedIn });
   return (
     <Header>
       <HeaderTop>
