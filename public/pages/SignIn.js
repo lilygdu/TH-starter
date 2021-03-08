@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Styles from "../styles";
 import Button from "../components/Button";
 import FloatingFormField from "../components/FloatingFormField";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { sendOTPEmail } from "../utils/email";
+const history = useHistory();
 
 const Main = styled.main`
   margin: 10rem auto 0;
@@ -50,9 +52,19 @@ const NotYourComputer = styled.p`
 
 const SignIn = () => {
   const [email, setEmail] = React.useState("");
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(`Trying to sign in ${email}`);
+    if (response.ok) {
+      const { email, otp } = data;
+      setUserEmail(email);
+      await sendOTPEmail({ otp, email });
+      history.push("/confirm-otp");
+    } else {
+      // show error:
+      // "This user does not exist"
+      // "That doesn't look like a valid email"
+    }
   };
 
   return (
