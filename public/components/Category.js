@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Styles from "../styles";
 
-const Link = styled.a`
+const CategoryLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   display: block;
@@ -33,11 +34,11 @@ const Image = styled.img`
   transition: opacity 0.3s;
 `;
 
-const Category = ({ name, image, lqip }) => {
+const Category = ({ name, image, lqip, id }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
 
   return (
-    <Link href="#">
+    <CategoryLink to={`/category/${id}`}>
       <ImageWrapper>
         <Image
           src={lqip}
@@ -54,7 +55,7 @@ const Category = ({ name, image, lqip }) => {
         />
       </ImageWrapper>
       <Name>{name}</Name>
-    </Link>
+    </CategoryLink>
   );
 };
 

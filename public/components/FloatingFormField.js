@@ -68,15 +68,13 @@ const FloatingFormField = ({
   validate = false,
 }) => {
   const [displayError, setDisplayError] = React.useState(errorMessage);
+  const [wasValidated, setWasValidated] = React.useState(false);
 
   React.useEffect(() => {
     setDisplayError(errorMessage);
   }, [errorMessage]);
 
   const validateInput = (event) => {
-    if (!validate) {
-      return;
-    }
     if (event.target.checkValidity()) {
       setDisplayError("");
     } else if (required && !event.target.value) {
@@ -84,10 +82,13 @@ const FloatingFormField = ({
     } else {
       setDisplayError(`That doesn't look like a valid ${type}`);
     }
+    setWasValidated(true);
   };
 
   const handleChange = (event) => {
-    validateInput(event);
+    if (validate || wasValidated) {
+      validateInput(event);
+    }
     onChange(event);
   };
 
@@ -100,8 +101,8 @@ const FloatingFormField = ({
         value={value}
         onChange={handleChange}
         onBlur={validateInput}
-        isValid={validate && !displayError}
-        isInvalid={validate && displayError}
+        isValid={wasValidated && !displayError}
+        isInvalid={!!displayError}
         type={element === "input" ? type : undefined}
         autoComplete={element === "input" ? autoComplete : undefined}
         required={required}
