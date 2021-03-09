@@ -17,8 +17,8 @@ const FloatingInput = styled.input`
   color: rgb(87, 45, 45);
   font-size: 0.9375rem;
   height: 3.125rem;
-  border-color: ${({ errorMessage, isValid }) =>
-    errorMessage
+  border-color: ${({ isInvalid, isValid }) =>
+    isInvalid
       ? Styles.color.input.invalid
       : isValid
       ? Styles.color.input.valid
@@ -58,7 +58,6 @@ const ErrorMessage = styled.div`
 const FloatingFormField = ({
   element = "input",
   type = "text",
-  isValid,
   errorMessage = "",
   label = "",
   value,
@@ -66,13 +65,30 @@ const FloatingFormField = ({
   autoComplete,
   children,
   required = false,
+  validate = false,
 }) => {
-  const [requiredError, setRequiredError] = React.useState("");
+  const [displayError, setDisplayError] = React.useState(errorMessage);
 
-  const handleBlur = () => {
-    if (required && !value) {
-      setRequiredError(`${label} is a required field.`);
+  React.useEffect(() => {
+    setDisplayError(errorMessage);
+  }, [errorMessage]);
+
+  const validateInput = (event) => {
+    if (!validate) {
+      return;
     }
+    if (event.target.checkValidity()) {
+      setDisplayError("");
+    } else if (required && !event.target.value) {
+      setDisplayError(`${label} is a required field.`);
+    } else {
+      setDisplayError(`That doesn't look like a valid ${type}`);
+    }
+  };
+
+  const handleChange = (event) => {
+    validateInput(event);
+    onChange(event);
   };
 
   return (
@@ -82,10 +98,10 @@ const FloatingFormField = ({
         as={element}
         floatLabel={element === "select" || value !== ""}
         value={value}
-        onChange={onChange}
-        onBlur={handleBlur}
-        isValid={!!requiredError && isValid}
-        errorMessage={errorMessage || requiredError}
+        onChange={handleChange}
+        onBlur={validateInput}
+        isValid={validate && !displayError}
+        isInvalid={validate && displayError}
         type={element === "input" ? type : undefined}
         autoComplete={element === "input" ? autoComplete : undefined}
         required={required}
@@ -96,7 +112,7 @@ const FloatingFormField = ({
         {label}
         {required && " *"}
       </label>
-      <ErrorMessage>{errorMessage || requiredError}</ErrorMessage>
+      <ErrorMessage>{displayError}</ErrorMessage>
     </FormField>
   );
 };
