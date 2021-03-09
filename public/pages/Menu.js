@@ -48,6 +48,7 @@ const Menu = () => {
         {categories.map((category) => (
           <Category
             key={category._id}
+            id={category._id}
             name={category.name}
             image={category.primaryImage.asset.url}
             lqip={category.primaryImage.asset.metadata.lqip}
