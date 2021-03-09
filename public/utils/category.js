@@ -5,6 +5,8 @@ const query = (categoryID) => `
       items{
         _id
         name
+        price
+        calories
         primaryImage {
           asset{
             url

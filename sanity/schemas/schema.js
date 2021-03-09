@@ -64,6 +64,16 @@ export default createSchema({
               .integer()
               .error("Items must have a price of at least 0 cents"),
         },
+        {
+          title: "Calories",
+          name: "calories",
+          type: "number",
+          validation: (Rule) =>
+            Rule.required()
+              .min(0)
+              .integer()
+              .error("Items must have at least 0 calories"),
+        },
       ],
     },
   ]),
