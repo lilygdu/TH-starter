@@ -106,10 +106,14 @@ const SignUp = () => {
   const [tosConsentErrorMessage, setTosConsentErrorMessage] = React.useState(
     ""
   );
+  const [isNameValid, setIsNameValid] = React.useState(false);
+  const [isEmailValid, setIsEmailValid] = React.useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
   const { setUserEmail } = React.useContext(UserContext);
   const history = useHistory();
 
   const handleSubmit = async (event) => {
+    setIsFormSubmitted(true);
     event.preventDefault();
     const { response, data } = await signUp({
       email,
@@ -127,6 +131,8 @@ const SignUp = () => {
       setEmailErrorMessage(data.email || "");
       setNameErrorMessage(data.name || "");
       setTosConsentErrorMessage(data.tos_consent || "");
+      setIsEmailValid(!data.email);
+      setIsNameValid(!data.name);
     }
   };
 
@@ -144,9 +150,7 @@ const SignUp = () => {
           label="Country"
           value={country}
           onChange={(event) => setCountry(event.target.value)}
-          isValid={false}
-          errorMessage={""}
-          required={true}
+          validate={false}
         >
           <option value="CAN">Canada</option>
           <option value="USA">United States</option>
@@ -156,20 +160,22 @@ const SignUp = () => {
           label="Email Address"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          isValid={false}
+          isValid={isEmailValid}
           errorMessage={emailErrorMessage}
           autoComplete="off"
           required={true}
+          validate={isFormSubmitted}
         />
         <FloatingFormField
           type="text"
           label="Name"
           value={name}
           onChange={(event) => setName(event.target.value)}
-          isValid={false}
+          isValid={isNameValid}
           errorMessage={nameErrorMessage}
           autoComplete="off"
           required={true}
+          validate={isFormSubmitted}
         />
         <OptionalInformation>
           <span>Optional Information</span>{" "}
@@ -200,7 +206,7 @@ const SignUp = () => {
             </>
           }
         />
-        <Button variant="primary" size="lg" $fullWidth type="submit">
+        <Button variant="primary" size="lg" $fullWidth>
           Sign Up
         </Button>
       </form>

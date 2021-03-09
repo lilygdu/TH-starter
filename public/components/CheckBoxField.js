@@ -52,7 +52,9 @@ const CheckBoxField = ({
         />
         <CheckBoxLabelContainer>
           <CheckBoxLabel htmlFor={name}>{label}</CheckBoxLabel>
-          <CheckBoxErrorMessage>{errorMessage}</CheckBoxErrorMessage>
+          <CheckBoxErrorMessage>
+            {!value ? errorMessage : ""}
+          </CheckBoxErrorMessage>
         </CheckBoxLabelContainer>
       </CheckBoxWrapper>
     </FormField>
