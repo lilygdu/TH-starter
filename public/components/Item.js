@@ -46,7 +46,7 @@ const Image = styled.img`
 `;
 
 const ButtonWrapper = styled.div`
-  width: 75%;
+  width: 80%;
   margin: 0 auto;
 `;
 

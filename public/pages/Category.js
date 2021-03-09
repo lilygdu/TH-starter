@@ -3,13 +3,56 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import Styles from "../styles";
 import LoadingAnimation from "../components/LoadingAnimation";
+import Button from "../components/Button";
 import Item from "../components/Item";
 import { fetchCategory } from "../utils/category";
+import { Link } from "react-router-dom";
 
 const Main = styled.main`
-  max-width: 60rem;
+  max-width: 80rem;
   margin: 9rem auto 0;
   min-height: 50rem;
+  position: relative;
+`;
+
+const MainMenuButton = styled(Link)`
+  position: absolute;
+  text-decoration: none;
+  top: 1.2rem;
+  left: 0rem;
+  margin-left: 4rem;
+  background-color: ${Styles.color.button.inverse.background};
+  border-color: ${Styles.color.button.inverse.border};
+  color: ${Styles.color.button.inverse.text};
+  padding: 0.5rem 1rem;
+  border-radius: 9999rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+
+  &:focus {
+    outline: none;
+    box-shadow: ${Styles.boxShadow.button};
+  }
+
+  &:hover {
+    background-color: ${Styles.color.button.inverse.hover.background};
+    border-color: ${Styles.color.button.inverse.hover.border};
+  }
+  &:active {
+    background-color: ${Styles.color.button.inverse.active.background};
+    color: ${Styles.color.button.inverse.active.text};
+    border-color: ${Styles.color.button.inverse.active.border};
+  }
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    display: none;
+  }
+`;
+
+const Arrow = styled.span`
+  font-size: 0.75rem;
 `;
 
 const CategoryHeading = styled.h1`
@@ -20,7 +63,7 @@ const CategoryHeading = styled.h1`
 
 const Items = styled.section`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
   gap: 1rem;
 `;
 
@@ -40,14 +83,20 @@ const Category = () => {
 
   return (
     <Main>
+      <MainMenuButton to="/">
+        <Arrow>
+          <i className="fas fa-arrow-left"></i>
+        </Arrow>
+        Main Menu
+      </MainMenuButton>
       <CategoryHeading>{category.name}</CategoryHeading>
       <Items>
-        {category.items.length === 0 && (
+        {!category.items?.length && (
           <LoadingContainer>
             <LoadingAnimation />
           </LoadingContainer>
         )}
-        {category.items.map((item) => (
+        {(category.items || []).map((item) => (
           <Item
             key={item._id}
             id={item._id}
