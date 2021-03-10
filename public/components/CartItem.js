@@ -3,6 +3,10 @@ import styled from "styled-components";
 import Styles from "../styles";
 import { CartContext } from "../context/CartContext";
 import { formatCents } from "../utils/price";
+import Dialog from "./Dialog";
+import Button from "./Button";
+
+const RemoveItemDialog = styled(Dialog)``;
 
 const ItemWrapper = styled.div`
   margin: 1.25rem;
@@ -69,33 +73,95 @@ const Quantity = styled.span`
   text-align: center;
 `;
 
+const Modal = styled.div`
+  background-color: ${Styles.color.account.modal.background};
+  padding: 1rem 2rem;
+  text-align: center;
+  color: ${Styles.color.account.modal.text};
+  border-radius: 5px;
+`;
+
+const ModalButtonWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+`;
+
+const DialogHeading = styled.h2`
+  font-size: 2.5rem;
+  margin: 0;
+`;
+const DialogText = styled.p`
+  font-size: 1.1rem;
+  margin: 0;
+`;
+const ModalButton = styled(Button)`
+  margin-top: 0.5rem;
+`;
+
 const CartItem = ({ item }) => {
-  const { addToCart, removeFromCart, decrementQuantity } = React.useContext(
-    CartContext
-  );
+  const {
+    addToCart,
+    decrementQuantity,
+    removeDialogOpen,
+    setRemoveDialogOpen,
+    removeFromCart,
+  } = React.useContext(CartContext);
+
+  const handleOkayClick = () => {
+    removeFromCart(item);
+    setRemoveDialogOpen(false);
+  };
 
   return (
-    <ItemWrapper>
-      <ItemTop>
-        <span>{item.name}</span>
-        <Price>{formatCents(item.quantity * item.price)}</Price>
-      </ItemTop>
-      <ItemBottom>
-        <RemoveButton onClick={() => removeFromCart(item)}>Remove</RemoveButton>
-        <QuantityButtonsWrapper>
-          <QuantityButton
-            onClick={() => decrementQuantity(item)}
-            disabled={item.quantity <= 1}
-          >
-            <i className="fas fa-minus"></i>
-          </QuantityButton>
-          <Quantity>{item.quantity}</Quantity>
-          <QuantityButton onClick={() => addToCart(item)}>
-            <i className="fas fa-plus"></i>
-          </QuantityButton>
-        </QuantityButtonsWrapper>
-      </ItemBottom>
-    </ItemWrapper>
+    <>
+      <ItemWrapper>
+        <ItemTop>
+          <span>{item.name}</span>
+          <Price>{formatCents(item.quantity * item.price)}</Price>
+        </ItemTop>
+        <ItemBottom>
+          <RemoveButton onClick={() => setRemoveDialogOpen(true)}>
+            Remove
+          </RemoveButton>
+          <QuantityButtonsWrapper>
+            <QuantityButton
+              onClick={() => decrementQuantity(item)}
+              disabled={item.quantity <= 1}
+            >
+              <i className="fas fa-minus"></i>
+            </QuantityButton>
+            <Quantity>{item.quantity}</Quantity>
+            <QuantityButton onClick={() => addToCart(item)}>
+              <i className="fas fa-plus"></i>
+            </QuantityButton>
+          </QuantityButtonsWrapper>
+        </ItemBottom>
+      </ItemWrapper>
+      <RemoveItemDialog
+        onClick={() => setRemoveDialogOpen(false)}
+        open={removeDialogOpen}
+      >
+        <Modal>
+          <DialogHeading>Remove Item</DialogHeading>
+          <DialogText>
+            Are you sure you want to remove your {item.name} from your cart?
+          </DialogText>
+          <ModalButtonWrapper>
+            <ModalButton variant="primary" size="lg" onClick={handleOkayClick}>
+              Okay
+            </ModalButton>
+            <ModalButton
+              variant="outline"
+              size="lg"
+              onClick={() => setRemoveDialogOpen(false)}
+            >
+              Cancel
+            </ModalButton>
+          </ModalButtonWrapper>
+        </Modal>
+      </RemoveItemDialog>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ export const CartContext = React.createContext({});
 const CartContextProvider = ({ children }) => {
   const [items, setItems] = React.useState([]);
   const [cartVisible, setCartVisible] = React.useState(false);
+  const [removeDialogOpen, setRemoveDialogOpen] = React.useState(false);
 
   const addToCart = (item) => {
     const newItems = [...items];
@@ -28,6 +29,7 @@ const CartContextProvider = ({ children }) => {
   };
 
   const removeFromCart = (item) => {
+    setRemoveDialogOpen(true);
     setItems(items.filter((i) => i.id !== item.id));
   };
 
@@ -36,7 +38,9 @@ const CartContextProvider = ({ children }) => {
       value={{
         items,
         cartVisible,
+        removeDialogOpen,
         setCartVisible,
+        setRemoveDialogOpen,
         addToCart,
         decrementQuantity,
         removeFromCart,

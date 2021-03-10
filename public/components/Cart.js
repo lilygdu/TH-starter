@@ -108,35 +108,37 @@ const Cart = ({ open }) => {
   };
 
   return (
-    <Dialog open={open}>
-      <CartTop
-        onScroll={handleScroll}
-        showCartTopInsetShadow={showCartTopInsetShadow}
-      >
-        {items.map((item) => (
-          <CartItem key={item.id} item={item} />
-        ))}
-        {items.length === 0 && (
-          <EmptyCart>You don't have anything in your cart yet!</EmptyCart>
-        )}
-      </CartTop>
-      <CartBottom>
-        <TotalWrapper>
-          <Total>Total: </Total>
-          <Cost>${formatCents(grandTotal)}</Cost>
-        </TotalWrapper>
-        <OrderMax>Order cannot exceed $100.00</OrderMax>
-        <CheckoutButton
-          onClick={() => setCartVisible(false)}
-          to="/checkout"
-          variant="primary"
-          size="lg"
-          disabled={items.length === 0}
+    <>
+      <Dialog open={open}>
+        <CartTop
+          onScroll={handleScroll}
+          showCartTopInsetShadow={showCartTopInsetShadow}
         >
-          Checkout
-        </CheckoutButton>
-      </CartBottom>
-    </Dialog>
+          {items.map((item) => (
+            <CartItem key={item.id} item={item} />
+          ))}
+          {items.length === 0 && (
+            <EmptyCart>You don't have anything in your cart yet!</EmptyCart>
+          )}
+        </CartTop>
+        <CartBottom>
+          <TotalWrapper>
+            <Total>Total: </Total>
+            <Cost>${formatCents(grandTotal)}</Cost>
+          </TotalWrapper>
+          <OrderMax>Order cannot exceed $100.00</OrderMax>
+          <CheckoutButton
+            onClick={() => setCartVisible(false)}
+            to="/checkout"
+            variant="primary"
+            size="lg"
+            disabled={items.length === 0}
+          >
+            Checkout
+          </CheckoutButton>
+        </CartBottom>
+      </Dialog>
+    </>
   );
 };
 
