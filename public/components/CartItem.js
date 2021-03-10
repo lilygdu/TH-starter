@@ -6,8 +6,6 @@ import { formatCents } from "../utils/price";
 import Dialog from "./Dialog";
 import Button from "./Button";
 
-const RemoveItemDialog = styled(Dialog)``;
-
 const ItemWrapper = styled.div`
   margin: 1.25rem;
   background-color: ${Styles.color.cartitem.background};
@@ -73,12 +71,15 @@ const Quantity = styled.span`
   text-align: center;
 `;
 
+const RemoveItemDialog = styled(Dialog)``;
+
 const Modal = styled.div`
   background-color: ${Styles.color.account.modal.background};
   padding: 1rem 2rem;
   text-align: center;
   color: ${Styles.color.account.modal.text};
   border-radius: 5px;
+  width: 25rem;
 `;
 
 const ModalButtonWrapper = styled.div`
@@ -92,7 +93,7 @@ const DialogHeading = styled.h2`
   margin: 0;
 `;
 const DialogText = styled.p`
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin: 0;
 `;
 const ModalButton = styled(Button)`
