@@ -84,6 +84,7 @@ const Button = React.forwardRef(
       children,
       isLoading = false,
       onClick,
+      ...rest
     },
     ref
   ) => {
@@ -97,6 +98,7 @@ const Button = React.forwardRef(
 
     return (
       <BaseButton
+        {...rest}
         onClick={handleClick}
         variant={variant}
         $fullWidth={$fullWidth}

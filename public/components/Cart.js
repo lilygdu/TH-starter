@@ -14,32 +14,102 @@ const Dialog = styled.dialog`
   margin: 0 2rem 0 0;
   z-index: 3;
   border: 0;
-  background-color: ${Styles.color.cart.background};
+  background-color: ${Styles.color.cart.notempty.background};
   border-radius: 0.5rem;
   padding: 0;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    display: none;
+  }
 `;
 
 const CartBottom = styled.div`
   background-color: white;
-  height: 10rem;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+`;
+
+const EmptyCart = styled.div`
+  color: ${Styles.color.cart.empty.text};
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  background-color: ${Styles.color.cart.empty.background};
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding-top: 2rem;
+`;
+
+const CheckoutButton = styled(Button)`
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+`;
+
+const TotalWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1.3rem;
+`;
+
+const Total = styled.p`
+  font-family: ${Styles.fontFamily.display};
+  font-size: 1.1rem;
+  color: ${Styles.color.cart.total};
+  margin-top: 0.6rem;
+`;
+
+const Cost = styled.p`
+  font-family: ${Styles.fontFamily.display};
+  font-size: 1.1rem;
+  color: ${Styles.color.cart.total};
+  margin-top: 0.6rem;
+`;
+
+const OrderMax = styled.p`
+  color: ${Styles.color.cart.ordermax};
+  text-align: center;
+  font-size: 0.8rem;
+  padding-bottom: 2rem;
+  margin: 0;
 `;
 
 const Cart = ({ open }) => {
-  const { items } = React.useContext(CartContext);
+  const { items, setCartVisible } = React.useContext(CartContext);
+
   let grandTotal = 0;
   items.forEach((item) => (grandTotal += item.price * item.quantity));
+
   return (
     <Dialog open={open}>
       {items.map((item) => (
         <CartItem key={item.id} item={item} />
       ))}
-      {items.length === 0 && <div>You have nothing in the cart!</div>}
+      {items.length === 0 && (
+        <EmptyCart>You don't have anything in your cart yet!</EmptyCart>
+      )}
       <CartBottom>
-        <p>Total: ${formatCents(grandTotal)}</p>
-        <p>Order cannot exceed $100</p>
-        <Button to="/checkout" variant="primary" size="lg">
+        <TotalWrapper>
+          <Total>Total: </Total>
+          <Cost>${formatCents(grandTotal)}</Cost>
+        </TotalWrapper>
+        <OrderMax>Order cannot exceed $100.00</OrderMax>
+        <CheckoutButton
+          onClick={() => setCartVisible(false)}
+          to="/checkout"
+          variant="primary"
+          size="lg"
+          disabled={items.length === 0}
+        >
           Checkout
-        </Button>
+        </CheckoutButton>
       </CartBottom>
     </Dialog>
   );

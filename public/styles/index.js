@@ -41,7 +41,15 @@ export default {
   },
   color: {
     cart: {
-      background: palette.brown.one,
+      empty: {
+        background: palette.white,
+        text: palette.gray.five,
+      },
+      notempty: {
+        background: palette.brown.one,
+      },
+      total: palette.brown.three,
+      ordermax: palette.gray.five,
     },
     cartitem: {
       background: palette.white,

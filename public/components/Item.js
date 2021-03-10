@@ -39,11 +39,9 @@ const Image = styled.img`
   object-fit: cover;
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
   bottom: 0;
-  opacity: ${({ isHidden }) => (isHidden ? 0 : 1)};
-  transition: opacity 0.3s;
+  right: 0;
+  left: 0;
 `;
 
 const ButtonWrapper = styled.div`
@@ -55,10 +53,8 @@ const Price = styled.b`
   font-size: 1.1rem;
 `;
 
-const ButtonText = styled.span`
-  display: flex;
+const AddToOrderButton = styled(Button)`
   justify-content: space-between;
-  align-items: center;
   width: 100%;
   padding: 0 1rem;
 `;
@@ -89,17 +85,14 @@ const Item = ({ name, image, lqip, id, price, calories }) => {
       <Name>{name}</Name>
       <Calories>{calories} Cals</Calories>
       <ButtonWrapper>
-        <Button
+        <AddToOrderButton
           variant="primary"
           size="md"
-          $fullWidth
           onClick={() => addToCart({ name, image, price, id })}
         >
-          <ButtonText>
-            <span>Add to order</span>
-            <Price>{displayPrice}</Price>
-          </ButtonText>
-        </Button>
+          <span>Add to order</span>
+          <Price>{displayPrice}</Price>
+        </AddToOrderButton>
       </ButtonWrapper>
     </ItemWrapper>
   );
