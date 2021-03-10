@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Styles from "../styles";
-import Button from "./Button";
 import { CartContext } from "../context/CartContext";
+import Button from "./Button";
+import CartItem from "./CartItem";
+import Styles from "../styles";
 
 const Dialog = styled.dialog`
   position: fixed;
@@ -23,33 +24,19 @@ const CartBottom = styled.div`
 `;
 
 const Cart = ({ open }) => {
-  const {
-    items,
-    addToCart,
-    decrementCartQuantity,
-    removeFromCart,
-  } = React.useContext(CartContext);
+  const { items } = React.useContext(CartContext);
+  let grandTotal = 0;
+  items.forEach((item) => (grandTotal += item.price * item.quantity));
   return (
     <Dialog open={open}>
       <ul>
         {items.map((item) => (
-          <li key={item.id}>
-            <button onClick={() => removeFromCart(item)}>Remove</button>
-            <button
-              onClick={() => decrementCartQuantity(item)}
-              disabled={item.quantity <= 1}
-            >
-              -
-            </button>
-            {item.quantity}
-            <button onClick={() => addToCart(item)}>+</button>
-            {item.name} | {item.quantity * item.price}
-          </li>
+          <CartItem key={item.id} item={item} />
         ))}
       </ul>
       {items.length === 0 && <div>You have nothing in the cart!</div>}
       <CartBottom>
-        <p>Total: $100</p>
+        <p>Total: ${(grandTotal / 100).toFixed(2)}</p>
         <p>Order cannot exceed $100</p>
         <Button to="/checkout" variant="primary" size="lg">
           Checkout

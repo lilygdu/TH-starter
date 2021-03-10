@@ -19,7 +19,7 @@ const CartContextProvider = ({ children }) => {
     // focus cart button?
   };
 
-  const decrementCartQuantity = (item) => {
+  const decrementQuantity = (item) => {
     const newItems = [...items];
     const itemAlreadyInCart = newItems.find((i) => i.id === item.id);
     if (itemAlreadyInCart.quantity > 1) {
@@ -39,7 +39,7 @@ const CartContextProvider = ({ children }) => {
         cartVisible,
         setCartVisible,
         addToCart,
-        decrementCartQuantity,
+        decrementQuantity,
         removeFromCart,
       }}
     >
