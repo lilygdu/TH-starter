@@ -114,7 +114,7 @@ const ChangeServiceMode = styled.span`
 
 const AppHeader = () => {
   const { isLoggedIn } = React.useContext(UserContext);
-  const { cartVisible, setCartVisible } = React.useContext(CartContext);
+  const { cartVisible, setCartVisible, items } = React.useContext(CartContext);
   const cartButton = React.useRef(null);
 
   React.useEffect(() => {
@@ -122,6 +122,9 @@ const AppHeader = () => {
       cartButton.current?.focus();
     }
   }, [cartVisible]);
+
+  let totalItemsInCart = 0;
+  items.forEach((item) => (totalItemsInCart += item.quantity));
 
   return (
     <>
@@ -161,7 +164,8 @@ const AppHeader = () => {
               onClick={() => setCartVisible(!cartVisible)}
               ref={cartButton}
             >
-              <i className="fas fa-shopping-bag"></i> 0
+              <i className="fas fa-shopping-bag"></i>{" "}
+              <span>{totalItemsInCart}</span>
             </Button>
           </HeaderRight>
         </HeaderTop>

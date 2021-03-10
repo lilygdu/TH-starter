@@ -17,10 +17,20 @@ const Dialog = styled.dialog`
   background-color: ${Styles.color.cart.notempty.background};
   border-radius: 0.5rem;
   padding: 0;
+  box-shadow: 0px 2px 10px -2px rgba(186, 186, 186, 0.75);
 
   @media only screen and (max-width: ${Styles.breakpoint}) {
     display: none;
   }
+`;
+
+const CartTop = styled.div`
+  max-height: 35rem;
+  overflow: scroll;
+  box-shadow: ${({ showCartTopInsetShadow }) =>
+    showCartTopInsetShadow
+      ? `inset 0px -10px 10px -9px rgba(186,186,186,0.75)`
+      : "none"};
 `;
 
 const CartBottom = styled.div`
@@ -83,18 +93,33 @@ const OrderMax = styled.p`
 
 const Cart = ({ open }) => {
   const { items, setCartVisible } = React.useContext(CartContext);
+  const [showCartTopInsetShadow, setShowCartTopInsetShadow] = React.useState(
+    false
+  );
 
   let grandTotal = 0;
   items.forEach((item) => (grandTotal += item.price * item.quantity));
 
+  const handleScroll = (event) => {
+    const isAtBottom =
+      event.target.scrollTop ===
+      event.target.scrollHeight - event.target.offsetHeight;
+    setShowCartTopInsetShadow(!isAtBottom);
+  };
+
   return (
     <Dialog open={open}>
-      {items.map((item) => (
-        <CartItem key={item.id} item={item} />
-      ))}
-      {items.length === 0 && (
-        <EmptyCart>You don't have anything in your cart yet!</EmptyCart>
-      )}
+      <CartTop
+        onScroll={handleScroll}
+        showCartTopInsetShadow={showCartTopInsetShadow}
+      >
+        {items.map((item) => (
+          <CartItem key={item.id} item={item} />
+        ))}
+        {items.length === 0 && (
+          <EmptyCart>You don't have anything in your cart yet!</EmptyCart>
+        )}
+      </CartTop>
       <CartBottom>
         <TotalWrapper>
           <Total>Total: </Total>

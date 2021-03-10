@@ -54,6 +54,7 @@ const Price = styled.b`
 `;
 
 const AddToOrderButton = styled(Button)`
+  white-space: pre;
   justify-content: space-between;
   width: 100%;
   padding: 0 1rem;

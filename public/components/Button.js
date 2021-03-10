@@ -14,7 +14,7 @@ const BaseButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.125rem;
+  gap: 0.5rem;
   overflow: hidden;
   text-decoration: none;
   user-select: none;

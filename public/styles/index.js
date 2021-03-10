@@ -50,6 +50,7 @@ export default {
       },
       total: palette.brown.three,
       ordermax: palette.gray.five,
+      boxshadow: palette.gray.six,
     },
     cartitem: {
       background: palette.white,
