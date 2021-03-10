@@ -40,6 +40,9 @@ export default {
     },
   },
   color: {
+    cart: {
+      background: palette.brown.one,
+    },
     input: {
       valid: palette.green.one,
       invalid: palette.red.three,

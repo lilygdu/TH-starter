@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { CartContext } from "../context/CartContext";
 import Styles from "../styles";
 import Button from "./Button";
 
@@ -63,6 +64,7 @@ const ButtonText = styled.span`
 `;
 
 const Item = ({ name, image, lqip, id, price, calories }) => {
+  const { addToCart } = React.useContext(CartContext);
   const [imageLoaded, setImageLoaded] = React.useState(false);
 
   const displayPrice = `$${(price / 100).toFixed(2)}`;
@@ -87,7 +89,12 @@ const Item = ({ name, image, lqip, id, price, calories }) => {
       <Name>{name}</Name>
       <Calories>{calories} Cals</Calories>
       <ButtonWrapper>
-        <Button variant="primary" size="md" $fullWidth>
+        <Button
+          variant="primary"
+          size="md"
+          $fullWidth
+          onClick={() => addToCart({ name, image, price, id })}
+        >
           <ButtonText>
             <span>Add to order</span>
             <Price>{displayPrice}</Price>
