@@ -4,6 +4,7 @@ import { CartContext } from "../context/CartContext";
 import Button from "./Button";
 import CartItem from "./CartItem";
 import Styles from "../styles";
+import { formatCents } from "../utils/price";
 
 const Dialog = styled.dialog`
   position: fixed;
@@ -29,14 +30,12 @@ const Cart = ({ open }) => {
   items.forEach((item) => (grandTotal += item.price * item.quantity));
   return (
     <Dialog open={open}>
-      <ul>
-        {items.map((item) => (
-          <CartItem key={item.id} item={item} />
-        ))}
-      </ul>
+      {items.map((item) => (
+        <CartItem key={item.id} item={item} />
+      ))}
       {items.length === 0 && <div>You have nothing in the cart!</div>}
       <CartBottom>
-        <p>Total: ${(grandTotal / 100).toFixed(2)}</p>
+        <p>Total: ${formatCents(grandTotal)}</p>
         <p>Order cannot exceed $100</p>
         <Button to="/checkout" variant="primary" size="lg">
           Checkout

@@ -16,7 +16,6 @@ const CartContextProvider = ({ children }) => {
     }
     setItems(newItems);
     setCartVisible(true);
-    // focus cart button?
   };
 
   const decrementQuantity = (item) => {

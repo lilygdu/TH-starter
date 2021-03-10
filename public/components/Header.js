@@ -115,6 +115,14 @@ const ChangeServiceMode = styled.span`
 const AppHeader = () => {
   const { isLoggedIn } = React.useContext(UserContext);
   const { cartVisible, setCartVisible } = React.useContext(CartContext);
+  const cartButton = React.useRef(null);
+
+  React.useEffect(() => {
+    if (cartVisible) {
+      cartButton.current?.focus();
+    }
+  }, [cartVisible]);
+
   return (
     <>
       <Header>
@@ -151,6 +159,7 @@ const AppHeader = () => {
               variant="primary"
               size="md"
               onClick={() => setCartVisible(!cartVisible)}
+              ref={cartButton}
             >
               <i className="fas fa-shopping-bag"></i> 0
             </Button>

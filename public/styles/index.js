@@ -43,6 +43,17 @@ export default {
     cart: {
       background: palette.brown.one,
     },
+    cartitem: {
+      background: palette.white,
+      name: palette.brown.three,
+      price: palette.gray.five,
+      border: palette.brown.one,
+      removebutton: palette.gray.six,
+      quantitybutton: {
+        enabled: palette.red.three,
+        disabled: palette.gray.four,
+      },
+    },
     input: {
       valid: palette.green.one,
       invalid: palette.red.three,

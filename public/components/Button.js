@@ -73,37 +73,43 @@ const BaseButton = styled.button`
   }
 `;
 
-const Button = ({
-  variant,
-  $fullWidth,
-  size,
-  to,
-  disabled,
-  children,
-  isLoading = false,
-  onClick,
-}) => {
-  const handleClick = (event) => {
-    if (disabled) {
-      event.preventDefault();
-    } else if (onClick) {
-      onClick(event);
-    }
-  };
+const Button = React.forwardRef(
+  (
+    {
+      variant,
+      $fullWidth,
+      size,
+      to,
+      disabled,
+      children,
+      isLoading = false,
+      onClick,
+    },
+    ref
+  ) => {
+    const handleClick = (event) => {
+      if (disabled) {
+        event.preventDefault();
+      } else if (onClick) {
+        onClick(event);
+      }
+    };
 
-  return (
-    <BaseButton
-      onClick={handleClick}
-      variant={variant}
-      $fullWidth={$fullWidth}
-      size={size}
-      as={to && Link}
-      to={to}
-      disabled={disabled}
-    >
-      {isLoading ? <LoadingAnimation /> : children}
-    </BaseButton>
-  );
-};
+    return (
+      <BaseButton
+        onClick={handleClick}
+        variant={variant}
+        $fullWidth={$fullWidth}
+        size={size}
+        as={to && Link}
+        to={to}
+        disabled={disabled}
+        ref={ref}
+      >
+        {isLoading ? <LoadingAnimation /> : children}
+      </BaseButton>
+    );
+  }
+);
 
 export default Button;
