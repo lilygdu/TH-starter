@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Styles from "../styles";
+import Dialog from "../components/Dialog";
 import BaseButton from "../components/Button";
 import { UserContext } from "../context/UserContext";
 
@@ -37,23 +38,6 @@ const AccountOptionsLink = styled.a`
 `;
 
 const AccountOptionsText = styled.span``;
-
-const Dialog = styled.dialog`
-  display: grid !important;
-  opacity: ${({ open }) => (open ? 1 : 0)};
-  visibility: ${({ open }) => (open ? "visible" : "hidden")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.75);
-  place-items: center;
-  z-index: 2;
-  transition: all 0.3s;
-`;
 
 const Modal = styled.div`
   background-color: ${Styles.color.account.modal.background};
