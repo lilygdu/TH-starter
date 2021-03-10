@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { UserContext } from "../context/UserContext";
+import { CartContext } from "../context/CartContext";
 import Button from "./Button";
 import Logo from "url:../images/th-logo.svg";
 import Styles from "../styles";
-import { UserContext } from "../context/UserContext";
+import Cart from "./Cart";
 
 const Header = styled.header`
   position: fixed;
@@ -112,53 +114,74 @@ const ChangeServiceMode = styled.span`
 
 const AppHeader = () => {
   const { isLoggedIn } = React.useContext(UserContext);
+  const { cartVisible, setCartVisible, items } = React.useContext(CartContext);
+  const cartButton = React.useRef(null);
+
+  React.useEffect(() => {
+    if (cartVisible) {
+      cartButton.current?.focus();
+    }
+  }, [cartVisible]);
+
+  let totalItemsInCart = 0;
+  items.forEach((item) => (totalItemsInCart += item.quantity));
+
   return (
-    <Header>
-      <HeaderTop>
-        <HeaderLeftNav>
-          <NavList>
-            <NavListItem>
-              <NavLink to="#">Order</NavLink>
-            </NavListItem>
-            <NavListItem>
-              <NavLink to="#">Catering</NavLink>
-            </NavListItem>
-            <NavListItem>
-              <NavLink to="#">
-                More <i className="fas fa-caret-down"></i>
-              </NavLink>
-            </NavListItem>
-          </NavList>
-        </HeaderLeftNav>
-        <HeaderLogoLink to="/">
-          <HeaderLogoImage src={Logo} alt="logo" />
-        </HeaderLogoLink>
-        <HeaderRight>
-          {isLoggedIn ? (
-            <Button to="/account" variant="primary" size="sm">
-              <i className="far fa-user"></i>
+    <>
+      <Header>
+        <HeaderTop>
+          <HeaderLeftNav>
+            <NavList>
+              <NavListItem>
+                <NavLink to="#">Order</NavLink>
+              </NavListItem>
+              <NavListItem>
+                <NavLink to="#">Catering</NavLink>
+              </NavListItem>
+              <NavListItem>
+                <NavLink to="#">
+                  More <i className="fas fa-caret-down"></i>
+                </NavLink>
+              </NavListItem>
+            </NavList>
+          </HeaderLeftNav>
+          <HeaderLogoLink to="/">
+            <HeaderLogoImage src={Logo} alt="logo" />
+          </HeaderLogoLink>
+          <HeaderRight>
+            {isLoggedIn ? (
+              <Button to="/account" variant="primary" size="sm">
+                <i className="far fa-user"></i>
+              </Button>
+            ) : (
+              <Button to="/signin" variant="inverse" size="md">
+                Log In
+              </Button>
+            )}
+            <Button
+              variant="primary"
+              size="md"
+              onClick={() => setCartVisible(!cartVisible)}
+              ref={cartButton}
+            >
+              <i className="fas fa-shopping-bag"></i>{" "}
+              <span>{totalItemsInCart}</span>
             </Button>
-          ) : (
-            <Button to="/signin" variant="inverse" size="md">
-              Log In
-            </Button>
-          )}
-          <Button variant="primary" size="md">
-            <i className="fas fa-shopping-bag"></i> 0
-          </Button>
-        </HeaderRight>
-      </HeaderTop>
-      <HeaderBottom>
-        <HeaderBottomLeft>
-          How would you like to receive this order?
-          <ChangeServiceMode>Change</ChangeServiceMode>
-        </HeaderBottomLeft>
-        <HeaderBottomRight>
-          <i className="fas fa-globe"></i>
-          EN/CA
-        </HeaderBottomRight>
-      </HeaderBottom>
-    </Header>
+          </HeaderRight>
+        </HeaderTop>
+        <HeaderBottom>
+          <HeaderBottomLeft>
+            How would you like to receive this order?
+            <ChangeServiceMode>Change</ChangeServiceMode>
+          </HeaderBottomLeft>
+          <HeaderBottomRight>
+            <i className="fas fa-globe"></i>
+            EN/CA
+          </HeaderBottomRight>
+        </HeaderBottom>
+      </Header>
+      <Cart open={cartVisible} />
+    </>
   );
 };
 

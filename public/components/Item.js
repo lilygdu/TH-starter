@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { CartContext } from "../context/CartContext";
 import Styles from "../styles";
 import Button from "./Button";
 
@@ -38,11 +39,9 @@ const Image = styled.img`
   object-fit: cover;
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
   bottom: 0;
-  opacity: ${({ isHidden }) => (isHidden ? 0 : 1)};
-  transition: opacity 0.3s;
+  right: 0;
+  left: 0;
 `;
 
 const ButtonWrapper = styled.div`
@@ -54,15 +53,15 @@ const Price = styled.b`
   font-size: 1.1rem;
 `;
 
-const ButtonText = styled.span`
-  display: flex;
+const AddToOrderButton = styled(Button)`
+  white-space: pre;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
   padding: 0 1rem;
 `;
 
 const Item = ({ name, image, lqip, id, price, calories }) => {
+  const { addToCart } = React.useContext(CartContext);
   const [imageLoaded, setImageLoaded] = React.useState(false);
 
   const displayPrice = `$${(price / 100).toFixed(2)}`;
@@ -87,12 +86,14 @@ const Item = ({ name, image, lqip, id, price, calories }) => {
       <Name>{name}</Name>
       <Calories>{calories} Cals</Calories>
       <ButtonWrapper>
-        <Button variant="primary" size="md" $fullWidth>
-          <ButtonText>
-            <span>Add to order</span>
-            <Price>{displayPrice}</Price>
-          </ButtonText>
-        </Button>
+        <AddToOrderButton
+          variant="primary"
+          size="md"
+          onClick={() => addToCart({ name, image, price, id })}
+        >
+          <span>Add to order</span>
+          <Price>{displayPrice}</Price>
+        </AddToOrderButton>
       </ButtonWrapper>
     </ItemWrapper>
   );
