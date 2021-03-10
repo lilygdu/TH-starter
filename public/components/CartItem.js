@@ -96,8 +96,10 @@ const DialogText = styled.p`
   font-size: 1.2rem;
   margin: 0;
 `;
+
 const ModalButton = styled(Button)`
   margin-top: 0.5rem;
+  width: 10rem;
 `;
 
 const CartItem = ({ item }) => {
