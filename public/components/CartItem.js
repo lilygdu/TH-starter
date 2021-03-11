@@ -103,17 +103,21 @@ const ModalButton = styled(Button)`
 `;
 
 const CartItem = ({ item }) => {
-  const {
-    addToCart,
-    decrementQuantity,
-    removeDialogOpen,
-    setRemoveDialogOpen,
-    removeFromCart,
-  } = React.useContext(CartContext);
+  const [removeDialogOpen, setRemoveDialogOpen] = React.useState(false);
+  const { addToCart, decrementQuantity, removeFromCart } = React.useContext(
+    CartContext
+  );
+  const okayButtonRef = React.useRef();
 
   const handleOkayClick = () => {
     removeFromCart(item);
     setRemoveDialogOpen(false);
+  };
+
+  const handleDialogTransition = () => {
+    if (removeDialogOpen) {
+      okayButtonRef.current?.focus();
+    }
   };
 
   return (
@@ -144,6 +148,7 @@ const CartItem = ({ item }) => {
       <RemoveItemDialog
         onClick={() => setRemoveDialogOpen(false)}
         open={removeDialogOpen}
+        onTransitionEnd={handleDialogTransition}
       >
         <Modal>
           <DialogHeading>Remove Item</DialogHeading>
@@ -151,7 +156,12 @@ const CartItem = ({ item }) => {
             Are you sure you want to remove your {item.name} from your cart?
           </DialogText>
           <ModalButtonWrapper>
-            <ModalButton variant="primary" size="lg" onClick={handleOkayClick}>
+            <ModalButton
+              variant="primary"
+              size="lg"
+              onClick={handleOkayClick}
+              ref={okayButtonRef}
+            >
               Okay
             </ModalButton>
             <ModalButton

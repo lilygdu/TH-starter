@@ -73,6 +73,7 @@ const Account = () => {
     UserContext
   );
   const history = useHistory();
+  const confirmButtonRef = React.useRef();
 
   React.useEffect(() => {
     redirectIfNotLoggedIn();
@@ -81,6 +82,12 @@ const Account = () => {
   const handleAccountOptionsLinkClick = (event) => {
     event.preventDefault();
     setDialogOpen(true);
+  };
+
+  const handleDialogTransition = () => {
+    if (dialogOpen) {
+      confirmButtonRef.current?.focus();
+    }
   };
 
   const signOut = () => {
@@ -141,12 +148,21 @@ const Account = () => {
           </AccountOptionsList>
         </AccountOptions>
       </Main>
-      <Dialog onClick={() => setDialogOpen(false)} open={dialogOpen}>
+      <Dialog
+        onClick={() => setDialogOpen(false)}
+        open={dialogOpen}
+        onTransitionEnd={handleDialogTransition}
+      >
         <Modal>
           <DialogHeading>Sign Out</DialogHeading>
           <DialogText>Are you sure you want to sign out?</DialogText>
           <ModalButtonWrapper>
-            <ModalButton variant="primary" size="lg" onClick={signOut}>
+            <ModalButton
+              variant="primary"
+              size="lg"
+              onClick={signOut}
+              ref={confirmButtonRef}
+            >
               Yes
             </ModalButton>
             <ModalButton
