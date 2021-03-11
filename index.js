@@ -15,13 +15,24 @@ app.use(express.static("dist"));
 
 const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
 
-const YOUR_DOMAIN = "http://localhost:5000/checkout";
+const YOUR_DOMAIN = "http://localhost:5000/confirmation";
+
+app.get("/sessions/:sessionID", async (request, response) => {
+  const { sessionID } = request.params;
+
+  const session = await stripe.checkout.sessions.retrieve(sessionID);
+  const lineItems = await stripe.checkout.sessions.listLineItems(sessionID, {
+    limit: 100,
+  });
+
+  response.json({ session, lineItems });
+});
 
 app.post("/checkout", async (request, response) => {
   const { userEmail, items } = request.body;
-  console.log({ userEmail, items });
 
   const session = await stripe.checkout.sessions.create({
+    customer_email: userEmail,
     payment_method_types: ["card"],
     line_items: items.map((item) => ({
       price_data: {
@@ -35,7 +46,7 @@ app.post("/checkout", async (request, response) => {
       quantity: item.quantity,
     })),
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true`,
+    success_url: `${YOUR_DOMAIN}?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
   response.json({ id: session.id });

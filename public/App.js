@@ -11,7 +11,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import ConfirmOTP from "./pages/ConfirmOTP";
 import Category from "./pages/Category";
-import Checkout from "./pages/Checkout";
+import Confirmation from "./pages/Confirmation";
 
 const App = () => (
   <BrowserRouter>
@@ -37,8 +37,8 @@ const App = () => (
           <Route path="/category/:categoryID">
             <Category />
           </Route>
-          <Route path="/checkout" exact>
-            <Checkout />
+          <Route path="/confirmation" exact>
+            <Confirmation />
           </Route>
         </Switch>
         <Footer />
