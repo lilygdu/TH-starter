@@ -8,6 +8,10 @@ const UserContextProvider = ({ children }) => {
   const [userEmail, setUserEmail] = React.useState(
     localStorage.getItem("email")
   );
+  const [userName, setUserName] = React.useState(
+    localStorage.getItem("userName")
+  );
+
   const history = useHistory();
   const isLoggedIn = !!userEmail && !!userID;
 
@@ -27,6 +31,14 @@ const UserContextProvider = ({ children }) => {
     }
   }, [userID]);
 
+  React.useEffect(() => {
+    if (userName) {
+      localStorage.setItem("userName", userName);
+    } else {
+      localStorage.removeItem("userName");
+    }
+  }, [userName]);
+
   const redirectIfNotLoggedIn = () => {
     if (!isLoggedIn) {
       history.push("/signin");
@@ -38,9 +50,11 @@ const UserContextProvider = ({ children }) => {
       value={{
         userID,
         userEmail,
+        userName,
         isLoggedIn,
         setUserEmail,
         setUserID,
+        setUserName,
         redirectIfNotLoggedIn,
       }}
     >

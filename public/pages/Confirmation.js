@@ -1,9 +1,13 @@
 import React from "react";
+import { parseISO, format } from "date-fns";
 import { fetchSession } from "../utils/stripe";
+import { UserContext } from "../context/UserContext";
+import { formatCents } from "../utils/price";
 
 const Confirmation = () => {
   const query = new URLSearchParams(window.location.search);
   const sessionID = query.get("session_id");
+  const { userName } = React.useContext(UserContext);
 
   const [session, setSession] = React.useState({});
   const [lineItems, setLineItems] = React.useState([]);
@@ -26,22 +30,55 @@ const Confirmation = () => {
   // and send that information in a respinse
   // so that the FE can display it
 
+  const orderTime =
+    session.metadata && format(parseISO(session.metadata.createdAt), "h:mm aa");
+
   return (
     <main
       style={{ margin: "10rem auto", textAlign: "center", maxWidth: "50rem" }}
     >
-      <h1>Confirmation Page!!</h1>
+      <aside>
+        <h2>Enjoy your order. See you soon!</h2>
+        <button variant="primary" size="lg">
+          Home
+        </button>
+      </aside>
+      <section>
+        <h1>
+          Your order has been placed in line with other customers and will be
+          ready as soon as possible!
+        </h1>
+        <p>
+          Drive up to the ordering screen and let us know you ordered online for{" "}
+          {userName}
+        </p>
+        <p>Order Number: {sessionID.slice(9, 19)}</p>
+        <p>
+          Order Time: <b>{orderTime}</b>
+        </p>
+        <p>
+          Method: <b>DriveThru</b>
+        </p>
 
-      <h2>Here will be some info about your order... {sessionID}</h2>
-      <h2>You paid {session.amount_total} cents!</h2>
-      <ul>
-        {lineItems.map((item) => (
-          <li key={item.id}>
-            {item.quantity} {item.description} @ {item.price.unit_amount} for{" "}
-            {item.amount_total}
-          </li>
-        ))}
-      </ul>
+        <div>
+          <h3>Your Order</h3>
+          {lineItems.map((item) => (
+            <div>
+              <h4>{item.description}</h4>
+              <p>Quantity: {item.quantity}</p>
+              <p>
+                Price: {item.price.currency}
+                {formatCents(item.price.unit_amount)}
+              </p>
+            </div>
+          ))}
+          <h4>
+            Total: {session.currency}
+            {formatCents(session.amount_total)}
+          </h4>
+          <p>View Receipt</p>
+        </div>
+      </section>
     </main>
   );
 };

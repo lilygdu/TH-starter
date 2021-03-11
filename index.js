@@ -34,6 +34,9 @@ app.post("/checkout", async (request, response) => {
   const session = await stripe.checkout.sessions.create({
     customer_email: userEmail,
     payment_method_types: ["card"],
+    metadata: {
+      createdAt: new Date().toISOString(),
+    },
     line_items: items.map((item) => ({
       price_data: {
         currency: "cad",
