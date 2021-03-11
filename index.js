@@ -18,21 +18,22 @@ const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
 const YOUR_DOMAIN = "http://localhost:5000/checkout";
 
 app.post("/checkout", async (request, response) => {
+  const { userEmail, items } = request.body;
+  console.log({ userEmail, items });
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    line_items: [
-      {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Stubborn Attachments",
-            images: ["https://i.imgur.com/EHyR2nP.png"],
-          },
-          unit_amount: 2000,
+    line_items: items.map((item) => ({
+      price_data: {
+        currency: "cad",
+        product_data: {
+          name: item.name,
+          images: [item.image],
         },
-        quantity: 1,
+        unit_amount: item.price,
       },
-    ],
+      quantity: item.quantity,
+    })),
     mode: "payment",
     success_url: `${YOUR_DOMAIN}?success=true`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
