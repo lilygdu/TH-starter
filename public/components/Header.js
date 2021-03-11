@@ -133,7 +133,7 @@ const AppHeader = () => {
           <HeaderLeftNav>
             <NavList>
               <NavListItem>
-                <NavLink to="#">Order</NavLink>
+                <NavLink to="/">Order</NavLink>
               </NavListItem>
               <NavListItem>
                 <NavLink to="#">Catering</NavLink>
