@@ -6,7 +6,9 @@ import stripeLibrary from "stripe";
 
 const app = express();
 const port = process.env.PORT || 5000;
-const stripe = stripeLibrary("sk_test_8yi82n1zaatPFwES7d6TSxRb00E88v0NfT");
+const stripe = stripeLibrary(
+  "sk_test_51ITqhfK3N0KQbmMT8TBZQyfOSgJN0S0DKucX7Fvl4ZOwmrFXkQ7okYeh3hVj3NyZvkWvftHPnJHVNXvVHnszoKby0017txxIeX"
+);
 
 app.use(express.json());
 app.use(express.static("dist"));
