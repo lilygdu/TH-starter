@@ -28,6 +28,7 @@ const CartContextProvider = ({ children }) => {
   };
 
   const removeFromCart = (item) => {
+    setRemoveDialogOpen(true);
     setItems(items.filter((i) => i.id !== item.id));
   };
 

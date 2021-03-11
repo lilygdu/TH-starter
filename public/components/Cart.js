@@ -112,33 +112,36 @@ const Cart = ({ open }) => {
   items.forEach((item) => (grandTotal += item.price * item.quantity));
 
   return (
-    <Dialog open={open}>
-      <CartTop onScroll={showShadowIfMoreCartItems} ref={cartTop}>
-        {items.map((item) => (
-          <CartItem key={item.id} item={item} />
-        ))}
-        {items.length === 0 && (
-          <EmptyCart>You don't have anything in your cart yet!</EmptyCart>
-        )}
-      </CartTop>
-      <CartBottom showCartShadow={showCartShadow}>
-        <TotalWrapper>
-          <Total>Total: </Total>
-          <Cost>${formatCents(grandTotal)}</Cost>
-        </TotalWrapper>
-        <OrderMax>Order cannot exceed $100.00</OrderMax>
-        <CheckoutButton
-          onClick={() => setCartVisible(false)}
-          to="/checkout"
-          variant="primary"
-          size="lg"
-          disabled={items.length === 0}
-        >
-          Checkout
-        </CheckoutButton>
-      </CartBottom>
-    </Dialog>
+    <>
+      <Dialog open={open}>
+        <CartTop onScroll={showShadowIfMoreCartItems} ref={cartTop}>
+          {items.map((item) => (
+            <CartItem key={item.id} item={item} />
+          ))}
+          {items.length === 0 && (
+            <EmptyCart>You don't have anything in your cart yet!</EmptyCart>
+          )}
+        </CartTop>
+        <CartBottom showCartShadow={showCartShadow}>
+          <TotalWrapper>
+            <Total>Total: </Total>
+            <Cost>${formatCents(grandTotal)}</Cost>
+          </TotalWrapper>
+          <OrderMax>Order cannot exceed $100.00</OrderMax>
+          <CheckoutButton
+            onClick={() => setCartVisible(false)}
+            to="/checkout"
+            variant="primary"
+            size="lg"
+            disabled={items.length === 0}
+          >
+            Checkout
+          </CheckoutButton>
+        </CartBottom>
+      </Dialog>
+    </>
   );
 };
 
 export default Cart;
+  
