@@ -80,7 +80,7 @@ const DidNotReceiveCode = styled.p`
 `;
 
 const ConfirmOTP = () => {
-  const { userEmail, setUserID } = React.useContext(UserContext);
+  const { userEmail, setUserID, setUserName } = React.useContext(UserContext);
   const [code, setCode] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
   const codeRef = React.useRef();
@@ -104,8 +104,9 @@ const ConfirmOTP = () => {
         email: userEmail,
       });
       if (response.ok) {
-        const { id } = data;
+        const { id, name } = data;
         setUserID(id);
+        setUserName(name);
         history.push("/");
       } else {
         setErrorMessage(data.otp);

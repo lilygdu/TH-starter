@@ -3,8 +3,14 @@ import React from "react";
 export const CartContext = React.createContext({});
 
 const CartContextProvider = ({ children }) => {
-  const [items, setItems] = React.useState([]);
+  const [items, setItems] = React.useState(
+    JSON.parse(localStorage.getItem("items") || "[]")
+  );
   const [cartVisible, setCartVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [JSON.stringify(items)]);
 
   const addToCart = (item) => {
     const newItems = [...items];
@@ -32,6 +38,10 @@ const CartContextProvider = ({ children }) => {
     setItems(items.filter((i) => i.id !== item.id));
   };
 
+  const clearCart = () => {
+    setItems([]);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -41,6 +51,7 @@ const CartContextProvider = ({ children }) => {
         addToCart,
         decrementQuantity,
         removeFromCart,
+        clearCart,
       }}
     >
       {children}

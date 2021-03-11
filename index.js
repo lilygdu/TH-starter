@@ -2,13 +2,63 @@ import express from "express";
 import dirname from "es-dirname";
 import path from "path";
 import db from "./db.js";
+import stripeLibrary from "stripe";
+
 const app = express();
 const port = process.env.PORT || 5000;
+const baseUrl = process.env.HOST_NAME || `http://localhost:${port}`;
+
+const stripe = stripeLibrary(
+  "sk_test_51ITqhfK3N0KQbmMT8TBZQyfOSgJN0S0DKucX7Fvl4ZOwmrFXkQ7okYeh3hVj3NyZvkWvftHPnJHVNXvVHnszoKby0017txxIeX"
+);
 
 app.use(express.json());
 app.use(express.static("dist"));
 
 const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
+
+app.get("/sessions/:sessionID", async (request, response) => {
+  const { sessionID } = request.params;
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionID);
+    const lineItems = await stripe.checkout.sessions.listLineItems(sessionID, {
+      limit: 100,
+    });
+    response.json({ session, lineItems });
+  } catch (error) {
+    response.status(422).json({ message: error.message });
+  }
+});
+
+app.post("/checkout", async (request, response) => {
+  try {
+    const { userEmail, items } = request.body;
+    const session = await stripe.checkout.sessions.create({
+      customer_email: userEmail,
+      payment_method_types: ["card"],
+      metadata: {
+        createdAt: new Date().toISOString(),
+      },
+      line_items: items.map((item) => ({
+        price_data: {
+          currency: "cad",
+          product_data: {
+            name: item.name,
+            images: [item.image],
+          },
+          unit_amount: item.price,
+        },
+        quantity: item.quantity,
+      })),
+      mode: "payment",
+      success_url: `${baseUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: baseUrl,
+    });
+    response.json({ id: session.id });
+  } catch (error) {
+    response.status(422).json({ message: error.message });
+  }
+});
 
 app.post("/signup", async (request, response) => {
   const {

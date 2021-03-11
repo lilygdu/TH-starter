@@ -1,10 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { loadStripe } from "@stripe/stripe-js";
 import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
 import Button from "./Button";
 import CartItem from "./CartItem";
 import Styles from "../styles";
 import { formatCents } from "../utils/price";
+
+const stripePromise = loadStripe(
+  "pk_test_51ITqhfK3N0KQbmMTSKBgE1P8cSOmKkyr8xnoHQ5PFdSEndfOdEVmUMK8FGTJyfuT6UPFfGPaUgusk0lS14Fll6kk00SojsxXhj"
+);
 
 const Dialog = styled.dialog`
   position: fixed;
@@ -26,7 +32,7 @@ const Dialog = styled.dialog`
 
 const CartTop = styled.div`
   max-height: 35rem;
-  padding-bottom: 11rem;
+  padding-bottom: 10.5rem;
   overflow: scroll;
 `;
 
@@ -64,6 +70,7 @@ const CheckoutButton = styled(Button)`
   border-top-right-radius: 0;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
+  width: 100%;
 `;
 
 const TotalWrapper = styled.div`
@@ -96,8 +103,24 @@ const OrderMax = styled.p`
 
 const Cart = ({ open }) => {
   const { items, setCartVisible } = React.useContext(CartContext);
+  const { userEmail } = React.useContext(UserContext);
   const [showCartShadow, setShowCartShadow] = React.useState(false);
   const cartTop = React.useRef();
+
+  const handleCheckoutClick = async () => {
+    setCartVisible(false);
+    const stripe = await stripePromise;
+    const response = await fetch("/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userEmail, items }),
+    });
+    const { id } = await response.json();
+    const result = await stripe.redirectToCheckout({ sessionId: id });
+    if (result.error) {
+      alert("ooops");
+    }
+  };
 
   const showShadowIfMoreCartItems = () => {
     const isAtBottom =
@@ -129,8 +152,7 @@ const Cart = ({ open }) => {
           </TotalWrapper>
           <OrderMax>Order cannot exceed $100.00</OrderMax>
           <CheckoutButton
-            onClick={() => setCartVisible(false)}
-            to="/checkout"
+            onClick={handleCheckoutClick}
             variant="primary"
             size="lg"
             disabled={items.length === 0}
@@ -144,4 +166,3 @@ const Cart = ({ open }) => {
 };
 
 export default Cart;
-  
