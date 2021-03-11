@@ -1,14 +1,18 @@
 import React from "react";
 import { parseISO, format } from "date-fns";
+import { useHistory } from "react-router-dom";
 import { fetchSession } from "../utils/stripe";
 import { UserContext } from "../context/UserContext";
+import { CartContext } from "../context/CartContext";
 import { formatCents } from "../utils/price";
+import Button from "../components/Button";
 
 const Confirmation = () => {
   const query = new URLSearchParams(window.location.search);
   const sessionID = query.get("session_id");
   const { userName } = React.useContext(UserContext);
-
+  const { clearCart } = React.useContext(CartContext);
+  const history = useHistory();
   const [session, setSession] = React.useState({});
   const [lineItems, setLineItems] = React.useState([]);
 
@@ -19,8 +23,11 @@ const Confirmation = () => {
       setLineItems(data.lineItems.data);
     } else {
       // someone is trying to hack us
+      history.push("/");
     }
   }, []);
+
+  React.useEffect(clearCart, []);
 
   console.log(session, lineItems);
 
@@ -39,9 +46,9 @@ const Confirmation = () => {
     >
       <aside>
         <h2>Enjoy your order. See you soon!</h2>
-        <button variant="primary" size="lg">
+        <Button variant="primary" size="lg">
           Home
-        </button>
+        </Button>
       </aside>
       <section>
         <h1>
@@ -67,14 +74,13 @@ const Confirmation = () => {
               <h4>{item.description}</h4>
               <p>Quantity: {item.quantity}</p>
               <p>
-                Price: {item.price.currency}
+                Price: {item.price.currency}$
                 {formatCents(item.price.unit_amount)}
               </p>
             </div>
           ))}
           <h4>
-            Total: {session.currency}
-            {formatCents(session.amount_total)}
+            Total: {session.currency}${formatCents(session.amount_total)}
           </h4>
           <p>View Receipt</p>
         </div>
