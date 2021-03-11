@@ -97,20 +97,23 @@ const OrderMax = styled.p`
 const Cart = ({ open }) => {
   const { items, setCartVisible } = React.useContext(CartContext);
   const [showCartShadow, setShowCartShadow] = React.useState(false);
+  const cartTop = React.useRef();
+
+  const showShadowIfMoreCartItems = () => {
+    const isAtBottom =
+      cartTop.current?.scrollTop ===
+      cartTop.current?.scrollHeight - cartTop.current?.offsetHeight;
+    setShowCartShadow(!isAtBottom);
+  };
+
+  React.useEffect(showShadowIfMoreCartItems);
 
   let grandTotal = 0;
   items.forEach((item) => (grandTotal += item.price * item.quantity));
 
-  const handleScroll = (event) => {
-    const isAtBottom =
-      event.target.scrollTop ===
-      event.target.scrollHeight - event.target.offsetHeight;
-    setShowCartShadow(!isAtBottom);
-  };
-
   return (
     <Dialog open={open}>
-      <CartTop onScroll={handleScroll}>
+      <CartTop onScroll={showShadowIfMoreCartItems} ref={cartTop}>
         {items.map((item) => (
           <CartItem key={item.id} item={item} />
         ))}
