@@ -2,13 +2,41 @@ import express from "express";
 import dirname from "es-dirname";
 import path from "path";
 import db from "./db.js";
+import stripeLibrary from "stripe";
+
 const app = express();
 const port = process.env.PORT || 5000;
+const stripe = stripeLibrary("sk_test_8yi82n1zaatPFwES7d6TSxRb00E88v0NfT");
 
 app.use(express.json());
 app.use(express.static("dist"));
 
 const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
+
+const YOUR_DOMAIN = "http://localhost:5000/checkout";
+
+app.post("/checkout", async (request, response) => {
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Stubborn Attachments",
+            images: ["https://i.imgur.com/EHyR2nP.png"],
+          },
+          unit_amount: 2000,
+        },
+        quantity: 1,
+      },
+    ],
+    mode: "payment",
+    success_url: `${YOUR_DOMAIN}?success=true`,
+    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+  });
+  response.json({ id: session.id });
+});
 
 app.post("/signup", async (request, response) => {
   const {
