@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import UserContextProvider from "./context/UserContext";
 import CartContextProvider from "./context/CartContext";
+import LocaleContextProvider from "./context/LocaleContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Menu from "./pages/Menu";
@@ -12,7 +13,7 @@ import SignUp from "./pages/SignUp";
 import ConfirmOTP from "./pages/ConfirmOTP";
 import Category from "./pages/Category";
 import Confirmation from "./pages/Confirmation";
-import LocaleContextProvider from "./context/LocaleContext";
+import RecentOrders from "./pages/RecentOrders";
 
 const App = () => (
   <BrowserRouter>
@@ -41,6 +42,9 @@ const App = () => (
             </Route>
             <Route path="/confirmation" exact>
               <Confirmation />
+            </Route>
+            <Route path="/orders" exact>
+              <RecentOrders />
             </Route>
           </Switch>
           <Footer />

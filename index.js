@@ -43,7 +43,7 @@ app.get("/users/:userID/recent_items", async (request, response) => {
 
   try {
     const result = await db.query(
-      `SELECT * FROM purchased_items 
+      `SELECT sanity_item_id FROM purchased_items 
       INNER JOIN purchases ON purchases.id = purchased_items.purchase_id
       WHERE purchases.stripe_id IS NOT NULL
       AND purchases.customer_id = $1
@@ -51,7 +51,7 @@ app.get("/users/:userID/recent_items", async (request, response) => {
       [userID]
     );
 
-    response.json({ items: result.rows });
+    response.json({ items: result.rows.map((item) => item.sanity_item_id) });
   } catch (error) {
     response.status(422).json({ message: error.message });
   }

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import Styles from "../styles";
 import Dialog from "../components/Dialog";
 import BaseButton from "../components/Button";
@@ -28,7 +28,7 @@ const AccountOptionsList = styled.ul`
 
 const AccountOptionsItem = styled.li``;
 
-const AccountOptionsLink = styled.a`
+const AccountOptionsLink = styled(Link)`
   display: flex;
   justify-content: space-between;
   color: ${Styles.color.account.link.text};
@@ -128,7 +128,7 @@ const Account = () => {
               </AccountOptionsLink>
             </AccountOptionsItem>
             <AccountOptionsItem>
-              <AccountOptionsLink href="#">
+              <AccountOptionsLink to="/orders">
                 <AccountOptionsText>Recent Orders</AccountOptionsText>
                 <i className="fas fa-chevron-right"></i>
               </AccountOptionsLink>
