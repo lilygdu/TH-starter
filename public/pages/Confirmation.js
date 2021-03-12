@@ -10,23 +10,36 @@ import { formatCents } from "../utils/price";
 import Button from "../components/Button";
 
 const Main = styled.main`
-  margin: 10rem auto;
-  text-align: centeright;
-  max-width: 50rem;
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 4;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 25rem 1fr;
+  margin-top: 5rem;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    grid-template-columns: 1fr;
+  }
 `;
+
 const Aside = styled.aside`
   background-color: ${Styles.color.confirmationpage.asidebackground};
-  text-transform: uppercase;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 25rem;
   justify-content: center;
-  z-index: -1;
   padding: 15rem 5rem;
   font-size: 1.4rem;
   line-height: 1.1;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    display: none;
+  }
+`;
+
+const Heading = styled.h2`
+  text-transform: uppercase;
+  text-align: center;
 `;
 
 const HomeButton = styled(Button)`
@@ -34,9 +47,10 @@ const HomeButton = styled(Button)`
 `;
 
 const MainSection = styled.section`
-  position: relative;
-  margin-left: 25rem;
-  max-width: 38rem;
+  text-align: center;
+  max-width: 26rem;
+  margin: 0 auto;
+  padding: 0 1rem;
 `;
 
 const OrderPlacedHeading = styled.h1`
@@ -75,6 +89,8 @@ const OrderMethod = styled.p`
 const OrderDetails = styled.div`
   background-color: ${Styles.color.confirmationpage.asidebackground};
   padding: 1rem;
+  max-width: 25rem;
+  margin: 0 auto;
 `;
 
 const OrderDetailsHeading = styled.h3`
@@ -122,6 +138,30 @@ const ViewReceipt = styled.p`
   margin: 0 1.2rem 0 0;
 `;
 
+const Header = styled.header`
+  height: 5rem;
+  background-color: ${Styles.color.confirmationpage.header.background};
+  color: ${Styles.color.confirmationpage.header.text};
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    height: 3.5rem;
+  }
+`;
+
+const MyOrder = styled.h1`
+  font-size: 1.5rem;
+  margin: 0;
+`;
+
 const Confirmation = () => {
   const query = new URLSearchParams(window.location.search);
   const sessionID = query.get("session_id");
@@ -143,65 +183,66 @@ const Confirmation = () => {
 
   React.useEffect(clearCart, []);
 
-  console.log(session, lineItems);
-
   const orderTime =
     session.metadata && format(parseISO(session.metadata.createdAt), "h:mm aa");
 
   return (
-    <main
-      style={{ margin: "10rem auto", textAlign: "center", maxWidth: "50rem" }}
-    >
-      <Aside>
-        <h2>Enjoy your order. See you soon!</h2>
-        <HomeButton variant="primary" size="lg">
-          Home
-        </HomeButton>
-      </Aside>
-      <MainSection>
-        <OrderPlacedHeading>
-          Your order has been placed in line with other customers and will be
-          ready as soon as possible!
-        </OrderPlacedHeading>
-        <OrderInstructions>
-          Drive up to the ordering screen and let us know you ordered online for{" "}
-          {userName}
-        </OrderInstructions>
-        <OrderNumber>
-          <b>
-            Order Number:{" "}
-            <OrderNumberID>{sessionID.slice(9, 19)}</OrderNumberID>{" "}
-          </b>
-        </OrderNumber>
-        <OrderTime>
-          Order Time: <b>{orderTime}</b>
-        </OrderTime>
-        <OrderMethod>
-          Method: <b>Drive Thru</b>
-        </OrderMethod>
+    <>
+      <Header>
+        <MyOrder>My Order</MyOrder>
+      </Header>
+      <Main>
+        <Aside>
+          <Heading>Enjoy your order. See you soon!</Heading>
+          <HomeButton variant="primary" size="lg" to="/">
+            Home
+          </HomeButton>
+        </Aside>
+        <MainSection>
+          <OrderPlacedHeading>
+            Your order has been placed in line with other customers and will be
+            ready as soon as possible!
+          </OrderPlacedHeading>
+          <OrderInstructions>
+            Drive up to the ordering screen and let us know you ordered online
+            for {userName}
+          </OrderInstructions>
+          <OrderNumber>
+            <b>
+              Order Number:{" "}
+              <OrderNumberID>{sessionID.slice(9, 19)}</OrderNumberID>{" "}
+            </b>
+          </OrderNumber>
+          <OrderTime>
+            Order Time: <b>{orderTime}</b>
+          </OrderTime>
+          <OrderMethod>
+            Method: <b>Drive Thru</b>
+          </OrderMethod>
 
-        <OrderDetails>
-          <OrderDetailsHeading>Your Order</OrderDetailsHeading>
-          {lineItems.map((item) => (
-            <OrderedItem>
-              <OrderedItemName>{item.description}</OrderedItemName>
-              <OrderedItemQuantity>
-                Quantity: {item.quantity}
-              </OrderedItemQuantity>
-              <OrderedItemPrice>
-                Price: <Currency>{item.price.currency}</Currency>$
-                {formatCents(item.price.unit_amount)}
-              </OrderedItemPrice>
-            </OrderedItem>
-          ))}
-          <OrderTotal>
-            Total: <Currency>{session.currency}</Currency>$
-            {formatCents(session.amount_total)}
-          </OrderTotal>
-          <ViewReceipt>View Receipt</ViewReceipt>
-        </OrderDetails>
-      </MainSection>
-    </main>
+          <OrderDetails>
+            <OrderDetailsHeading>Your Order</OrderDetailsHeading>
+            {lineItems.map((item) => (
+              <OrderedItem>
+                <OrderedItemName>{item.description}</OrderedItemName>
+                <OrderedItemQuantity>
+                  Quantity: {item.quantity}
+                </OrderedItemQuantity>
+                <OrderedItemPrice>
+                  Price: <Currency>{item.price.currency}</Currency>$
+                  {formatCents(item.price.unit_amount)}
+                </OrderedItemPrice>
+              </OrderedItem>
+            ))}
+            <OrderTotal>
+              Total: <Currency>{session.currency}</Currency>$
+              {session.amount_total && formatCents(session.amount_total)}
+            </OrderTotal>
+            <ViewReceipt>View Receipt</ViewReceipt>
+          </OrderDetails>
+        </MainSection>
+      </Main>
+    </>
   );
 };
 

@@ -67,6 +67,10 @@ export default {
       asidebackground: palette.brown.one,
       graytext: palette.gray.five,
       redtext: palette.red.three,
+      header: {
+        background: palette.red.three,
+        text: palette.white,
+      },
     },
     input: {
       valid: palette.green.one,
