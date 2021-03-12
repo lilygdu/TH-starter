@@ -63,6 +63,11 @@ export default {
         disabled: palette.gray.four,
       },
     },
+    confirmationpage: {
+      asidebackground: palette.brown.one,
+      graytext: palette.gray.five,
+      redtext: palette.red.three,
+    },
     input: {
       valid: palette.green.one,
       invalid: palette.red.three,
