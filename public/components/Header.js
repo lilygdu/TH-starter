@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { UserContext } from "../context/UserContext";
 import { CartContext } from "../context/CartContext";
+import { LocaleContext } from "../context/LocaleContext";
 import Button from "./Button";
 import Logo from "url:../images/th-logo.svg";
 import Styles from "../styles";
@@ -104,7 +105,7 @@ const HeaderBottom = styled.div`
 `;
 
 const HeaderBottomLeft = styled.div``;
-const HeaderBottomRight = styled.div``;
+const HeaderBottomRight = styled.button``;
 
 const ChangeServiceMode = styled.span`
   color: ${Styles.color.header.text};
@@ -115,6 +116,9 @@ const ChangeServiceMode = styled.span`
 const AppHeader = () => {
   const { isLoggedIn } = React.useContext(UserContext);
   const { cartVisible, setCartVisible, items } = React.useContext(CartContext);
+  const { isLocaleDialogOpen, setLocaleDialogOpen } = React.useContext(
+    LocaleContext
+  );
   const cartButton = React.useRef(null);
 
   React.useEffect(() => {
@@ -174,7 +178,9 @@ const AppHeader = () => {
             How would you like to receive this order?
             <ChangeServiceMode>Change</ChangeServiceMode>
           </HeaderBottomLeft>
-          <HeaderBottomRight>
+          <HeaderBottomRight
+            onClick={() => setLocaleDialogOpen(!isLocaleDialogOpen)}
+          >
             <i className="fas fa-globe"></i>
             EN/CA
           </HeaderBottomRight>
