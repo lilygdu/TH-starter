@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Styles from "../styles";
 import { UserContext } from "../context/UserContext";
+import { LocaleContext } from "../context/LocaleContext";
 import { confirmOTP } from "../utils/user";
 
 const Main = styled.main`
@@ -80,6 +81,7 @@ const DidNotReceiveCode = styled.p`
 `;
 
 const ConfirmOTP = () => {
+  const { locales, setSelectedLocale } = React.useContext(LocaleContext);
   const { userEmail, setUserID, setUserName } = React.useContext(UserContext);
   const [code, setCode] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -104,9 +106,13 @@ const ConfirmOTP = () => {
         email: userEmail,
       });
       if (response.ok) {
-        const { id, name } = data;
+        const { id, name, country } = data;
         setUserID(id);
         setUserName(name);
+        const matchingLocale = locales.find(
+          (locale) => locale.countryCode === country
+        );
+        setSelectedLocale(matchingLocale);
         history.push("/");
       } else {
         setErrorMessage(data.otp);

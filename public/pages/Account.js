@@ -5,6 +5,8 @@ import Styles from "../styles";
 import Dialog from "../components/Dialog";
 import BaseButton from "../components/Button";
 import { UserContext } from "../context/UserContext";
+import { CartContext } from "../context/CartContext";
+import { LocaleContext } from "../context/LocaleContext";
 
 const Main = styled.main`
   margin: 11.5rem auto 0;
@@ -72,6 +74,8 @@ const Account = () => {
   const { redirectIfNotLoggedIn, setUserEmail, setUserID } = React.useContext(
     UserContext
   );
+  const { clearCart } = React.useContext(CartContext);
+  const { locales, setSelectedLocale } = React.useContext(LocaleContext);
   const history = useHistory();
   const confirmButtonRef = React.useRef();
 
@@ -94,6 +98,8 @@ const Account = () => {
     localStorage.clear();
     setUserEmail(null);
     setUserID(null);
+    setSelectedLocale(locales[0]);
+    clearCart();
     history.push("/signin");
   };
 

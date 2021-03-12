@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { CartContext } from "../context/CartContext";
+import { LocaleContext } from "../context/LocaleContext";
 import Styles from "../styles";
 import Button from "./Button";
 
@@ -62,9 +63,10 @@ const AddToOrderButton = styled(Button)`
 
 const Item = ({ name, image, lqip, id, price, calories }) => {
   const { addToCart } = React.useContext(CartContext);
+  const { selectedLocale } = React.useContext(LocaleContext);
   const [imageLoaded, setImageLoaded] = React.useState(false);
 
-  const displayPrice = `$${(price / 100).toFixed(2)}`;
+  const displayPrice = `${selectedLocale.currency}${(price / 100).toFixed(2)}`;
 
   return (
     <ItemWrapper>

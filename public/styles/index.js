@@ -74,6 +74,7 @@ export default {
       default: palette.gray.four,
       label: palette.gray.five,
       background: palette.white,
+      radio: palette.red.three,
     },
     loading: {
       red: palette.red.three,
@@ -118,6 +119,12 @@ export default {
       modal: {
         background: palette.brown.one,
         text: palette.brown.three,
+      },
+    },
+    locale: {
+      modal: {
+        background: palette.white,
+        border: palette.gray.one,
       },
     },
     signup: {
