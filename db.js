@@ -30,6 +30,25 @@ pool.query(`
     failed_attempts INTEGER DEFAULT 0 NOT NULL,
     account_locked BOOLEAN DEFAULT FALSE NOT NULL
   );
+
+  CREATE TABLE IF NOT EXISTS purchases(
+    id SERIAL NOT NULL PRIMARY KEY,
+    stripe_id VARCHAR(256) UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    customer_id uuid NOT NULL,
+    CONSTRAINT fk_th_user
+    FOREIGN KEY (customer_id) REFERENCES th_users (id)
+  );
+
+  CREATE TABLE IF NOT EXISTS purchased_items(
+    id SERIAL NOT NULL PRIMARY KEY,
+    purchase_id INTEGER NOT NULL,
+    sanity_item_id VARCHAR(256) NOT NULL,
+    price INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    CONSTRAINT fk_purchase
+    FOREIGN KEY (purchase_id) REFERENCES purchases (id)
+  );
 `);
 
 export default pool;

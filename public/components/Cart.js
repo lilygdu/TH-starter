@@ -104,7 +104,7 @@ const Currency = styled.span`
 
 const Cart = ({ open }) => {
   const { items, setCartVisible } = React.useContext(CartContext);
-  const { userEmail } = React.useContext(UserContext);
+  const { userEmail, userID } = React.useContext(UserContext);
   const { selectedLocale } = React.useContext(LocaleContext);
   const [showCartShadow, setShowCartShadow] = React.useState(false);
   const cartTop = React.useRef();
@@ -113,6 +113,7 @@ const Cart = ({ open }) => {
     setCartVisible(false);
     initiateCheckout({
       userEmail,
+      userID,
       items,
       currencyCode: selectedLocale.currencyCode,
     });

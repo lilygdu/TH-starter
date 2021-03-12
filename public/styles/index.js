@@ -72,6 +72,9 @@ export default {
         text: palette.white,
       },
     },
+    recentitems: {
+      itemname: palette.brown.three,
+    },
     input: {
       valid: palette.green.one,
       invalid: palette.red.three,
