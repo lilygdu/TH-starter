@@ -26,12 +26,19 @@ const supportedLocales = [
 
 const LocaleContextProvider = ({ children }) => {
   const [locales, setLocales] = React.useState([]);
-  const [selectedLocale, setSelectedLocale] = React.useState({});
+  const [selectedLocale, setSelectedLocale] = React.useState(
+    JSON.parse(
+      localStorage.getItem("locale") || JSON.stringify(supportedLocales[0])
+    )
+  );
 
   React.useEffect(() => {
     setLocales(supportedLocales);
-    setSelectedLocale(supportedLocales[0]);
   }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("locale", JSON.stringify(selectedLocale));
+  }, [selectedLocale]);
 
   return (
     <LocaleContext.Provider

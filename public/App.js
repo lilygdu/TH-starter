@@ -16,8 +16,8 @@ import LocaleContextProvider from "./context/LocaleContext";
 
 const App = () => (
   <BrowserRouter>
-    <LocaleContextProvider>
-      <UserContextProvider>
+    <UserContextProvider>
+      <LocaleContextProvider>
         <CartContextProvider>
           <Header />
           <Switch>
@@ -45,8 +45,8 @@ const App = () => (
           </Switch>
           <Footer />
         </CartContextProvider>
-      </UserContextProvider>
-    </LocaleContextProvider>
+      </LocaleContextProvider>
+    </UserContextProvider>
   </BrowserRouter>
 );
 
