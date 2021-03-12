@@ -32,7 +32,7 @@ app.get("/sessions/:sessionID", async (request, response) => {
 
 app.post("/checkout", async (request, response) => {
   try {
-    const { userEmail, items } = request.body;
+    const { userEmail, items, currencyCode } = request.body;
     const session = await stripe.checkout.sessions.create({
       customer_email: userEmail,
       payment_method_types: ["card"],
@@ -41,7 +41,7 @@ app.post("/checkout", async (request, response) => {
       },
       line_items: items.map((item) => ({
         price_data: {
-          currency: "cad",
+          currency: currencyCode,
           product_data: {
             name: item.name,
             images: [item.image],

@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { loadStripe } from "@stripe/stripe-js";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
+import { LocaleContext } from "../context/LocaleContext";
 import Button from "./Button";
 import CartItem from "./CartItem";
 import Styles from "../styles";
 import { formatCents } from "../utils/price";
-
-const stripePromise = loadStripe(
-  "pk_test_51ITqhfK3N0KQbmMTSKBgE1P8cSOmKkyr8xnoHQ5PFdSEndfOdEVmUMK8FGTJyfuT6UPFfGPaUgusk0lS14Fll6kk00SojsxXhj"
-);
+import { initiateCheckout } from "../utils/stripe";
 
 const Dialog = styled.dialog`
   position: fixed;
@@ -101,25 +98,24 @@ const OrderMax = styled.p`
   margin: 0;
 `;
 
+const Currency = styled.span`
+  font-size: 0.9rem;
+`;
+
 const Cart = ({ open }) => {
   const { items, setCartVisible } = React.useContext(CartContext);
   const { userEmail } = React.useContext(UserContext);
+  const { selectedLocale } = React.useContext(LocaleContext);
   const [showCartShadow, setShowCartShadow] = React.useState(false);
   const cartTop = React.useRef();
 
   const handleCheckoutClick = async () => {
     setCartVisible(false);
-    const stripe = await stripePromise;
-    const response = await fetch("/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userEmail, items }),
+    initiateCheckout({
+      userEmail,
+      items,
+      currencyCode: selectedLocale.currencyCode,
     });
-    const { id } = await response.json();
-    const result = await stripe.redirectToCheckout({ sessionId: id });
-    if (result.error) {
-      alert("ooops");
-    }
   };
 
   const showShadowIfMoreCartItems = () => {
@@ -148,9 +144,14 @@ const Cart = ({ open }) => {
         <CartBottom showCartShadow={showCartShadow}>
           <TotalWrapper>
             <Total>Total: </Total>
-            <Cost>${formatCents(grandTotal)}</Cost>
+            <Cost>
+              <Currency>{selectedLocale.currency}</Currency>
+              {formatCents(grandTotal)}
+            </Cost>
           </TotalWrapper>
-          <OrderMax>Order cannot exceed $100.00</OrderMax>
+          <OrderMax>
+            Order cannot exceed {selectedLocale.currency}100.00
+          </OrderMax>
           <CheckoutButton
             onClick={handleCheckoutClick}
             variant="primary"

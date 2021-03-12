@@ -8,6 +8,7 @@ import Button from "./Button";
 import Logo from "url:../images/th-logo.svg";
 import Styles from "../styles";
 import Cart from "./Cart";
+import LocaleDialog from "./LocaleDialog";
 
 const Header = styled.header`
   position: fixed;
@@ -105,7 +106,24 @@ const HeaderBottom = styled.div`
 `;
 
 const HeaderBottomLeft = styled.div``;
-const HeaderBottomRight = styled.button``;
+const HeaderBottomRight = styled.button`
+  font-size: inherit;
+  color: inherit;
+  font-family: inherit;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  &:focus {
+    outline: 0;
+  }
+  & i {
+    margin-top: 0.1rem;
+  }
+`;
 
 const ChangeServiceMode = styled.span`
   color: ${Styles.color.header.text};
@@ -116,9 +134,9 @@ const ChangeServiceMode = styled.span`
 const AppHeader = () => {
   const { isLoggedIn } = React.useContext(UserContext);
   const { cartVisible, setCartVisible, items } = React.useContext(CartContext);
-  const { isLocaleDialogOpen, setLocaleDialogOpen } = React.useContext(
-    LocaleContext
-  );
+  const { selectedLocale } = React.useContext(LocaleContext);
+  const [isLocaleDialogOpen, setIsLocaleDialogOpen] = React.useState(false);
+
   const cartButton = React.useRef(null);
 
   React.useEffect(() => {
@@ -179,14 +197,18 @@ const AppHeader = () => {
             <ChangeServiceMode>Change</ChangeServiceMode>
           </HeaderBottomLeft>
           <HeaderBottomRight
-            onClick={() => setLocaleDialogOpen(!isLocaleDialogOpen)}
+            onClick={() => setIsLocaleDialogOpen(!isLocaleDialogOpen)}
           >
             <i className="fas fa-globe"></i>
-            EN/CA
+            {selectedLocale.key}
           </HeaderBottomRight>
         </HeaderBottom>
       </Header>
       <Cart open={cartVisible} />
+      <LocaleDialog
+        isOpen={isLocaleDialogOpen}
+        closeDialog={() => setIsLocaleDialogOpen(false)}
+      />
     </>
   );
 };
