@@ -8,6 +8,7 @@ import CheckBoxField from "../components/CheckBoxField";
 import { signUp } from "../utils/user";
 import { sendOTPEmail } from "../utils/email";
 import { UserContext } from "../context/UserContext";
+import { LocaleContext } from "../context/LocaleContext";
 
 const Main = styled.main`
   margin: 8rem auto 0;
@@ -110,6 +111,7 @@ const SignUp = () => {
   const [isEmailValid, setIsEmailValid] = React.useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
   const { setUserEmail } = React.useContext(UserContext);
+  const { locales } = React.useContext(LocaleContext);
   const history = useHistory();
 
   const handleSubmit = async (event) => {
@@ -152,8 +154,11 @@ const SignUp = () => {
           onChange={(event) => setCountry(event.target.value)}
           validate={false}
         >
-          <option value="CAN">Canada</option>
-          <option value="USA">United States</option>
+          {locales.map((locale) => (
+            <option key={locale.key} value={locale.countryCode}>
+              {locale.country}
+            </option>
+          ))}
         </FloatingFormField>
         <FloatingFormField
           type="email"

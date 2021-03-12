@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Styles from "../styles";
 import { CartContext } from "../context/CartContext";
+import { LocaleContext } from "../context/LocaleContext";
 import { formatCents } from "../utils/price";
 import Dialog from "./Dialog";
 import Button from "./Button";
@@ -35,9 +36,6 @@ const ItemBottom = styled.div`
 const Price = styled.span`
   font-size: 0.9rem;
   color: ${Styles.color.cartitem.price};
-  &::before {
-    content: "$";
-  }
 `;
 
 const RemoveButton = styled.button`
@@ -107,6 +105,7 @@ const CartItem = ({ item }) => {
   const { addToCart, decrementQuantity, removeFromCart } = React.useContext(
     CartContext
   );
+  const { selectedLocale } = React.useContext(LocaleContext);
   const okayButtonRef = React.useRef();
 
   const handleOkayClick = () => {
@@ -125,7 +124,10 @@ const CartItem = ({ item }) => {
       <ItemWrapper>
         <ItemTop>
           <span>{item.name}</span>
-          <Price>{formatCents(item.quantity * item.price)}</Price>
+          <Price>
+            {selectedLocale.currency}
+            {formatCents(item.quantity * item.price)}
+          </Price>
         </ItemTop>
         <ItemBottom>
           <RemoveButton onClick={() => setRemoveDialogOpen(true)}>

@@ -12,37 +12,40 @@ import SignUp from "./pages/SignUp";
 import ConfirmOTP from "./pages/ConfirmOTP";
 import Category from "./pages/Category";
 import Confirmation from "./pages/Confirmation";
+import LocaleContextProvider from "./context/LocaleContext";
 
 const App = () => (
   <BrowserRouter>
     <UserContextProvider>
-      <CartContextProvider>
-        <Header />
-        <Switch>
-          <Route path="/" exact>
-            <Menu />
-          </Route>
-          <Route path="/account" exact>
-            <Account />
-          </Route>
-          <Route path="/signin" exact>
-            <SignIn />
-          </Route>
-          <Route path="/signup" exact>
-            <SignUp />
-          </Route>
-          <Route path="/confirm-otp" exact>
-            <ConfirmOTP />
-          </Route>
-          <Route path="/category/:categoryID">
-            <Category />
-          </Route>
-          <Route path="/confirmation" exact>
-            <Confirmation />
-          </Route>
-        </Switch>
-        <Footer />
-      </CartContextProvider>
+      <LocaleContextProvider>
+        <CartContextProvider>
+          <Header />
+          <Switch>
+            <Route path="/" exact>
+              <Menu />
+            </Route>
+            <Route path="/account" exact>
+              <Account />
+            </Route>
+            <Route path="/signin" exact>
+              <SignIn />
+            </Route>
+            <Route path="/signup" exact>
+              <SignUp />
+            </Route>
+            <Route path="/confirm-otp" exact>
+              <ConfirmOTP />
+            </Route>
+            <Route path="/category/:categoryID">
+              <Category />
+            </Route>
+            <Route path="/confirmation" exact>
+              <Confirmation />
+            </Route>
+          </Switch>
+          <Footer />
+        </CartContextProvider>
+      </LocaleContextProvider>
     </UserContextProvider>
   </BrowserRouter>
 );
