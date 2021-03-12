@@ -25,57 +25,83 @@ app.get("/sessions/:sessionID", async (request, response) => {
       limit: 100,
     });
 
+    const { purchaseID } = session.metadata;
+
+    await db.query(`UPDATE purchases SET stripe_id = $1 WHERE id = $2`, [
+      session.id,
+      purchaseID,
+    ]);
+
     response.json({ session, lineItems });
   } catch (error) {
     response.status(422).json({ message: error.message });
   }
 });
 
-app.post("/checkout", async (request, response) => {
-  // try {
-  const { userEmail, userID, items, currencyCode } = request.body;
+app.get("/users/:userID/recent_items", async (request, response) => {
+  const { userID } = request.params;
 
-  const purchaseResult = await db.query(
-    `INSERT INTO purchases (customer_id) VALUES($1) RETURNING id;`,
-    [userID]
-  );
-
-  const purchaseID = purchaseResult.rows[0].id;
-
-  for (const item of items) {
-    await db.query(
-      `INSERT INTO purchased_items (purchase_id, sanity_item_id, price, quantity) 
-        VALUES($1, $2, $3, $4);`,
-      [purchaseID, item.id, item.price, item.quantity]
+  try {
+    const result = await db.query(
+      `SELECT * FROM purchased_items 
+      INNER JOIN purchases ON purchases.id = purchased_items.purchase_id
+      WHERE purchases.stripe_id IS NOT NULL
+      AND purchases.customer_id = $1
+      LIMIT 10;`,
+      [userID]
     );
-  }
 
-  const session = await stripe.checkout.sessions.create({
-    customer_email: userEmail,
-    payment_method_types: ["card"],
-    metadata: {
-      createdAt: new Date().toISOString(),
-      purchaseID,
-    },
-    line_items: items.map((item) => ({
-      price_data: {
-        currency: currencyCode,
-        product_data: {
-          name: item.name,
-          images: [item.image],
-        },
-        unit_amount: item.price,
+    response.json({ items: result.rows });
+  } catch (error) {
+    response.status(422).json({ message: error.message });
+  }
+});
+
+app.post("/checkout", async (request, response) => {
+  try {
+    const { userEmail, userID, items, currencyCode } = request.body;
+
+    const purchaseResult = await db.query(
+      `INSERT INTO purchases (customer_id) VALUES($1) RETURNING id;`,
+      [userID]
+    );
+
+    const purchaseID = purchaseResult.rows[0].id;
+
+    for (const item of items) {
+      await db.query(
+        `INSERT INTO purchased_items (purchase_id, sanity_item_id, price, quantity) 
+        VALUES($1, $2, $3, $4);`,
+        [purchaseID, item.id, item.price, item.quantity]
+      );
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      customer_email: userEmail,
+      payment_method_types: ["card"],
+      metadata: {
+        createdAt: new Date().toISOString(),
+        purchaseID,
       },
-      quantity: item.quantity,
-    })),
-    mode: "payment",
-    success_url: `${baseUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: baseUrl,
-  });
-  response.json({ id: session.id });
-  // } catch (error) {
-  //   response.status(422).json({ message: error.message });
-  // }
+      line_items: items.map((item) => ({
+        price_data: {
+          currency: currencyCode,
+          product_data: {
+            name: item.name,
+            images: [item.image],
+          },
+          unit_amount: item.price,
+        },
+        quantity: item.quantity,
+      })),
+      mode: "payment",
+      success_url: `${baseUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: baseUrl,
+    });
+    response.json({ id: session.id });
+  } catch (error) {
+    response.status(422).json({ message: error.message });
+  }
 });
 
 app.post("/signup", async (request, response) => {

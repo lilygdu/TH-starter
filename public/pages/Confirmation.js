@@ -223,7 +223,7 @@ const Confirmation = () => {
           <OrderDetails>
             <OrderDetailsHeading>Your Order</OrderDetailsHeading>
             {lineItems.map((item) => (
-              <OrderedItem>
+              <OrderedItem key={item.id}>
                 <OrderedItemName>{item.description}</OrderedItemName>
                 <OrderedItemQuantity>
                   Quantity: {item.quantity}
