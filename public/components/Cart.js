@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import ClickAwayListener from "react-click-away-listener";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 import { LocaleContext } from "../context/LocaleContext";
@@ -103,7 +104,7 @@ const Currency = styled.span`
 `;
 
 const Cart = ({ open }) => {
-  const { items, setCartVisible } = React.useContext(CartContext);
+  const { items, cartVisible, setCartVisible } = React.useContext(CartContext);
   const { userEmail, userID } = React.useContext(UserContext);
   const { selectedLocale } = React.useContext(LocaleContext);
   const [showCartShadow, setShowCartShadow] = React.useState(false);
@@ -128,11 +129,18 @@ const Cart = ({ open }) => {
 
   React.useEffect(showShadowIfMoreCartItems);
 
+  const handleClickAway = (event) => {
+    const isClickOnAddToOrderButton = !!event.target.closest(".add-to-order");
+    if (cartVisible && !isClickOnAddToOrderButton) {
+      setCartVisible(false);
+    }
+  };
+
   let grandTotal = 0;
   items.forEach((item) => (grandTotal += item.price * item.quantity));
 
   return (
-    <>
+    <ClickAwayListener onClickAway={handleClickAway}>
       <Dialog open={open}>
         <CartTop onScroll={showShadowIfMoreCartItems} ref={cartTop}>
           {items.map((item) => (
@@ -163,7 +171,7 @@ const Cart = ({ open }) => {
           </CheckoutButton>
         </CartBottom>
       </Dialog>
-    </>
+    </ClickAwayListener>
   );
 };
 
