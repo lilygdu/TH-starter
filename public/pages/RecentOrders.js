@@ -50,8 +50,6 @@ const RecentOrders = () => {
     }
   }, []);
 
-  console.log({ recentOrders });
-
   return (
     <Main>
       <RecentItems>
