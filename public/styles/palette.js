@@ -8,6 +8,7 @@ export default {
     four: "lightgray",
     five: "gray",
     six: "rgb(118, 117, 109)",
+    seven: "rgb(89, 80, 80)",
   },
   red: {
     one: "rgb(247, 219, 224)",
