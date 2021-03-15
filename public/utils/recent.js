@@ -41,3 +41,36 @@ export const fetchItem = async ({ sanityID }) => {
   const item = data.data.Item;
   return item;
 };
+
+const itemsQuery = (sanityIDs) => `
+  query {
+    allItem(where:{_id:{in:[${sanityIDs.map((id) => `"${id}"`)}]}}){
+      _id
+      name
+      price
+      calories
+      primaryImage {
+        asset{
+          url
+          metadata{
+            lqip
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const fetchItems = async ({ sanityIDs }) => {
+  const response = await fetch(
+    "https://kgjhft50.api.sanity.io/v1/graphql/production/default",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: itemsQuery(sanityIDs) }),
+    }
+  );
+  const data = await response.json();
+  const items = data.data.allItem;
+  return items;
+};

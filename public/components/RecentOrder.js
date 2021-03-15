@@ -2,8 +2,13 @@ import React from "react";
 import { formatOrderNumber } from "../utils/order";
 import { parseISO, format } from "date-fns";
 import styled from "styled-components";
+import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
+import { LocaleContext } from "../context/LocaleContext";
 import Button from "../components/Button";
 import Styles from "../styles";
+import { fetchItems } from "../utils/recent";
+import { initiateCheckout } from "../utils/stripe";
 
 const Wrapper = styled.div`
   box-shadow: 2px 2px 9px 0px rgba(178, 178, 178, 0.5);
@@ -82,10 +87,55 @@ const ReorderButton = styled(Button)`
 `;
 
 const RecentOrder = ({ id, createdAt, items }) => {
+  const { addMultipleToCart, items: allCartItems } = React.useContext(
+    CartContext
+  );
+  const { userEmail, userID } = React.useContext(UserContext);
+  const { selectedLocale } = React.useContext(LocaleContext);
+  const [sanityItems, setSanityItems] = React.useState([]);
+  const [isReordering, setIsReordering] = React.useState(false);
+
+  React.useEffect(async () => {
+    setSanityItems(
+      await fetchItems({ sanityIDs: items.map((item) => item.sanityItemID) })
+    );
+  }, []);
+
+  React.useEffect(() => {
+    if (isReordering) {
+      initiateCheckout({
+        userEmail,
+        userID,
+        items: allCartItems,
+        currencyCode: selectedLocale.currencyCode,
+      });
+    }
+  }, [isReordering]);
+
   let totalItems = 0;
 
   items.forEach((item) => (totalItems += item.quantity));
   const orderTime = format(parseISO(createdAt), "MMM d, h:mm aa");
+
+  const handleReorderClick = async () => {
+    const additions = [];
+    for (const item of items) {
+      const correspondingSanityItem = sanityItems.find(
+        (sanityItem) => sanityItem._id === item.sanityItemID
+      );
+      additions.push({
+        quantity: item.quantity,
+        item: {
+          name: correspondingSanityItem.name,
+          image: correspondingSanityItem.primaryImage.asset.url,
+          id: correspondingSanityItem._id,
+          price: correspondingSanityItem.price,
+        },
+      });
+    }
+    addMultipleToCart(additions);
+    setIsReordering(true);
+  };
 
   return (
     <Wrapper>
@@ -110,7 +160,12 @@ const RecentOrder = ({ id, createdAt, items }) => {
         <ViewDetailsButton variant="outline" size="lg" $fullWidth>
           View Details
         </ViewDetailsButton>
-        <ReorderButton variant="primary" size="lg" $fullWidth>
+        <ReorderButton
+          variant="primary"
+          size="lg"
+          $fullWidth
+          onClick={handleReorderClick}
+        >
           Reorder
         </ReorderButton>
       </Right>
