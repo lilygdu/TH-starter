@@ -45,6 +45,7 @@ pool.query(`
     purchase_id INTEGER NOT NULL,
     sanity_item_id VARCHAR(256) NOT NULL,
     price INTEGER NOT NULL,
+    name VARCHAR(256) NOT NULL,
     quantity INTEGER NOT NULL,
     CONSTRAINT fk_purchase
     FOREIGN KEY (purchase_id) REFERENCES purchases (id)

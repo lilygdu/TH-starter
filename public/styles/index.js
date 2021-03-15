@@ -74,6 +74,8 @@ export default {
     },
     recentitems: {
       itemname: palette.brown.three,
+      quantity: palette.gray.five,
+      orderitem: palette.gray.five,
     },
     input: {
       valid: palette.green.one,

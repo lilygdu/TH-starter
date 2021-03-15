@@ -43,7 +43,7 @@ app.get("/users/:userID/recent_items", async (request, response) => {
 
   try {
     const result = await db.query(
-      `SELECT sanity_item_id FROM purchased_items 
+      `SELECT DISTINCT sanity_item_id FROM purchased_items 
       INNER JOIN purchases ON purchases.id = purchased_items.purchase_id
       WHERE purchases.stripe_id IS NOT NULL
       AND purchases.customer_id = $1
@@ -62,7 +62,7 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
 
   try {
     const result = await db.query(
-      `SELECT stripe_id, created_at, purchased_items.sanity_item_id, purchased_items.quantity 
+      `SELECT stripe_id, created_at, purchased_items.sanity_item_id, purchased_items.quantity, purchased_items.name 
       FROM purchases
       INNER JOIN purchased_items ON purchases.id = purchased_items.purchase_id
       WHERE stripe_id IS NOT NULL
@@ -74,7 +74,7 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
     const purchases = [];
 
     for (const item of result.rows) {
-      const { stripe_id, created_at, quantity, sanity_item_id } = item;
+      const { stripe_id, created_at, quantity, sanity_item_id, name } = item;
       const existingPurchase = purchases.find(
         (purchase) => purchase.id === stripe_id
       );
@@ -82,11 +82,15 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
         const purchase = {
           id: stripe_id,
           createdAt: created_at,
-          items: [{ quantity, sanityItemID: sanity_item_id }],
+          items: [{ quantity, sanityItemID: sanity_item_id, name }],
         };
         purchases.push(purchase);
       } else {
-        existingPurchase.items.push({ quantity, sanityItemID: sanity_item_id });
+        existingPurchase.items.push({
+          quantity,
+          sanityItemID: sanity_item_id,
+          name,
+        });
       }
     }
 
@@ -109,9 +113,9 @@ app.post("/checkout", async (request, response) => {
 
     for (const item of items) {
       await db.query(
-        `INSERT INTO purchased_items (purchase_id, sanity_item_id, price, quantity) 
-        VALUES($1, $2, $3, $4);`,
-        [purchaseID, item.id, item.price, item.quantity]
+        `INSERT INTO purchased_items (purchase_id, sanity_item_id, price, quantity, name) 
+        VALUES($1, $2, $3, $4, $5);`,
+        [purchaseID, item.id, item.price, item.quantity, item.name]
       );
     }
 

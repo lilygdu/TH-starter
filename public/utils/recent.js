@@ -4,6 +4,12 @@ export const fetchRecentItemsSanityIds = async ({ userID }) => {
   return { response, data };
 };
 
+export const fetchRecentOrders = async ({ userID }) => {
+  const response = await fetch(`/users/${userID}/recent_orders`);
+  const data = await response.json();
+  return { response, data };
+};
+
 const itemQuery = (sanityID) => `
   query {
     Item(id:"${sanityID}"){

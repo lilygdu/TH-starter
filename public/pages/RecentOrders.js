@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { fetchRecentItemsSanityIds } from "../utils/recentItems";
+import { fetchRecentItemsSanityIds, fetchRecentOrders } from "../utils/recent";
 import { UserContext } from "../context/UserContext";
 import RecentItem from "../components/RecentItem";
+import RecentOrder from "../components/RecentOrder";
 
 const Main = styled.main`
   margin: 10rem auto;
@@ -14,17 +15,25 @@ const Heading = styled.h1`
   text-align: center;
 `;
 
-const RecentItems = styled.section``;
+const RecentItems = styled.section`
+  width: 100%;
+`;
 
 const Carousel = styled.div`
   display: flex;
   overflow-x: scroll;
   gap: 1rem;
   padding: 1rem;
+  width: 100%;
+`;
+
+const Orders = styled.section`
+  padding: 0 1rem;
 `;
 
 const RecentOrders = () => {
   const [recentItems, setRecentItems] = React.useState([]);
+  const [recentOrders, setRecentOrders] = React.useState([]);
   const { userID } = React.useContext(UserContext);
 
   React.useEffect(async () => {
@@ -34,7 +43,14 @@ const RecentOrders = () => {
     }
   }, []);
 
-  console.log({ recentItems });
+  React.useEffect(async () => {
+    const { response, data } = await fetchRecentOrders({ userID });
+    if (response.ok) {
+      setRecentOrders(data.purchases);
+    }
+  }, []);
+
+  console.log({ recentOrders });
 
   return (
     <Main>
@@ -46,6 +62,13 @@ const RecentOrders = () => {
           ))}
         </Carousel>
       </RecentItems>
+
+      <Orders>
+        <Heading>Recent Orders</Heading>
+        {recentOrders.map(({ id, createdAt, items }) => (
+          <RecentOrder key={id} id={id} createdAt={createdAt} items={items} />
+        ))}
+      </Orders>
     </Main>
   );
 };

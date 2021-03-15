@@ -7,6 +7,7 @@ import { fetchSession } from "../utils/stripe";
 import { UserContext } from "../context/UserContext";
 import { CartContext } from "../context/CartContext";
 import { formatCents } from "../utils/price";
+import { formatOrderNumber } from "../utils/order";
 import Button from "../components/Button";
 
 const Main = styled.main`
@@ -217,7 +218,7 @@ const Confirmation = () => {
             <OrderNumber>
               <b>
                 Order Number:{" "}
-                <OrderNumberID>{sessionID.slice(9, 19)}</OrderNumberID>{" "}
+                <OrderNumberID>{formatOrderNumber(sessionID)}</OrderNumberID>{" "}
               </b>
             </OrderNumber>
             <OrderTime>

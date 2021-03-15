@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchItem } from "../utils/recentItems";
+import { fetchItem } from "../utils/recent";
 import { CartContext } from "../context/CartContext";
 import styled from "styled-components";
 import Button from "../components/Button";
