@@ -123,6 +123,10 @@ const ModalTop = styled.div`
   max-height: 30rem;
   overflow-y: scroll;
   padding: 0 7rem;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    padding: 0 2rem;
+  }
 `;
 
 const OrderedItemsWrapper = styled.div`
@@ -143,6 +147,10 @@ const ModalButtonWrapper = styled.div`
   gap: 1rem;
   justify-content: center;
   padding: 0 7rem;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    padding: 0 2rem;
+  }
 `;
 
 const ModalReorderButton = styled(Button)`
