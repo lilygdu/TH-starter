@@ -1,6 +1,4 @@
 import React from "react";
-import { fetchItem } from "../utils/recent";
-import { CartContext } from "../context/CartContext";
 import { formatOrderNumber } from "../utils/order";
 import { parseISO, format } from "date-fns";
 import styled from "styled-components";
@@ -65,6 +63,7 @@ const Name = styled.h3`
 
 const MoreItems = styled.span`
   color: #c8102e;
+  text-decoration: underline;
 `;
 
 const ViewDetailsButton = styled(Button)`
