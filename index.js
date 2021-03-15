@@ -57,6 +57,45 @@ app.get("/users/:userID/recent_items", async (request, response) => {
   }
 });
 
+app.get("/users/:userID/recent_orders", async (request, response) => {
+  const { userID } = request.params;
+
+  try {
+    const result = await db.query(
+      `SELECT stripe_id, created_at, purchased_items.sanity_item_id, purchased_items.quantity 
+      FROM purchases
+      INNER JOIN purchased_items ON purchases.id = purchased_items.purchase_id
+      WHERE stripe_id IS NOT NULL
+      AND customer_id = $1
+      LIMIT 10;`,
+      [userID]
+    );
+
+    const purchases = [];
+
+    for (const item of result.rows) {
+      const { stripe_id, created_at, quantity, sanity_item_id } = item;
+      const existingPurchase = purchases.find(
+        (purchase) => purchase.id === stripe_id
+      );
+      if (!existingPurchase) {
+        const purchase = {
+          id: stripe_id,
+          createdAt: created_at,
+          items: [{ quantity, sanityItemID: sanity_item_id }],
+        };
+        purchases.push(purchase);
+      } else {
+        existingPurchase.items.push({ quantity, sanityItemID: sanity_item_id });
+      }
+    }
+
+    response.json({ purchases });
+  } catch (error) {
+    response.status(422).json({ message: error.message });
+  }
+});
+
 app.post("/checkout", async (request, response) => {
   try {
     const { userEmail, userID, items, currencyCode } = request.body;
