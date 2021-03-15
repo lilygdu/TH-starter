@@ -67,6 +67,7 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
       INNER JOIN purchased_items ON purchases.id = purchased_items.purchase_id
       WHERE stripe_id IS NOT NULL
       AND customer_id = $1
+      ORDER BY created_at DESC
       LIMIT 10;`,
       [userID]
     );

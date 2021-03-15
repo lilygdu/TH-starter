@@ -24,6 +24,19 @@ const CartContextProvider = ({ children }) => {
     setCartVisible(true);
   };
 
+  const addMultipleToCart = (additions) => {
+    const newItems = [...items];
+    for (const addition of additions) {
+      const itemAlreadyInCart = newItems.find((i) => i.id === addition.item.id);
+      if (itemAlreadyInCart) {
+        itemAlreadyInCart.quantity += addition.quantity;
+      } else {
+        newItems.push({ ...addition.item, quantity: addition.quantity });
+      }
+    }
+    setItems(newItems);
+  };
+
   const decrementQuantity = (item) => {
     const newItems = [...items];
     const itemAlreadyInCart = newItems.find((i) => i.id === item.id);
@@ -48,6 +61,7 @@ const CartContextProvider = ({ children }) => {
         cartVisible,
         setCartVisible,
         addToCart,
+        addMultipleToCart,
         decrementQuantity,
         removeFromCart,
         clearCart,
