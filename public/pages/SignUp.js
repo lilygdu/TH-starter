@@ -5,6 +5,7 @@ import Styles from "../styles";
 import Button from "../components/Button";
 import FloatingFormField from "../components/FloatingFormField";
 import CheckBoxField from "../components/CheckBoxField";
+import { Helmet } from "react-helmet";
 import { signUp } from "../utils/user";
 import { sendOTPEmail } from "../utils/email";
 import { UserContext } from "../context/UserContext";
@@ -139,86 +140,91 @@ const SignUp = () => {
   };
 
   return (
-    <Main>
-      <EarnRewardsHeading>Start earning rewards</EarnRewardsHeading>
-      <CreateAccountHeading>Create an Account</CreateAccountHeading>
-      <ExistingAccount>
-        <div>Already have an account?</div>
-        <SignInLink to="/signin">Sign In</SignInLink>
-      </ExistingAccount>
-      <form noValidate onSubmit={handleSubmit}>
-        <FloatingFormField
-          element="select"
-          label="Country"
-          value={country}
-          onChange={(event) => setCountry(event.target.value)}
-          validate={false}
-        >
-          {locales.map((locale) => (
-            <option key={locale.key} value={locale.countryCode}>
-              {locale.country}
-            </option>
-          ))}
-        </FloatingFormField>
-        <FloatingFormField
-          type="email"
-          label="Email Address"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          isValid={isEmailValid}
-          errorMessage={emailErrorMessage}
-          autoComplete="off"
-          required={true}
-          validate={isFormSubmitted}
-        />
-        <FloatingFormField
-          type="text"
-          label="Name"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          isValid={isNameValid}
-          errorMessage={nameErrorMessage}
-          autoComplete="off"
-          required={true}
-          validate={isFormSubmitted}
-        />
-        <OptionalInformation>
-          <span>Optional Information</span>{" "}
-          <i className="fas fa-angle-down"></i>
-        </OptionalInformation>
-        <CheckBoxField
-          name="email_consent"
-          value={emailConsent}
-          onChange={() => setEmailConsent(!emailConsent)}
-          label={
-            "Yes! I want to receive promotional emails about special offers and other information about Tim Hortons. (Optional)"
-          }
-        />
-        <CheckBoxField
-          name="tos_consent"
-          value={tosConsent}
-          onChange={() => setTosConsent(!tosConsent)}
-          errorMessage={tosConsentErrorMessage}
-          label={
-            <>
-              I agree to the following:
-              <span>
-                <TOSLink to="#"> Privacy Policy,</TOSLink>
-                <br />
-                <TOSLink to="#">Tims Rewards Terms and Conditions, </TOSLink>
-                <TOSLink to="#">Terms of Service</TOSLink>
-              </span>
-            </>
-          }
-        />
-        <Button variant="primary" size="lg" $fullWidth>
-          Sign Up
-        </Button>
-      </form>
-      <NotYourComputer>
-        Not your computer? Please make sure to log out before you leave
-      </NotYourComputer>
-    </Main>
+    <>
+      <Helmet>
+        <title>Tim Hortons - Sign Up</title>
+      </Helmet>
+      <Main>
+        <EarnRewardsHeading>Start earning rewards</EarnRewardsHeading>
+        <CreateAccountHeading>Create an Account</CreateAccountHeading>
+        <ExistingAccount>
+          <div>Already have an account?</div>
+          <SignInLink to="/signin">Sign In</SignInLink>
+        </ExistingAccount>
+        <form noValidate onSubmit={handleSubmit}>
+          <FloatingFormField
+            element="select"
+            label="Country"
+            value={country}
+            onChange={(event) => setCountry(event.target.value)}
+            validate={false}
+          >
+            {locales.map((locale) => (
+              <option key={locale.key} value={locale.countryCode}>
+                {locale.country}
+              </option>
+            ))}
+          </FloatingFormField>
+          <FloatingFormField
+            type="email"
+            label="Email Address"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            isValid={isEmailValid}
+            errorMessage={emailErrorMessage}
+            autoComplete="off"
+            required={true}
+            validate={isFormSubmitted}
+          />
+          <FloatingFormField
+            type="text"
+            label="Name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            isValid={isNameValid}
+            errorMessage={nameErrorMessage}
+            autoComplete="off"
+            required={true}
+            validate={isFormSubmitted}
+          />
+          <OptionalInformation>
+            <span>Optional Information</span>{" "}
+            <i className="fas fa-angle-down"></i>
+          </OptionalInformation>
+          <CheckBoxField
+            name="email_consent"
+            value={emailConsent}
+            onChange={() => setEmailConsent(!emailConsent)}
+            label={
+              "Yes! I want to receive promotional emails about special offers and other information about Tim Hortons. (Optional)"
+            }
+          />
+          <CheckBoxField
+            name="tos_consent"
+            value={tosConsent}
+            onChange={() => setTosConsent(!tosConsent)}
+            errorMessage={tosConsentErrorMessage}
+            label={
+              <>
+                I agree to the following:
+                <span>
+                  <TOSLink to="#"> Privacy Policy,</TOSLink>
+                  <br />
+                  <TOSLink to="#">Tims Rewards Terms and Conditions, </TOSLink>
+                  <TOSLink to="#">Terms of Service</TOSLink>
+                </span>
+              </>
+            }
+          />
+          <Button variant="primary" size="lg" $fullWidth>
+            Sign Up
+          </Button>
+        </form>
+        <NotYourComputer>
+          Not your computer? Please make sure to log out before you leave
+        </NotYourComputer>
+      </Main>
+    </>
   );
 };
 export default SignUp;

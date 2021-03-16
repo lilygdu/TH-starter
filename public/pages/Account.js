@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import Styles from "../styles";
 import Dialog from "../components/Dialog";
 import BaseButton from "../components/Button";
@@ -105,6 +106,9 @@ const Account = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Tim Hortons - My Account</title>
+      </Helmet>
       <Main>
         <AccountHeading>Account</AccountHeading>
         <AccountOptions>

@@ -1,6 +1,7 @@
 import React from "react";
 import Styles from "../styles";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import { parseISO, format } from "date-fns";
 import { useHistory } from "react-router-dom";
 import { fetchSession } from "../utils/stripe";
@@ -195,6 +196,9 @@ const Confirmation = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Tim Hortons - Order Confirmation</title>
+      </Helmet>
       <Header>
         <MyOrder>My Order</MyOrder>
       </Header>

@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+
+import { Helmet } from "react-helmet";
 import { fetchRecentItemsSanityIds, fetchRecentOrders } from "../utils/recent";
 import { UserContext } from "../context/UserContext";
 import Button from "../components/Button";
@@ -86,39 +88,46 @@ const RecentOrders = () => {
   }, []);
 
   return (
-    <Main topMargin={!showRecentOrders}>
-      {showRecentOrders && (
-        <RecentItems>
-          <ItemsHeading>Recent Items</ItemsHeading>
-          <Carousel>
-            {recentItems.map((sanityID) => (
-              <RecentItem key={sanityID} sanityID={sanityID} />
-            ))}
-          </Carousel>
-        </RecentItems>
-      )}
 
-      <Orders>
-        <OrdersHeading large={!showRecentOrders}>Recent Orders</OrdersHeading>
-        {recentOrders.map(({ id, createdAt, items }) => (
-          <RecentOrder key={id} id={id} createdAt={createdAt} items={items} />
-        ))}
-        {!showRecentOrders && (
-          <EmptyOrdersDisplay>
-            <CoffeeIcon>
-              <i className="fas fa-mug-hot"></i>
-            </CoffeeIcon>
-            <EmptyOrdersHeading>
-              Recent orders & items will appear here
-            </EmptyOrdersHeading>
-            <StartOrderText>Go start a new order now!</StartOrderText>
-            <StartOrderButton to="/" variant="primary" size="lg">
-              Start Order
-            </StartOrderButton>
-          </EmptyOrdersDisplay>
+    <>
+      <Helmet>
+        <title>Tim Hortons - Recent Orders</title>
+      </Helmet>
+      <Main topMargin={!showRecentOrders}>
+        {showRecentOrders && (
+          <RecentItems>
+            <ItemsHeading>Recent Items</ItemsHeading>
+
+
+            <Carousel>
+              {recentItems.map((sanityID) => (
+                <RecentItem key={sanityID} sanityID={sanityID} />
+              ))}
+            </Carousel>
+          </RecentItems>
         )}
-      </Orders>
-    </Main>
+        <Orders>
+          <OrdersHeading large={!showRecentOrders}>Recent Orders</OrdersHeading>
+          {recentOrders.map(({ id, createdAt, items }) => (
+            <RecentOrder key={id} id={id} createdAt={createdAt} items={items} />
+          ))}
+          {!showRecentOrders && (
+            <EmptyOrdersDisplay>
+              <CoffeeIcon>
+                <i className="fas fa-mug-hot"></i>
+              </CoffeeIcon>
+              <EmptyOrdersHeading>
+                Recent orders & items will appear here
+              </EmptyOrdersHeading>
+              <StartOrderText>Go start a new order now!</StartOrderText>
+              <StartOrderButton to="/" variant="primary" size="lg">
+                Start Order
+              </StartOrderButton>
+            </EmptyOrdersDisplay>
+          )}
+        </Orders>
+      </Main>
+    </>
   );
 };
 

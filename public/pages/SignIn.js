@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Styles from "../styles";
 import Button from "../components/Button";
 import FloatingFormField from "../components/FloatingFormField";
+import { Helmet } from "react-helmet";
 import { useHistory } from "react-router-dom";
 import { sendOTPEmail } from "../utils/email";
 import { signIn } from "../utils/user";
@@ -81,39 +82,44 @@ const SignIn = () => {
   };
 
   return (
-    <Main>
-      <Heading>Sign In</Heading>
-      <form noValidate onSubmit={handleSubmit}>
-        <FloatingFormField
-          type="email"
-          label="Email Address *"
-          value={email}
-          onChange={handleEmailChange}
-          autoComplete="off"
-          errorMessage={emailError}
-        />
+    <>
+      <Helmet>
+        <title>Tim Hortons - Sign In</title>
+      </Helmet>
+      <Main>
+        <Heading>Sign In</Heading>
+        <form noValidate onSubmit={handleSubmit}>
+          <FloatingFormField
+            type="email"
+            label="Email Address *"
+            value={email}
+            onChange={handleEmailChange}
+            autoComplete="off"
+            errorMessage={emailError}
+          />
+          <ButtonWrapper>
+            <Button
+              variant="primary"
+              size="lg"
+              $fullWidth
+              disabled={email.length === 0}
+              isLoading={isButtonLoading}
+            >
+              Sign In
+            </Button>
+          </ButtonWrapper>
+        </form>
+        <NoAccountText>Don't have an account yet?</NoAccountText>
         <ButtonWrapper>
-          <Button
-            variant="primary"
-            size="lg"
-            $fullWidth
-            disabled={email.length === 0}
-            isLoading={isButtonLoading}
-          >
-            Sign In
+          <Button to="/signup" variant="outline" size="lg" $fullWidth>
+            Sign Up
           </Button>
         </ButtonWrapper>
-      </form>
-      <NoAccountText>Don't have an account yet?</NoAccountText>
-      <ButtonWrapper>
-        <Button to="/signup" variant="outline" size="lg" $fullWidth>
-          Sign Up
-        </Button>
-      </ButtonWrapper>
-      <NotYourComputer>
-        Not your computer? Please make sure to log out before you leave
-      </NotYourComputer>
-    </Main>
+        <NotYourComputer>
+          Not your computer? Please make sure to log out before you leave
+        </NotYourComputer>
+      </Main>
+    </>
   );
 };
 export default SignIn;
