@@ -76,6 +76,12 @@ export default {
       itemname: palette.brown.three,
       quantity: palette.gray.five,
       orderitem: palette.gray.five,
+      modal: {
+        heading: palette.brown.three,
+        text: palette.gray.seven,
+        border: palette.gray.three,
+        background: palette.brown.one,
+      },
     },
     input: {
       valid: palette.green.one,
