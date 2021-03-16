@@ -296,7 +296,7 @@ const RecentOrder = ({ id, createdAt, items }) => {
             </OrderDetailsWrapper>
             <OrderedItemsWrapper>
               {items.map((item) => (
-                <OrderedItem key={id}>
+                <OrderedItem key={item.sanityItemID}>
                   <b>{item.name}</b>
                   <span>{item.quantity}</span>
                   <span>
