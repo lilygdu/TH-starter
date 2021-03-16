@@ -102,50 +102,50 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
 });
 
 app.post("/checkout", async (request, response) => {
-  try {
-    const { userEmail, userID, items, currencyCode } = request.body;
+  // try {
+  const { userEmail, userID, items, currencyCode } = request.body;
 
-    const purchaseResult = await db.query(
-      `INSERT INTO purchases (customer_id) VALUES($1) RETURNING id;`,
-      [userID]
-    );
+  const purchaseResult = await db.query(
+    `INSERT INTO purchases (customer_id) VALUES($1) RETURNING id;`,
+    [userID]
+  );
 
-    const purchaseID = purchaseResult.rows[0].id;
+  const purchaseID = purchaseResult.rows[0].id;
 
-    for (const item of items) {
-      await db.query(
-        `INSERT INTO purchased_items (purchase_id, sanity_item_id, price, quantity, name) 
+  for (const item of items) {
+    await db.query(
+      `INSERT INTO purchased_items (purchase_id, sanity_item_id, price, quantity, name) 
         VALUES($1, $2, $3, $4, $5);`,
-        [purchaseID, item.id, item.price, item.quantity, item.name]
-      );
-    }
-
-    const session = await stripe.checkout.sessions.create({
-      customer_email: userEmail,
-      payment_method_types: ["card"],
-      metadata: {
-        createdAt: new Date().toISOString(),
-        purchaseID,
-      },
-      line_items: items.map((item) => ({
-        price_data: {
-          currency: currencyCode,
-          product_data: {
-            name: item.name,
-            images: [item.image],
-          },
-          unit_amount: item.price,
-        },
-        quantity: item.quantity,
-      })),
-      mode: "payment",
-      success_url: `${baseUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: baseUrl,
-    });
-    response.json({ id: session.id });
-  } catch (error) {
-    response.status(422).json({ message: error.message });
+      [purchaseID, item.id, item.price, item.quantity, item.name]
+    );
   }
+
+  const session = await stripe.checkout.sessions.create({
+    customer_email: userEmail,
+    payment_method_types: ["card"],
+    metadata: {
+      createdAt: new Date().toISOString(),
+      purchaseID,
+    },
+    line_items: items.map((item) => ({
+      price_data: {
+        currency: currencyCode,
+        product_data: {
+          name: item.name,
+          images: [item.image],
+        },
+        unit_amount: item.price,
+      },
+      quantity: item.quantity,
+    })),
+    mode: "payment",
+    success_url: `${baseUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: baseUrl,
+  });
+  response.json({ id: session.id });
+  // } catch (error) {
+  //   response.status(422).json({ message: error.message });
+  // }
 });
 
 app.post("/signup", async (request, response) => {
