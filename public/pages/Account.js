@@ -110,19 +110,19 @@ const Account = () => {
         <AccountOptions>
           <AccountOptionsList>
             <AccountOptionsItem>
-              <AccountOptionsLink href="#">
+              <AccountOptionsLink to="#">
                 <AccountOptionsText>Tims Rewards</AccountOptionsText>
                 <i className="fas fa-chevron-right"></i>
               </AccountOptionsLink>
             </AccountOptionsItem>
             <AccountOptionsItem>
-              <AccountOptionsLink href="#">
+              <AccountOptionsLink to="#">
                 <AccountOptionsText>Account Info</AccountOptionsText>
                 <i className="fas fa-chevron-right"></i>
               </AccountOptionsLink>
             </AccountOptionsItem>
             <AccountOptionsItem>
-              <AccountOptionsLink href="#">
+              <AccountOptionsLink to="#">
                 <AccountOptionsText>Payment Methods</AccountOptionsText>
                 <i className="fas fa-chevron-right"></i>
               </AccountOptionsLink>
@@ -134,7 +134,7 @@ const Account = () => {
               </AccountOptionsLink>
             </AccountOptionsItem>
             <AccountOptionsItem>
-              <AccountOptionsLink href="#">
+              <AccountOptionsLink to="#">
                 <AccountOptionsText>
                   Communications Preferences
                 </AccountOptionsText>
@@ -143,9 +143,8 @@ const Account = () => {
             </AccountOptionsItem>
             <AccountOptionsItem>
               <AccountOptionsLink
-                href="#"
+                to="#"
                 onClick={handleAccountOptionsLinkClick}
-                dialogOpen={dialogOpen}
               >
                 <AccountOptionsText>Sign Out</AccountOptionsText>
                 <i className="fas fa-chevron-right"></i>
