@@ -62,7 +62,7 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
 
   try {
     const result = await db.query(
-      `SELECT stripe_id, created_at, purchased_items.sanity_item_id, purchased_items.quantity, purchased_items.name 
+      `SELECT stripe_id, created_at, purchased_items.sanity_item_id, purchased_items.quantity, purchased_items.name, purchased_items.price 
       FROM purchases
       INNER JOIN purchased_items ON purchases.id = purchased_items.purchase_id
       WHERE stripe_id IS NOT NULL
@@ -75,7 +75,14 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
     const purchases = [];
 
     for (const item of result.rows) {
-      const { stripe_id, created_at, quantity, sanity_item_id, name } = item;
+      const {
+        stripe_id,
+        created_at,
+        quantity,
+        price,
+        sanity_item_id,
+        name,
+      } = item;
       const existingPurchase = purchases.find(
         (purchase) => purchase.id === stripe_id
       );
@@ -83,7 +90,7 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
         const purchase = {
           id: stripe_id,
           createdAt: created_at,
-          items: [{ quantity, sanityItemID: sanity_item_id, name }],
+          items: [{ quantity, sanityItemID: sanity_item_id, name, price }],
         };
         purchases.push(purchase);
       } else {
@@ -91,6 +98,7 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
           quantity,
           sanityItemID: sanity_item_id,
           name,
+          price,
         });
       }
     }

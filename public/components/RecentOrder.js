@@ -10,6 +10,7 @@ import Dialog from "../components/Dialog";
 import Styles from "../styles";
 import { fetchItems } from "../utils/recent";
 import { initiateCheckout } from "../utils/stripe";
+import { formatCents } from "../utils/price";
 
 const Wrapper = styled.div`
   box-shadow: 2px 2px 9px 0px rgba(178, 178, 178, 0.5);
@@ -165,8 +166,8 @@ const PriceSubjectToChange = styled.div`
 `;
 
 const ModalTotal = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 4fr 1fr 1fr;
   border-top: 1px solid ${Styles.color.recentitems.modal.border};
   padding: 2rem 0;
 `;
@@ -205,8 +206,12 @@ const RecentOrder = ({ id, createdAt, items }) => {
   }, [isReordering]);
 
   let totalItems = 0;
+  let totalPrice = 0;
+  items.forEach((item) => {
+    totalItems += item.quantity;
+    totalPrice += item.price;
+  });
 
-  items.forEach((item) => (totalItems += item.quantity));
   const orderTime = format(parseISO(createdAt), "MMM d, h:mm aa");
   const modalOrderDate = format(parseISO(createdAt), "MMM d, yyyy");
   const modalOrderTime = format(parseISO(createdAt), "h:mm aa");
@@ -250,7 +255,10 @@ const RecentOrder = ({ id, createdAt, items }) => {
             {items[0].name}
             {totalItems > 1 && (
               <>
-                , <MoreItems>{totalItems - 1} more items...</MoreItems>
+                ,{" "}
+                <MoreItems onClick={handleViewDetailsClick}>
+                  {totalItems - 1} more items...
+                </MoreItems>
               </>
             )}
           </Name>
@@ -284,23 +292,27 @@ const RecentOrder = ({ id, createdAt, items }) => {
                 Order Number: {formatOrderNumber(id)}
               </ModalOrderNumber>
               <ModalOrderTime>Order time: {modalOrderTime}</ModalOrderTime>
-              <OrderMethod>Method: Take Out</OrderMethod>
-              <OrderLocation>
-                Location: 130 King Street West, TORONTO, Ontario
-              </OrderLocation>
+              <OrderMethod>Method: Drive Thru</OrderMethod>
             </OrderDetailsWrapper>
             <OrderedItemsWrapper>
               {items.map((item) => (
                 <OrderedItem key={id}>
                   <b>{item.name}</b>
-                  {item.quantity}
-                  {item.price}
+                  <span>{item.quantity}</span>
+                  <span>
+                    {selectedLocale.currency}
+                    {formatCents(item.price)}
+                  </span>
                 </OrderedItem>
               ))}
             </OrderedItemsWrapper>
             <ModalTotal>
               <span>Total</span>
-              <span>$12.00</span>
+              <span></span>
+              <span>
+                {selectedLocale.currency}
+                {formatCents(totalPrice)}
+              </span>
             </ModalTotal>
           </ModalTop>
           <ModalButtonWrapper>
