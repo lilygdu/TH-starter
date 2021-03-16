@@ -154,7 +154,7 @@ const ModalButtonWrapper = styled.div`
 `;
 
 const ModalReorderButton = styled(Button)`
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   width: 100%;
 `;
 
@@ -172,7 +172,7 @@ const ModalTotal = styled.div`
 `;
 
 const ModalNeedHelpButton = styled(Button)`
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   width: 100%;
   font-size: 0.9rem;
 `;
@@ -234,8 +234,6 @@ const RecentOrder = ({ id, createdAt, items }) => {
   const handleViewDetailsClick = () => {
     setDialogOpen(true);
   };
-
-  console.log({ items });
 
   return (
     <>
