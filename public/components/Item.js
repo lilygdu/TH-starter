@@ -92,6 +92,7 @@ const Item = ({ name, image, lqip, id, price, calories }) => {
           variant="primary"
           size="md"
           onClick={() => addToCart({ name, image, price, id })}
+          className="add-to-order"
         >
           <span>Add to order</span>
           <Price>{displayPrice}</Price>

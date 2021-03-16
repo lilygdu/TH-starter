@@ -8,6 +8,7 @@ import { fetchSession } from "../utils/stripe";
 import { UserContext } from "../context/UserContext";
 import { CartContext } from "../context/CartContext";
 import { formatCents } from "../utils/price";
+import { formatOrderNumber } from "../utils/order";
 import Button from "../components/Button";
 
 const Main = styled.main`
@@ -49,9 +50,15 @@ const HomeButton = styled(Button)`
 
 const MainSection = styled.section`
   text-align: center;
-  max-width: 26rem;
-  margin: 0 auto;
   padding: 0 1rem;
+  height: 100vh;
+  overflow-y: scroll;
+  padding-bottom: 5rem;
+`;
+
+const MainContent = styled.div`
+  max-width: 26rem;
+  margin: 0 auto 5rem;
 `;
 
 const OrderPlacedHeading = styled.h1`
@@ -203,47 +210,49 @@ const Confirmation = () => {
           </HomeButton>
         </Aside>
         <MainSection>
-          <OrderPlacedHeading>
-            Your order has been placed in line with other customers and will be
-            ready as soon as possible!
-          </OrderPlacedHeading>
-          <OrderInstructions>
-            Drive up to the ordering screen and let us know you ordered online
-            for {userName}
-          </OrderInstructions>
-          <OrderNumber>
-            <b>
-              Order Number:{" "}
-              <OrderNumberID>{sessionID.slice(9, 19)}</OrderNumberID>{" "}
-            </b>
-          </OrderNumber>
-          <OrderTime>
-            Order Time: <b>{orderTime}</b>
-          </OrderTime>
-          <OrderMethod>
-            Method: <b>Drive Thru</b>
-          </OrderMethod>
+          <MainContent>
+            <OrderPlacedHeading>
+              Your order has been placed in line with other customers and will
+              be ready as soon as possible!
+            </OrderPlacedHeading>
+            <OrderInstructions>
+              Drive up to the ordering screen and let us know you ordered online
+              for {userName}
+            </OrderInstructions>
+            <OrderNumber>
+              <b>
+                Order Number:{" "}
+                <OrderNumberID>{formatOrderNumber(sessionID)}</OrderNumberID>{" "}
+              </b>
+            </OrderNumber>
+            <OrderTime>
+              Order Time: <b>{orderTime}</b>
+            </OrderTime>
+            <OrderMethod>
+              Method: <b>Drive Thru</b>
+            </OrderMethod>
 
-          <OrderDetails>
-            <OrderDetailsHeading>Your Order</OrderDetailsHeading>
-            {lineItems.map((item) => (
-              <OrderedItem key={item.id}>
-                <OrderedItemName>{item.description}</OrderedItemName>
-                <OrderedItemQuantity>
-                  Quantity: {item.quantity}
-                </OrderedItemQuantity>
-                <OrderedItemPrice>
-                  Price: <Currency>{item.price.currency}</Currency>$
-                  {formatCents(item.price.unit_amount)}
-                </OrderedItemPrice>
-              </OrderedItem>
-            ))}
-            <OrderTotal>
-              Total: <Currency>{session.currency}</Currency>$
-              {session.amount_total && formatCents(session.amount_total)}
-            </OrderTotal>
-            <ViewReceipt>View Receipt</ViewReceipt>
-          </OrderDetails>
+            <OrderDetails>
+              <OrderDetailsHeading>Your Order</OrderDetailsHeading>
+              {lineItems.map((item) => (
+                <OrderedItem key={item.id}>
+                  <OrderedItemName>{item.description}</OrderedItemName>
+                  <OrderedItemQuantity>
+                    Quantity: {item.quantity}
+                  </OrderedItemQuantity>
+                  <OrderedItemPrice>
+                    Price: <Currency>{item.price.currency}</Currency>$
+                    {formatCents(item.price.unit_amount)}
+                  </OrderedItemPrice>
+                </OrderedItem>
+              ))}
+              <OrderTotal>
+                Total: <Currency>{session.currency}</Currency>$
+                {session.amount_total && formatCents(session.amount_total)}
+              </OrderTotal>
+              <ViewReceipt>View Receipt</ViewReceipt>
+            </OrderDetails>
+          </MainContent>
         </MainSection>
       </Main>
     </>

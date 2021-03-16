@@ -12,6 +12,7 @@
     "express": "^4.17.1",
     "pg": "^8.5.1",
     "react": "^17.0.1",
+    "react-click-away-listener": "^2.0.0",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "react-router-dom": "^5.2.0",
@@ -19,7 +20,7 @@
     "styled-components": "^5.2.1"
   },
   "scripts": {
-    "start": "parcel watch public/*.html & node index.js"
+    "start": "parcel watch public/index.html & node index.js"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
