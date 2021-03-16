@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import Styles from "../styles";
 import LoadingAnimation from "../components/LoadingAnimation";
 import Button from "../components/Button";
@@ -82,33 +83,38 @@ const Category = () => {
   }, []);
 
   return (
-    <Main>
-      <MainMenuButton to="/">
-        <Arrow>
-          <i className="fas fa-arrow-left"></i>
-        </Arrow>
-        Main Menu
-      </MainMenuButton>
-      <CategoryHeading>{category.name}</CategoryHeading>
-      <Items>
-        {!category.items?.length && (
-          <LoadingContainer>
-            <LoadingAnimation />
-          </LoadingContainer>
-        )}
-        {(category.items || []).map((item) => (
-          <Item
-            key={item._id}
-            id={item._id}
-            name={item.name}
-            image={item.primaryImage.asset.url}
-            lqip={item.primaryImage.asset.metadata.lqip}
-            price={item.price}
-            calories={item.calories}
-          />
-        ))}
-      </Items>
-    </Main>
+    <>
+      <Helmet>
+        <title>Tim Hortons - {category.name}</title>
+      </Helmet>
+      <Main>
+        <MainMenuButton to="/">
+          <Arrow>
+            <i className="fas fa-arrow-left"></i>
+          </Arrow>
+          Main Menu
+        </MainMenuButton>
+        <CategoryHeading>{category.name}</CategoryHeading>
+        <Items>
+          {!category.items?.length && (
+            <LoadingContainer>
+              <LoadingAnimation />
+            </LoadingContainer>
+          )}
+          {(category.items || []).map((item) => (
+            <Item
+              key={item._id}
+              id={item._id}
+              name={item.name}
+              image={item.primaryImage.asset.url}
+              lqip={item.primaryImage.asset.metadata.lqip}
+              price={item.price}
+              calories={item.calories}
+            />
+          ))}
+        </Items>
+      </Main>
+    </>
   );
 };
 

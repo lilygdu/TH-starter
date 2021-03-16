@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import { fetchRecentItemsSanityIds } from "../utils/recentItems";
 import { UserContext } from "../context/UserContext";
 import RecentItem from "../components/RecentItem";
@@ -37,16 +38,21 @@ const RecentOrders = () => {
   console.log({ recentItems });
 
   return (
-    <Main>
-      <RecentItems>
-        <Heading>Recent Items</Heading>
-        <Carousel>
-          {recentItems.map((sanityID) => (
-            <RecentItem key={sanityID} sanityID={sanityID} />
-          ))}
-        </Carousel>
-      </RecentItems>
-    </Main>
+    <>
+      <Helmet>
+        <title>Tim Hortons - Recent Orders</title>
+      </Helmet>
+      <Main>
+        <RecentItems>
+          <Heading>Recent Items</Heading>
+          <Carousel>
+            {recentItems.map((sanityID) => (
+              <RecentItem key={sanityID} sanityID={sanityID} />
+            ))}
+          </Carousel>
+        </RecentItems>
+      </Main>
+    </>
   );
 };
 

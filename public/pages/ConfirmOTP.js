@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
 import Styles from "../styles";
+import { useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { UserContext } from "../context/UserContext";
 import { LocaleContext } from "../context/LocaleContext";
 import { confirmOTP } from "../utils/user";
@@ -121,30 +122,35 @@ const ConfirmOTP = () => {
   };
 
   return (
-    <Main>
-      <VerifyCodeHeading>Verify with code</VerifyCodeHeading>
-      <CodeSentHeading>
-        We just sent an email with login instructions to <b>{userEmail}</b>
-      </CodeSentHeading>
-      <EnterCode>
-        <div>Enter Verification Code Below:</div>
-      </EnterCode>
-      <Code
-        type="text"
-        name="code"
-        id="code"
-        autoComplete="off"
-        maxLength="6"
-        spellCheck="false"
-        required
-        invalid={!!errorMessage}
-        value={code}
-        onChange={(event) => handleChange(event.target.value)}
-        ref={codeRef}
-      />
-      <ErrorMessage>{errorMessage}</ErrorMessage>
-      <DidNotReceiveCode>Didn't receive a code?</DidNotReceiveCode>
-    </Main>
+    <>
+      <Helmet>
+        <title>Tim Hortons - Confirm OTP</title>
+      </Helmet>
+      <Main>
+        <VerifyCodeHeading>Verify with code</VerifyCodeHeading>
+        <CodeSentHeading>
+          We just sent an email with login instructions to <b>{userEmail}</b>
+        </CodeSentHeading>
+        <EnterCode>
+          <div>Enter Verification Code Below:</div>
+        </EnterCode>
+        <Code
+          type="text"
+          name="code"
+          id="code"
+          autoComplete="off"
+          maxLength="6"
+          spellCheck="false"
+          required
+          invalid={!!errorMessage}
+          value={code}
+          onChange={(event) => handleChange(event.target.value)}
+          ref={codeRef}
+        />
+        <ErrorMessage>{errorMessage}</ErrorMessage>
+        <DidNotReceiveCode>Didn't receive a code?</DidNotReceiveCode>
+      </Main>
+    </>
   );
 };
 

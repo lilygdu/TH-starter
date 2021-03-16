@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Styles from "../styles";
+import { Helmet } from "react-helmet";
 import LoadingAnimation from "../components/LoadingAnimation";
 import { fetchCategories } from "../utils/menu";
 import Category from "../components/Category";
@@ -37,25 +38,30 @@ const Menu = () => {
   }, []);
 
   return (
-    <Main>
-      <MenuHeading>{categories.length > 0 && "Menu"}</MenuHeading>
-      <Categories>
-        {categories.length === 0 && (
-          <LoadingContainer>
-            <LoadingAnimation />
-          </LoadingContainer>
-        )}
-        {categories.map((category) => (
-          <Category
-            key={category._id}
-            id={category._id}
-            name={category.name}
-            image={category.primaryImage.asset.url}
-            lqip={category.primaryImage.asset.metadata.lqip}
-          />
-        ))}
-      </Categories>
-    </Main>
+    <>
+      <Helmet>
+        <title>Tim Hortons - Main Menu</title>
+      </Helmet>
+      <Main>
+        <MenuHeading>{categories.length > 0 && "Menu"}</MenuHeading>
+        <Categories>
+          {categories.length === 0 && (
+            <LoadingContainer>
+              <LoadingAnimation />
+            </LoadingContainer>
+          )}
+          {categories.map((category) => (
+            <Category
+              key={category._id}
+              id={category._id}
+              name={category.name}
+              image={category.primaryImage.asset.url}
+              lqip={category.primaryImage.asset.metadata.lqip}
+            />
+          ))}
+        </Categories>
+      </Main>
+    </>
   );
 };
 
