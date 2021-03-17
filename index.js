@@ -1,8 +1,10 @@
 import express from "express";
 import dirname from "es-dirname";
+import { parseJSON, differenceInMinutes } from "date-fns";
 import path from "path";
 import db from "./db.js";
 import stripeLibrary from "stripe";
+import requestIp from "request-ip";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -11,11 +13,42 @@ const baseUrl = process.env.HOST_NAME || `http://localhost:${port}`;
 const stripe = stripeLibrary(
   "sk_test_51ITqhfK3N0KQbmMT8TBZQyfOSgJN0S0DKucX7Fvl4ZOwmrFXkQ7okYeh3hVj3NyZvkWvftHPnJHVNXvVHnszoKby0017txxIeX"
 );
+const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
 
 app.use(express.json());
 app.use(express.static("dist"));
+app.use(requestIp.mw());
 
-const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
+app.post("/session", async (request, response) => {
+  const { loggedInUserID, sessionID, userTrackingID } = request.body;
+
+  const result = await db.query(
+    `SELECT created_at, last_known_activity_at, id FROM sessions WHERE id = $1;`,
+    [sessionID]
+  );
+  const session = result.rows[0];
+  const now = new Date();
+  if (
+    // no session with that id
+    !session ||
+    // the session is older than 15 minutes
+    differenceInMinutes(now, parseJSON(session.last_known_activity_at)) > 15
+  ) {
+    const insertResult = await db.query(
+      `INSERT INTO sessions (logged_in_user_id, ip_address, user_tracking_id) 
+      VALUES ($1, $2, $3) RETURNING id, user_tracking_id;`,
+      [loggedInUserID, request.clientIp, userTrackingID]
+    );
+    response.json({ session: insertResult.rows[0] });
+  } else {
+    const updateResult = await db.query(
+      `UPDATE sessions SET last_known_activity_at = CURRENT_TIMESTAMP
+      WHERE id = $1 RETURNING id, user_tracking_id;`,
+      [sessionID]
+    );
+    response.json({ session: updateResult.rows[0] });
+  }
+});
 
 app.get("/sessions/:sessionID", async (request, response) => {
   const { sessionID } = request.params;

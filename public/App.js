@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import UserContextProvider from "./context/UserContext";
 import CartContextProvider from "./context/CartContext";
 import LocaleContextProvider from "./context/LocaleContext";
+import TrackingContextProvider from "./context/TrackingContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Menu from "./pages/Menu";
@@ -20,34 +21,36 @@ const App = () => (
     <UserContextProvider>
       <LocaleContextProvider>
         <CartContextProvider>
-          <Header />
-          <Switch>
-            <Route path="/" exact>
-              <Menu />
-            </Route>
-            <Route path="/account" exact>
-              <Account />
-            </Route>
-            <Route path="/signin" exact>
-              <SignIn />
-            </Route>
-            <Route path="/signup" exact>
-              <SignUp />
-            </Route>
-            <Route path="/confirm-otp" exact>
-              <ConfirmOTP />
-            </Route>
-            <Route path="/category/:categoryID">
-              <Category />
-            </Route>
-            <Route path="/confirmation" exact>
-              <Confirmation />
-            </Route>
-            <Route path="/orders" exact>
-              <RecentOrders />
-            </Route>
-          </Switch>
-          <Footer />
+          <TrackingContextProvider>
+            <Header />
+            <Switch>
+              <Route path="/" exact>
+                <Menu />
+              </Route>
+              <Route path="/account" exact>
+                <Account />
+              </Route>
+              <Route path="/signin" exact>
+                <SignIn />
+              </Route>
+              <Route path="/signup" exact>
+                <SignUp />
+              </Route>
+              <Route path="/confirm-otp" exact>
+                <ConfirmOTP />
+              </Route>
+              <Route path="/category/:categoryID">
+                <Category />
+              </Route>
+              <Route path="/confirmation" exact>
+                <Confirmation />
+              </Route>
+              <Route path="/orders" exact>
+                <RecentOrders />
+              </Route>
+            </Switch>
+            <Footer />
+          </TrackingContextProvider>
         </CartContextProvider>
       </LocaleContextProvider>
     </UserContextProvider>
