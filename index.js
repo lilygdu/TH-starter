@@ -19,6 +19,51 @@ app.use(express.json());
 app.use(express.static("dist"));
 app.use(requestIp.mw());
 
+app.post("/page_view", async (request, response) => {
+  const {
+    loggedInUserID,
+    sessionID,
+    userTrackingID,
+    pageName,
+    isCartAbandoned,
+    stripePurchaseID,
+  } = request.body;
+
+  let result = await db.query(
+    `SELECT created_at, last_known_activity_at, id FROM sessions WHERE id = $1;`,
+    [sessionID]
+  );
+  const session = result.rows[0];
+  const now = new Date();
+  if (
+    // no session with that id
+    !session ||
+    // the session is older than 15 minutes
+    differenceInMinutes(now, parseJSON(session.last_known_activity_at)) > 15
+  ) {
+    result = await db.query(
+      `INSERT INTO sessions (logged_in_user_id, ip_address, user_tracking_id) 
+      VALUES ($1, $2, $3) RETURNING id, user_tracking_id;`,
+      [loggedInUserID, request.clientIp, userTrackingID]
+    );
+  } else {
+    result = await db.query(
+      `UPDATE sessions SET last_known_activity_at = CURRENT_TIMESTAMP
+      WHERE id = $1 RETURNING id, user_tracking_id;`,
+      [sessionID]
+    );
+  }
+  const newSessionID = result.rows[0].id;
+
+  await db.query(
+    `INSERT INTO page_visits (session_id, page_name, abandoned_cart, stripe_purchase_id)
+    VALUES ($1, $2, $3, $4);`,
+    [newSessionID, pageName, isCartAbandoned, stripePurchaseID]
+  );
+
+  response.json({ session: result.rows[0] });
+});
+
 app.post("/session", async (request, response) => {
   const { loggedInUserID, sessionID, userTrackingID } = request.body;
 
@@ -181,7 +226,7 @@ app.post("/checkout", async (request, response) => {
       })),
       mode: "payment",
       success_url: `${baseUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: baseUrl,
+      cancel_url: `${baseUrl}?cart_abandoned=true`,
     });
     response.json({ id: session.id });
   } catch (error) {
@@ -295,12 +340,10 @@ app.post("/signin", async (request, response) => {
   const user = match.rows[0];
   if (user) {
     const updateResult = await db.query(
-      `
-      UPDATE th_users
+      `UPDATE th_users
       SET otp = (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6))
       WHERE email = $1
-      RETURNING email, otp;
-      `,
+      RETURNING email, otp;`,
       [email]
     );
     response.json(updateResult.rows[0]);
