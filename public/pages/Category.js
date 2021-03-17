@@ -14,6 +14,7 @@ const Main = styled.main`
   margin: 9rem auto 0;
   min-height: 50rem;
   position: relative;
+  padding: 0 1rem;
 `;
 
 const MainMenuButton = styled(Link)`
@@ -60,12 +61,20 @@ const CategoryHeading = styled.h1`
   font-size: 3.2rem;
   text-align: center;
   height: 3.5rem;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    font-size: 2rem;
+  }
 `;
 
 const Items = styled.section`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 5rem;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    gap: 1rem;
+  }
 `;
 
 const LoadingContainer = styled.div`
