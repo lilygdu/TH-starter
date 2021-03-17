@@ -111,6 +111,7 @@ const SignUp = () => {
   const [isNameValid, setIsNameValid] = React.useState(false);
   const [isEmailValid, setIsEmailValid] = React.useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
+  const [isButtonLoading, setIsButtonLoading] = React.useState(false);
   const { setUserEmail } = React.useContext(UserContext);
   const { locales } = React.useContext(LocaleContext);
   const history = useHistory();
@@ -118,6 +119,7 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     setIsFormSubmitted(true);
     event.preventDefault();
+    setIsButtonLoading(true);
     const { response, data } = await signUp({
       email,
       name,
@@ -136,6 +138,7 @@ const SignUp = () => {
       setTosConsentErrorMessage(data.tos_consent || "");
       setIsEmailValid(!data.email);
       setIsNameValid(!data.name);
+      setIsButtonLoading(false);
     }
   };
 
@@ -216,7 +219,12 @@ const SignUp = () => {
               </>
             }
           />
-          <Button variant="primary" size="lg" $fullWidth>
+          <Button
+            variant="primary"
+            size="lg"
+            $fullWidth
+            isLoading={isButtonLoading}
+          >
             Sign Up
           </Button>
         </form>
