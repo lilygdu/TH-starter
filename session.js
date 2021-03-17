@@ -19,11 +19,19 @@ export const createOrUpdateSession = async ({
     // the session is older than 15 minutes
     differenceInMinutes(now, parseJSON(session.last_known_activity_at)) > 15
   ) {
-    result = await db.query(
-      `INSERT INTO sessions (logged_in_user_id, ip_address, user_tracking_id) 
+    if (userTrackingID) {
+      result = await db.query(
+        `INSERT INTO sessions (logged_in_user_id, ip_address, user_tracking_id) 
       VALUES ($1, $2, $3) RETURNING id, user_tracking_id;`,
-      [loggedInUserID, clientIp, userTrackingID]
-    );
+        [loggedInUserID, clientIp, userTrackingID]
+      );
+    } else {
+      result = await db.query(
+        `INSERT INTO sessions (logged_in_user_id, ip_address) 
+        VALUES ($1, $2) RETURNING id, user_tracking_id;`,
+        [loggedInUserID, clientIp]
+      );
+    }
   } else {
     result = await db.query(
       `UPDATE sessions SET last_known_activity_at = CURRENT_TIMESTAMP
