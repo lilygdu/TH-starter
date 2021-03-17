@@ -60,6 +60,16 @@ pool.query(`
     ip_address cidr NOT NULL
   );
 
+  CREATE TABLE IF NOT EXISTS page_visits(
+    id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    session_id uuid NOT NULL,
+    page_name VARCHAR(256) NOT NULL,
+    visited_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    abandoned_cart BOOLEAN, 
+    stripe_purchase_id VARCHAR(256),
+    CONSTRAINT fk_session
+    FOREIGN KEY (session_id) REFERENCES sessions (id)
+  );
 `);
 
 export default pool;
