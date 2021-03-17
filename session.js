@@ -1,7 +1,7 @@
 import { parseJSON, differenceInMinutes } from "date-fns";
 import db from "./db.js";
 
-export const createSession = async ({
+export const createOrUpdateSession = async ({
   sessionID,
   loggedInUserID,
   clientIp,

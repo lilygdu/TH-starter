@@ -4,7 +4,7 @@ import stripeLibrary from "stripe";
 import requestIp from "request-ip";
 import path from "path";
 import db from "./db.js";
-import { createSession } from "./session.js";
+import { createOrUpdateSession } from "./session.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -29,7 +29,7 @@ app.post("/page_view", async (request, response) => {
     stripePurchaseID,
   } = request.body;
   const { clientIp } = request;
-  const session = await createSession({
+  const session = await createOrUpdateSession({
     sessionID,
     loggedInUserID,
     userTrackingID,
@@ -48,7 +48,7 @@ app.post("/session", async (request, response) => {
   const { loggedInUserID, sessionID, userTrackingID } = request.body;
   const { clientIp } = request;
 
-  const session = await createSession({
+  const session = await createOrUpdateSession({
     sessionID,
     userTrackingID,
     clientIp,
