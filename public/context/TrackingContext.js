@@ -1,5 +1,6 @@
 import React from "react";
 import { UserContext } from "./UserContext";
+import { createSession } from "../utils/tracking";
 
 export const TrackingContext = React.createContext({});
 
@@ -12,19 +13,12 @@ const TrackingContextProvider = ({ children }) => {
     localStorage.getItem("userTrackingID")
   );
 
-  console.log({ sessionID, userID, userTrackingID });
-
   React.useEffect(async () => {
-    const response = await fetch("/session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        loggedInUserID: userID,
-        sessionID,
-        userTrackingID,
-      }),
+    const { response, data } = await createSession({
+      userID,
+      userTrackingID,
+      sessionID,
     });
-    const data = await response.json();
     if (response.ok) {
       setSessionID(data.session.id);
       setUserTrackingID(data.session.user_tracking_id);
