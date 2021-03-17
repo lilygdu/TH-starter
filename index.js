@@ -19,6 +19,11 @@ app.use(express.json());
 app.use(express.static("dist"));
 app.use(requestIp.mw());
 
+app.post("/page_view", async (request, response) => {
+  console.log(request.body);
+  response.json({ hello: "world" });
+});
+
 app.post("/session", async (request, response) => {
   const { loggedInUserID, sessionID, userTrackingID } = request.body;
 
@@ -181,7 +186,7 @@ app.post("/checkout", async (request, response) => {
       })),
       mode: "payment",
       success_url: `${baseUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: baseUrl,
+      cancel_url: `${baseUrl}?cart_abandoned=true`,
     });
     response.json({ id: session.id });
   } catch (error) {
@@ -295,12 +300,10 @@ app.post("/signin", async (request, response) => {
   const user = match.rows[0];
   if (user) {
     const updateResult = await db.query(
-      `
-      UPDATE th_users
+      `UPDATE th_users
       SET otp = (SELECT string_agg(shuffle('0123456789')::char, '') FROM generate_series(1, 6))
       WHERE email = $1
-      RETURNING email, otp;
-      `,
+      RETURNING email, otp;`,
       [email]
     );
     response.json(updateResult.rows[0]);
