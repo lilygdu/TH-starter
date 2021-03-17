@@ -1,10 +1,10 @@
 import express from "express";
 import dirname from "es-dirname";
-import { parseJSON, differenceInMinutes } from "date-fns";
-import path from "path";
-import db from "./db.js";
 import stripeLibrary from "stripe";
 import requestIp from "request-ip";
+import path from "path";
+import db from "./db.js";
+import { createOrUpdateSession } from "./session.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,71 +28,34 @@ app.post("/page_view", async (request, response) => {
     isCartAbandoned,
     stripePurchaseID,
   } = request.body;
-
-  let result = await db.query(
-    `SELECT created_at, last_known_activity_at, id FROM sessions WHERE id = $1;`,
-    [sessionID]
-  );
-  const session = result.rows[0];
-  const now = new Date();
-  if (
-    // no session with that id
-    !session ||
-    // the session is older than 15 minutes
-    differenceInMinutes(now, parseJSON(session.last_known_activity_at)) > 15
-  ) {
-    result = await db.query(
-      `INSERT INTO sessions (logged_in_user_id, ip_address, user_tracking_id) 
-      VALUES ($1, $2, $3) RETURNING id, user_tracking_id;`,
-      [loggedInUserID, request.clientIp, userTrackingID]
-    );
-  } else {
-    result = await db.query(
-      `UPDATE sessions SET last_known_activity_at = CURRENT_TIMESTAMP
-      WHERE id = $1 RETURNING id, user_tracking_id;`,
-      [sessionID]
-    );
-  }
-  const newSessionID = result.rows[0].id;
-
+  const { clientIp } = request;
+  const session = await createOrUpdateSession({
+    sessionID,
+    loggedInUserID,
+    userTrackingID,
+    clientIp,
+  });
   await db.query(
     `INSERT INTO page_visits (session_id, page_name, abandoned_cart, stripe_purchase_id)
     VALUES ($1, $2, $3, $4);`,
-    [newSessionID, pageName, isCartAbandoned, stripePurchaseID]
+    [session.id, pageName, isCartAbandoned, stripePurchaseID]
   );
 
-  response.json({ session: result.rows[0] });
+  response.json({ session });
 });
 
 app.post("/session", async (request, response) => {
   const { loggedInUserID, sessionID, userTrackingID } = request.body;
+  const { clientIp } = request;
 
-  const result = await db.query(
-    `SELECT created_at, last_known_activity_at, id FROM sessions WHERE id = $1;`,
-    [sessionID]
-  );
-  const session = result.rows[0];
-  const now = new Date();
-  if (
-    // no session with that id
-    !session ||
-    // the session is older than 15 minutes
-    differenceInMinutes(now, parseJSON(session.last_known_activity_at)) > 15
-  ) {
-    const insertResult = await db.query(
-      `INSERT INTO sessions (logged_in_user_id, ip_address, user_tracking_id) 
-      VALUES ($1, $2, $3) RETURNING id, user_tracking_id;`,
-      [loggedInUserID, request.clientIp, userTrackingID]
-    );
-    response.json({ session: insertResult.rows[0] });
-  } else {
-    const updateResult = await db.query(
-      `UPDATE sessions SET last_known_activity_at = CURRENT_TIMESTAMP
-      WHERE id = $1 RETURNING id, user_tracking_id;`,
-      [sessionID]
-    );
-    response.json({ session: updateResult.rows[0] });
-  }
+  const session = await createOrUpdateSession({
+    sessionID,
+    userTrackingID,
+    clientIp,
+    loggedInUserID,
+  });
+
+  response.json({ session });
 });
 
 app.get("/sessions/:sessionID", async (request, response) => {
