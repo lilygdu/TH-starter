@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "./UserContext";
-import { createSession } from "../utils/tracking";
+import { createSession, createPageView } from "../utils/tracking";
 
 export const TrackingContext = React.createContext({});
 
@@ -43,7 +43,7 @@ const TrackingContextProvider = ({ children }) => {
     }
   }, [userTrackingID]);
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
     const query = new URLSearchParams(window.location.search);
     const stripePurchaseID = query.get("session_id");
     const isCartAbandoned = stripePurchaseID
@@ -51,16 +51,18 @@ const TrackingContextProvider = ({ children }) => {
       : query.get("cart_abandoned") === "true"
       ? true
       : null;
-    fetch("/page_view", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sessionID,
-        pageName: location.pathname,
-        stripePurchaseID,
-        isCartAbandoned,
-      }),
+    const { response, data } = await createPageView({
+      sessionID,
+      pageName: location.pathname,
+      isCartAbandoned,
+      userID,
+      userTrackingID,
+      stripePurchaseID,
     });
+    if (response.ok) {
+      setSessionID(data.session.id);
+      setUserTrackingID(data.session.user_tracking_id);
+    }
   }, [location]);
 
   return (

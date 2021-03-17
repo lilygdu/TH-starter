@@ -20,8 +20,48 @@ app.use(express.static("dist"));
 app.use(requestIp.mw());
 
 app.post("/page_view", async (request, response) => {
-  console.log(request.body);
-  response.json({ hello: "world" });
+  const {
+    loggedInUserID,
+    sessionID,
+    userTrackingID,
+    pageName,
+    isCartAbandoned,
+    stripePurchaseID,
+  } = request.body;
+
+  let result = await db.query(
+    `SELECT created_at, last_known_activity_at, id FROM sessions WHERE id = $1;`,
+    [sessionID]
+  );
+  const session = result.rows[0];
+  const now = new Date();
+  if (
+    // no session with that id
+    !session ||
+    // the session is older than 15 minutes
+    differenceInMinutes(now, parseJSON(session.last_known_activity_at)) > 15
+  ) {
+    result = await db.query(
+      `INSERT INTO sessions (logged_in_user_id, ip_address, user_tracking_id) 
+      VALUES ($1, $2, $3) RETURNING id, user_tracking_id;`,
+      [loggedInUserID, request.clientIp, userTrackingID]
+    );
+  } else {
+    result = await db.query(
+      `UPDATE sessions SET last_known_activity_at = CURRENT_TIMESTAMP
+      WHERE id = $1 RETURNING id, user_tracking_id;`,
+      [sessionID]
+    );
+  }
+  const newSessionID = result.rows[0].id;
+
+  await db.query(
+    `INSERT INTO page_visits (session_id, page_name, abandoned_cart, stripe_purchase_id)
+    VALUES ($1, $2, $3, $4);`,
+    [newSessionID, pageName, isCartAbandoned, stripePurchaseID]
+  );
+
+  response.json({ session: result.rows[0] });
 });
 
 app.post("/session", async (request, response) => {
