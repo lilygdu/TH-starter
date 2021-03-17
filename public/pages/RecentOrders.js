@@ -1,16 +1,23 @@
 import React from "react";
 import styled from "styled-components";
-
+import Styles from "../styles";
 import { Helmet } from "react-helmet";
 import { fetchRecentItemsSanityIds, fetchRecentOrders } from "../utils/recent";
 import { UserContext } from "../context/UserContext";
 import Button from "../components/Button";
 import RecentItem from "../components/RecentItem";
 import RecentOrder from "../components/RecentOrder";
+import LoadingAnimation from "../components/LoadingAnimation";
 
 const Main = styled.main`
   margin: ${({ topMargin }) => (topMargin ? "16rem auto" : "10rem auto")};
   max-width: 51.5rem;
+`;
+
+const LoadingContainer = styled.div`
+  margin: 15rem auto;
+  grid-column: 1 / -1;
+  color: ${Styles.color.loading.red};
 `;
 
 const ItemsHeading = styled.h1`
@@ -70,34 +77,41 @@ const StartOrderButton = styled(Button)`
 const RecentOrders = () => {
   const [recentItems, setRecentItems] = React.useState([]);
   const [recentOrders, setRecentOrders] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
   const { userID } = React.useContext(UserContext);
   const showRecentOrders = recentOrders.length > 0;
 
   React.useEffect(async () => {
-    const { response, data } = await fetchRecentItemsSanityIds({ userID });
-    if (response.ok) {
-      setRecentItems(data.items);
-    }
-  }, []);
-
-  React.useEffect(async () => {
-    const { response, data } = await fetchRecentOrders({ userID });
-    if (response.ok) {
-      setRecentOrders(data.purchases);
+    const { itemResponse, itemData } = await fetchRecentItemsSanityIds({
+      userID,
+    });
+    const { orderResponse, orderData } = await fetchRecentOrders({ userID });
+    if (itemResponse.ok && orderResponse.ok) {
+      setIsLoading(false);
+      setRecentItems(itemData.items);
+      setRecentOrders(orderData.purchases);
+    } else {
+      setIsLoading(true);
+      if (!!showRecentOrders) {
+        setIsLoading(false);
+      }
     }
   }, []);
 
   return (
-
     <>
       <Helmet>
         <title>Tim Hortons - Recent Orders</title>
       </Helmet>
       <Main topMargin={!showRecentOrders}>
+        {isLoading && (
+          <LoadingContainer>
+            <LoadingAnimation />
+          </LoadingContainer>
+        )}
         {showRecentOrders && (
           <RecentItems>
             <ItemsHeading>Recent Items</ItemsHeading>
-
 
             <Carousel>
               {recentItems.map((sanityID) => (
@@ -107,24 +121,34 @@ const RecentOrders = () => {
           </RecentItems>
         )}
         <Orders>
-          <OrdersHeading large={!showRecentOrders}>Recent Orders</OrdersHeading>
-          {recentOrders.map(({ id, createdAt, items }) => (
-            <RecentOrder key={id} id={id} createdAt={createdAt} items={items} />
-          ))}
-          {!showRecentOrders && (
-            <EmptyOrdersDisplay>
-              <CoffeeIcon>
-                <i className="fas fa-mug-hot"></i>
-              </CoffeeIcon>
-              <EmptyOrdersHeading>
-                Recent orders & items will appear here
-              </EmptyOrdersHeading>
-              <StartOrderText>Go start a new order now!</StartOrderText>
-              <StartOrderButton to="/" variant="primary" size="lg">
-                Start Order
-              </StartOrderButton>
-            </EmptyOrdersDisplay>
+          {!isLoading && (
+            <OrdersHeading large={!showRecentOrders}>
+              Recent Orders
+            </OrdersHeading>
           )}
+          {showRecentOrders
+            ? recentOrders.map(({ id, createdAt, items }) => (
+                <RecentOrder
+                  key={id}
+                  id={id}
+                  createdAt={createdAt}
+                  items={items}
+                />
+              ))
+            : !isLoading && (
+                <EmptyOrdersDisplay>
+                  <CoffeeIcon>
+                    <i className="fas fa-mug-hot"></i>
+                  </CoffeeIcon>
+                  <EmptyOrdersHeading>
+                    Recent orders & items will appear here
+                  </EmptyOrdersHeading>
+                  <StartOrderText>Go start a new order now!</StartOrderText>
+                  <StartOrderButton to="/" variant="primary" size="lg">
+                    Start Order
+                  </StartOrderButton>
+                </EmptyOrdersDisplay>
+              )}
         </Orders>
       </Main>
     </>

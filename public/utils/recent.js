@@ -1,13 +1,13 @@
 export const fetchRecentItemsSanityIds = async ({ userID }) => {
-  const response = await fetch(`/users/${userID}/recent_items`);
-  const data = await response.json();
-  return { response, data };
+  const itemResponse = await fetch(`/users/${userID}/recent_items`);
+  const itemData = await itemResponse.json();
+  return { itemResponse, itemData };
 };
 
 export const fetchRecentOrders = async ({ userID }) => {
-  const response = await fetch(`/users/${userID}/recent_orders`);
-  const data = await response.json();
-  return { response, data };
+  const orderResponse = await fetch(`/users/${userID}/recent_orders`);
+  const orderData = await orderResponse.json();
+  return { orderResponse, orderData };
 };
 
 const itemQuery = (sanityID) => `
