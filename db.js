@@ -50,6 +50,16 @@ pool.query(`
     CONSTRAINT fk_purchase
     FOREIGN KEY (purchase_id) REFERENCES purchases (id)
   );
+
+  CREATE TABLE IF NOT EXISTS sessions(
+    id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_tracking_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    logged_in_user_id uuid REFERENCES th_users (id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    last_known_activity_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    ip_address cidr NOT NULL
+  );
+
 `);
 
 export default pool;
