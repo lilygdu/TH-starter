@@ -7,9 +7,10 @@ import { fetchCategories } from "../utils/menu";
 import Category from "../components/Category";
 
 const Main = styled.main`
-  max-width: 60rem;
+  max-width: 80rem;
   margin: 9rem auto 0;
   min-height: 50rem;
+  padding: 0 1rem;
 `;
 
 const MenuHeading = styled.h1`
@@ -20,8 +21,12 @@ const MenuHeading = styled.h1`
 
 const Categories = styled.section`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 5rem;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    gap: 1rem;
+  }
 `;
 
 const LoadingContainer = styled.div`

@@ -9,6 +9,7 @@ const ItemWrapper = styled.div`
   text-decoration: none;
   text-align: center;
   display: block;
+  padding-bottom: 2rem;
 `;
 
 const Name = styled.h2`
@@ -32,6 +33,12 @@ const ImageWrapper = styled.div`
   width: 100%;
   height: 15rem;
   position: relative;
+  justify-content: center;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    width: 100%;
+    margin: 0 auto;
+  }
 `;
 
 const Image = styled.img`
@@ -46,8 +53,12 @@ const Image = styled.img`
 `;
 
 const ButtonWrapper = styled.div`
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    width: 100%;
+  }
 `;
 
 const Price = styled.b`
