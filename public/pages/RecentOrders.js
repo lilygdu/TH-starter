@@ -12,6 +12,7 @@ import LoadingAnimation from "../components/LoadingAnimation";
 const Main = styled.main`
   margin: ${({ topMargin }) => (topMargin ? "16rem auto" : "10rem auto")};
   max-width: 51.5rem;
+  min-height: 25rem;
 `;
 
 const LoadingContainer = styled.div`
@@ -78,24 +79,31 @@ const RecentOrders = () => {
   const [recentItems, setRecentItems] = React.useState([]);
   const [recentOrders, setRecentOrders] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const { userID } = React.useContext(UserContext);
+  const { userID, redirectIfNotLoggedIn } = React.useContext(UserContext);
   const showRecentOrders = recentOrders.length > 0;
 
   React.useEffect(async () => {
-    const { itemResponse, itemData } = await fetchRecentItemsSanityIds({
+    const {
+      response: itemResponse,
+      data: itemData,
+    } = await fetchRecentItemsSanityIds({
       userID,
     });
-    const { orderResponse, orderData } = await fetchRecentOrders({ userID });
+    const {
+      response: orderResponse,
+      data: orderData,
+    } = await fetchRecentOrders({ userID });
+
     if (itemResponse.ok && orderResponse.ok) {
-      setIsLoading(false);
       setRecentItems(itemData.items);
       setRecentOrders(orderData.purchases);
-    } else {
-      setIsLoading(true);
-      if (!!showRecentOrders) {
-        setIsLoading(false);
-      }
     }
+
+    setIsLoading(false);
+  }, []);
+
+  React.useEffect(() => {
+    redirectIfNotLoggedIn();
   }, []);
 
   return (
@@ -104,38 +112,35 @@ const RecentOrders = () => {
         <title>Tim Hortons - Recent Orders</title>
       </Helmet>
       <Main topMargin={!showRecentOrders}>
-        {isLoading && (
+        {isLoading ? (
           <LoadingContainer>
             <LoadingAnimation />
           </LoadingContainer>
-        )}
-        {showRecentOrders && (
-          <RecentItems>
-            <ItemsHeading>Recent Items</ItemsHeading>
-
-            <Carousel>
-              {recentItems.map((sanityID) => (
-                <RecentItem key={sanityID} sanityID={sanityID} />
-              ))}
-            </Carousel>
-          </RecentItems>
-        )}
-        <Orders>
-          {!isLoading && (
-            <OrdersHeading large={!showRecentOrders}>
-              Recent Orders
-            </OrdersHeading>
-          )}
-          {showRecentOrders
-            ? recentOrders.map(({ id, createdAt, items }) => (
+        ) : (
+          <>
+            {showRecentOrders && (
+              <RecentItems>
+                <ItemsHeading>Recent Items</ItemsHeading>
+                <Carousel>
+                  {recentItems.map((sanityID) => (
+                    <RecentItem key={sanityID} sanityID={sanityID} />
+                  ))}
+                </Carousel>
+              </RecentItems>
+            )}
+            <Orders>
+              <OrdersHeading large={!showRecentOrders}>
+                Recent Orders
+              </OrdersHeading>
+              {recentOrders.map(({ id, createdAt, items }) => (
                 <RecentOrder
                   key={id}
                   id={id}
                   createdAt={createdAt}
                   items={items}
                 />
-              ))
-            : !isLoading && (
+              ))}
+              {!showRecentOrders && (
                 <EmptyOrdersDisplay>
                   <CoffeeIcon>
                     <i className="fas fa-mug-hot"></i>
@@ -149,7 +154,9 @@ const RecentOrders = () => {
                   </StartOrderButton>
                 </EmptyOrdersDisplay>
               )}
-        </Orders>
+            </Orders>
+          </>
+        )}
       </Main>
     </>
   );
