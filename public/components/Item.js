@@ -104,6 +104,11 @@ const Item = ({ name, image, lqip, id, price, calories }) => {
           size="md"
           onClick={() => addToCart({ name, image, price, id })}
           className="add-to-order"
+          data-tracking-action="add-item-to-cart"
+          data-tracking-element="button"
+          data-tracking-type="item"
+          data-tracking-name={name}
+          data-tracking-id={id}
         >
           <span>Add to order</span>
           <Price>{displayPrice}</Price>

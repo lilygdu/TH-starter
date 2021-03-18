@@ -72,9 +72,13 @@ const ModalButton = styled(BaseButton)`
 
 const Account = () => {
   const [dialogOpen, setDialogOpen] = React.useState(false);
-  const { redirectIfNotLoggedIn, setUserEmail, setUserID } = React.useContext(
-    UserContext
-  );
+  const {
+    redirectIfNotLoggedIn,
+    setUserEmail,
+    setUserID,
+    userID,
+    userEmail,
+  } = React.useContext(UserContext);
   const { clearCart } = React.useContext(CartContext);
   const { locales, setSelectedLocale } = React.useContext(LocaleContext);
   const history = useHistory();
@@ -132,7 +136,11 @@ const Account = () => {
               </AccountOptionsLink>
             </AccountOptionsItem>
             <AccountOptionsItem>
-              <AccountOptionsLink to="/orders">
+              <AccountOptionsLink
+                to="/orders"
+                data-tracking-action="navigate-to-orders"
+                data-tracking-element="link"
+              >
                 <AccountOptionsText>Recent Orders</AccountOptionsText>
                 <i className="fas fa-chevron-right"></i>
               </AccountOptionsLink>
@@ -149,6 +157,11 @@ const Account = () => {
               <AccountOptionsLink
                 to="#"
                 onClick={handleAccountOptionsLinkClick}
+                data-tracking-action="open-sign-out-dialog"
+                data-tracking-element="link"
+                data-tracking-type="account"
+                data-tracking-name={userEmail}
+                data-tracking-id={userID}
               >
                 <AccountOptionsText>Sign Out</AccountOptionsText>
                 <i className="fas fa-chevron-right"></i>
@@ -161,6 +174,11 @@ const Account = () => {
         onClick={() => setDialogOpen(false)}
         open={dialogOpen}
         onTransitionEnd={handleDialogTransition}
+        data-tracking-action="close-sign-out-dialog"
+        data-tracking-element="dialog"
+        data-tracking-type="account"
+        data-tracking-name={userEmail}
+        data-tracking-id={userID}
       >
         <Modal>
           <DialogHeading>Sign Out</DialogHeading>
@@ -171,6 +189,11 @@ const Account = () => {
               size="lg"
               onClick={signOut}
               ref={confirmButtonRef}
+              data-tracking-action="confirm-sign-out"
+              data-tracking-element="button"
+              data-tracking-type="account"
+              data-tracking-name={userEmail}
+              data-tracking-id={userID}
             >
               Yes
             </ModalButton>
@@ -178,6 +201,11 @@ const Account = () => {
               variant="outline"
               size="lg"
               onClick={() => setDialogOpen(false)}
+              data-tracking-action="close-sign-out-dialog"
+              data-tracking-element="button"
+              data-tracking-type="account"
+              data-tracking-name={userEmail}
+              data-tracking-id={userID}
             >
               No
             </ModalButton>

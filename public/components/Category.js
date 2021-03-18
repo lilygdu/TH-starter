@@ -38,7 +38,14 @@ const Category = ({ name, image, lqip, id }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
 
   return (
-    <CategoryLink to={`/category/${id}`}>
+    <CategoryLink
+      to={`/category/${id}`}
+      data-tracking-action="navigate-to-category"
+      data-tracking-element="link"
+      data-tracking-type="category"
+      data-tracking-name={name}
+      data-tracking-id={id}
+    >
       <ImageWrapper>
         <Image
           src={lqip}

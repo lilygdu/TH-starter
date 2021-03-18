@@ -256,7 +256,13 @@ const RecentOrder = ({ id, createdAt, items }) => {
             {totalItems > 1 && (
               <>
                 ,{" "}
-                <MoreItems onClick={handleViewDetailsClick}>
+                <MoreItems
+                  onClick={handleViewDetailsClick}
+                  data-tracking-action="open-recent-order-details-dialog"
+                  data-tracking-element="span"
+                  data-tracking-type="purchase"
+                  data-tracking-id={id}
+                >
                   {totalItems - 1} more items...
                 </MoreItems>
               </>
@@ -269,6 +275,10 @@ const RecentOrder = ({ id, createdAt, items }) => {
             size="lg"
             onClick={handleViewDetailsClick}
             $fullWidth
+            data-tracking-action="open-recent-order-details-dialog"
+            data-tracking-element="button"
+            data-tracking-type="purchase"
+            data-tracking-id={id}
           >
             View Details
           </ViewDetailsButton>
@@ -277,12 +287,23 @@ const RecentOrder = ({ id, createdAt, items }) => {
             size="lg"
             onClick={handleReorderClick}
             $fullWidth
+            data-tracking-action="reorder-recent-purchase"
+            data-tracking-element="button"
+            data-tracking-type="purchase"
+            data-tracking-id={id}
           >
             Reorder
           </ReorderButton>
         </Right>
       </Wrapper>
-      <OrderDetails onClick={() => setDialogOpen(false)} open={dialogOpen}>
+      <OrderDetails
+        onClick={() => setDialogOpen(false)}
+        open={dialogOpen}
+        data-tracking-action="close-recent-order-details-dialog"
+        data-tracking-element="dialog"
+        data-tracking-type="purchase"
+        data-tracking-id={id}
+      >
         <Modal>
           <DialogHeading>Order Details</DialogHeading>
           <ModalTop>
@@ -320,6 +341,10 @@ const RecentOrder = ({ id, createdAt, items }) => {
               variant="primary"
               size="lg"
               onClick={handleReorderClick}
+              data-tracking-action="reorder-recent-purchase-from-dialog"
+              data-tracking-element="button"
+              data-tracking-type="purchase"
+              data-tracking-id={id}
             >
               Reorder
             </ModalReorderButton>
