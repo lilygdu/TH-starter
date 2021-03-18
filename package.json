@@ -24,6 +24,7 @@
     "styled-components": "^5.2.1"
   },
   "scripts": {
-    "start": "parcel watch public/index.html & node index.js"
+    "dev": "parcel watch public/index.html & node index.js",
+    "start": "parcel build public/index.html && node index.js"
   }
 }
