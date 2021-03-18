@@ -89,7 +89,16 @@ const RecentItem = ({ sanityID }) => {
         </ImageWrapper>
         <Name>{item.name}</Name>
       </Top>
-      <AddButton variant="outline" size="md" onClick={() => addToCart(item)}>
+      <AddButton
+        variant="outline"
+        size="md"
+        onClick={() => addToCart(item)}
+        data-tracking-action="add-recent-item-to-cart"
+        data-tracking-element="button"
+        data-tracking-type="item"
+        data-tracking-name={item.name}
+        data-tracking-id={item.id}
+      >
         Add +
       </AddButton>
     </Wrapper>

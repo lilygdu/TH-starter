@@ -172,6 +172,9 @@ const Cart = ({ open }) => {
             variant="primary"
             size="lg"
             disabled={items.length === 0}
+            data-tracking-action="checkout"
+            data-tracking-element="button"
+            data-tracking-type="cart"
           >
             Checkout
           </CheckoutButton>

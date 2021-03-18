@@ -130,24 +130,48 @@ const CartItem = ({ item }) => {
           </Price>
         </ItemTop>
         <ItemBottom>
-          <RemoveButton onClick={() => setRemoveDialogOpen(true)}>
+          <RemoveButton
+            data-tracking-action="open-remove-item-from-cart-dialog"
+            data-tracking-element="button"
+            data-tracking-type="item"
+            data-tracking-name={item.name}
+            data-tracking-id={item.id}
+            onClick={() => setRemoveDialogOpen(true)}
+          >
             Remove
           </RemoveButton>
           <QuantityButtonsWrapper>
             <QuantityButton
               onClick={() => decrementQuantity(item)}
               disabled={item.quantity <= 1}
+              data-tracking-action="decrement-cart-item"
+              data-tracking-element="button"
+              data-tracking-type="item"
+              data-tracking-name={item.name}
+              data-tracking-id={item.id}
             >
               <i className="fas fa-minus"></i>
             </QuantityButton>
             <Quantity>{item.quantity}</Quantity>
-            <QuantityButton onClick={() => addToCart(item)}>
+            <QuantityButton
+              data-tracking-action="increment-cart-item"
+              data-tracking-element="button"
+              data-tracking-type="item"
+              data-tracking-name={item.name}
+              data-tracking-id={item.id}
+              onClick={() => addToCart(item)}
+            >
               <i className="fas fa-plus"></i>
             </QuantityButton>
           </QuantityButtonsWrapper>
         </ItemBottom>
       </ItemWrapper>
       <RemoveItemDialog
+        data-tracking-action="close-remove-item-from-cart-dialog"
+        data-tracking-element="dialog"
+        data-tracking-type="item"
+        data-tracking-name={item.name}
+        data-tracking-id={item.id}
         onClick={() => setRemoveDialogOpen(false)}
         open={removeDialogOpen}
         onTransitionEnd={handleDialogTransition}
@@ -159,6 +183,11 @@ const CartItem = ({ item }) => {
           </DialogText>
           <ModalButtonWrapper>
             <ModalButton
+              data-tracking-action="confirm-remove-item-from-cart"
+              data-tracking-element="button"
+              data-tracking-type="item"
+              data-tracking-name={item.name}
+              data-tracking-id={item.id}
               variant="primary"
               size="lg"
               onClick={handleOkayClick}
@@ -169,6 +198,11 @@ const CartItem = ({ item }) => {
             <ModalButton
               variant="outline"
               size="lg"
+              data-tracking-action="cancel-remove-item-from-cart"
+              data-tracking-element="button"
+              data-tracking-type="item"
+              data-tracking-name={item.name}
+              data-tracking-id={item.id}
               onClick={() => setRemoveDialogOpen(false)}
             >
               Cancel
