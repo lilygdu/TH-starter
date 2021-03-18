@@ -16,10 +16,10 @@ const stripe = stripeLibrary(
 );
 const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
 
+app.use(sslRedirect.default());
 app.use(express.json());
 app.use(express.static("dist"));
 app.use(requestIp.mw());
-app.use(sslRedirect());
 
 app.post("/click_event", async (request, response) => {
   const {
