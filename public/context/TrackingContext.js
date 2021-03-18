@@ -1,7 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "./UserContext";
-import { createSession, createPageView } from "../utils/tracking";
+import {
+  createSession,
+  createPageVisit,
+  createClickEvent,
+} from "../utils/tracking";
 
 export const TrackingContext = React.createContext({});
 
@@ -52,7 +56,7 @@ const TrackingContextProvider = ({ children }) => {
       : query.get("cart_abandoned") === "true"
       ? true
       : null;
-    const { response, data } = await createPageView({
+    const { response, data } = await createPageVisit({
       sessionID,
       pageName: location.pathname,
       isCartAbandoned,
@@ -67,28 +71,37 @@ const TrackingContextProvider = ({ children }) => {
     }
   }, [location]);
 
-  const trackClick = (event) => {
+  const trackClick = async (event) => {
     const { offsetWidth, offsetHeight } = document.body;
     const { pageX, pageY } = event;
     const percentX = Math.round((100 * pageX) / offsetWidth);
     const percentY = Math.round((100 * pageY) / offsetHeight);
     const {
-      trackingId,
+      trackingId: trackingID,
       trackingAction,
       trackingName,
       trackingType,
       trackingElement,
     } = event.currentTarget.dataset;
-    console.log({
+    const { response, data } = await createClickEvent({
+      pageName: location.pathname,
+      sessionID,
+      userID,
+      userTrackingID,
       percentX,
       percentY,
-      trackingId,
+      trackingID,
       trackingAction,
       trackingElement,
       trackingType,
       trackingName,
       pageVisitID,
     });
+    if (response.ok) {
+      setSessionID(data.session.id);
+      setUserTrackingID(data.session.user_tracking_id);
+      setPageVisitID(data.pageVisitID);
+    }
   };
 
   return (

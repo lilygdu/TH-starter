@@ -225,6 +225,8 @@ const AppHeader = () => {
               size="md"
               onClick={handleToggleCartVisibility}
               ref={cartButton}
+              data-tracking-action="toggle-cart-visibility"
+              data-tracking-element="button"
             >
               <i className="fas fa-shopping-bag"></i>{" "}
               <span>{totalItemsInCart}</span>
