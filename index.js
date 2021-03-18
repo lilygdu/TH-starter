@@ -2,7 +2,6 @@ import express from "express";
 import dirname from "es-dirname";
 import stripeLibrary from "stripe";
 import requestIp from "request-ip";
-import sslRedirect from "heroku-ssl-redirect";
 import path from "path";
 import db from "./db.js";
 import { createOrUpdateSession } from "./session.js";
@@ -16,7 +15,16 @@ const stripe = stripeLibrary(
 );
 const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
 
-app.use(sslRedirect.default());
+app.use((request, response, next) => {
+  if (
+    process.env.NODE_ENV === "production" &&
+    request.headers["x-forwarded-proto"] !== "https"
+  ) {
+    return response.redirect("https://" + request.headers.host + request.url);
+  }
+  return next();
+});
+
 app.use(express.json());
 app.use(express.static("dist"));
 app.use(requestIp.mw());
