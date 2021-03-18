@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import slugify from "slugify";
 import { TrackingContext } from "../context/TrackingContext";
 import Styles from "../styles";
 
@@ -41,7 +42,7 @@ const Category = ({ name, image, lqip, id }) => {
 
   return (
     <CategoryLink
-      to={`/category/${id}`}
+      to={`/category/${slugify(name, { lower: true })}/${id}`}
       data-tracking-action="navigate-to-category"
       data-tracking-element="link"
       data-tracking-type="category"
