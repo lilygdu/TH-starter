@@ -35,13 +35,14 @@ app.post("/page_view", async (request, response) => {
     userTrackingID,
     clientIp,
   });
-  await db.query(
+  const result = await db.query(
     `INSERT INTO page_visits (session_id, page_name, abandoned_cart, stripe_purchase_id)
-    VALUES ($1, $2, $3, $4);`,
+    VALUES ($1, $2, $3, $4) RETURNING id;`,
     [session.id, pageName, isCartAbandoned, stripePurchaseID]
   );
+  const pageVisitID = result.rows[0].id;
 
-  response.json({ session });
+  response.json({ session, pageVisitID });
 });
 
 app.post("/session", async (request, response) => {

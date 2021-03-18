@@ -1,6 +1,7 @@
 import React from "react";
 import { fetchItem } from "../utils/recent";
 import { CartContext } from "../context/CartContext";
+import { TrackingContext } from "../context/TrackingContext";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Styles from "../styles";
@@ -54,6 +55,7 @@ const RecentItem = ({ sanityID }) => {
   const { addToCart } = React.useContext(CartContext);
   const [item, setItem] = React.useState({});
   const [imageLoaded, setImageLoaded] = React.useState(false);
+  const { trackClick } = React.useContext(TrackingContext);
   React.useEffect(async () => {
     const data = await fetchItem({ sanityID });
     setItem({
@@ -64,6 +66,11 @@ const RecentItem = ({ sanityID }) => {
       id: sanityID,
     });
   }, []);
+
+  const handleClick = (event, item) => {
+    trackClick(event);
+    addToCart(item);
+  };
 
   return (
     <Wrapper>
@@ -92,7 +99,7 @@ const RecentItem = ({ sanityID }) => {
       <AddButton
         variant="outline"
         size="md"
-        onClick={() => addToCart(item)}
+        onClick={(event) => handleClick(event, item)}
         data-tracking-action="add-recent-item-to-cart"
         data-tracking-element="button"
         data-tracking-type="item"

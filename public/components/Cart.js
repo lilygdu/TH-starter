@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 import { LocaleContext } from "../context/LocaleContext";
+import { TrackingContext } from "../context/TrackingContext";
 import Button from "./Button";
 import CartItem from "./CartItem";
 import Styles from "../styles";
@@ -108,11 +109,13 @@ const Cart = ({ open }) => {
   const { items, cartVisible, setCartVisible } = React.useContext(CartContext);
   const { userEmail, userID, isLoggedIn } = React.useContext(UserContext);
   const { selectedLocale } = React.useContext(LocaleContext);
+  const { trackClick } = React.useContext(TrackingContext);
   const [showCartShadow, setShowCartShadow] = React.useState(false);
   const cartTop = React.useRef();
   const history = useHistory();
 
-  const handleCheckoutClick = async () => {
+  const handleCheckoutClick = async (event) => {
+    trackClick(event);
     setCartVisible(false);
     if (isLoggedIn) {
       initiateCheckout({

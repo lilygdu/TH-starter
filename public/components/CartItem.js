@@ -4,6 +4,7 @@ import Styles from "../styles";
 import { CartContext } from "../context/CartContext";
 import { LocaleContext } from "../context/LocaleContext";
 import { formatCents } from "../utils/price";
+import { TrackingContext } from "../context/TrackingContext";
 import Dialog from "./Dialog";
 import Button from "./Button";
 
@@ -106,11 +107,34 @@ const CartItem = ({ item }) => {
     CartContext
   );
   const { selectedLocale } = React.useContext(LocaleContext);
+  const { trackClick } = React.useContext(TrackingContext);
+
   const okayButtonRef = React.useRef();
 
-  const handleOkayClick = () => {
+  const handleOkayClick = (event) => {
     removeFromCart(item);
     setRemoveDialogOpen(false);
+    trackClick(event);
+  };
+
+  const handleRemoveButtonClick = (event) => {
+    trackClick(event);
+    setRemoveDialogOpen(true);
+  };
+
+  const handleDialogCloseClick = (event) => {
+    trackClick(event);
+    setRemoveDialogOpen(false);
+  };
+
+  const handleDecrementClick = (event, item) => {
+    trackClick(event);
+    decrementQuantity(item);
+  };
+
+  const handleIncrementClick = (event, item) => {
+    trackClick(event);
+    addToCart(item);
   };
 
   const handleDialogTransition = () => {
@@ -136,13 +160,13 @@ const CartItem = ({ item }) => {
             data-tracking-type="item"
             data-tracking-name={item.name}
             data-tracking-id={item.id}
-            onClick={() => setRemoveDialogOpen(true)}
+            onClick={handleRemoveButtonClick}
           >
             Remove
           </RemoveButton>
           <QuantityButtonsWrapper>
             <QuantityButton
-              onClick={() => decrementQuantity(item)}
+              onClick={(event) => handleDecrementClick(event, item)}
               disabled={item.quantity <= 1}
               data-tracking-action="decrement-cart-item"
               data-tracking-element="button"
@@ -159,7 +183,7 @@ const CartItem = ({ item }) => {
               data-tracking-type="item"
               data-tracking-name={item.name}
               data-tracking-id={item.id}
-              onClick={() => addToCart(item)}
+              onClick={(event) => handleIncrementClick(event, item)}
             >
               <i className="fas fa-plus"></i>
             </QuantityButton>
@@ -172,7 +196,7 @@ const CartItem = ({ item }) => {
         data-tracking-type="item"
         data-tracking-name={item.name}
         data-tracking-id={item.id}
-        onClick={() => setRemoveDialogOpen(false)}
+        onClick={handleDialogCloseClick}
         open={removeDialogOpen}
         onTransitionEnd={handleDialogTransition}
       >
@@ -203,7 +227,7 @@ const CartItem = ({ item }) => {
               data-tracking-type="item"
               data-tracking-name={item.name}
               data-tracking-id={item.id}
-              onClick={() => setRemoveDialogOpen(false)}
+              onClick={handleDialogCloseClick}
             >
               Cancel
             </ModalButton>

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 import { LocaleContext } from "../context/LocaleContext";
+import { TrackingContext } from "../context/TrackingContext";
 import Button from "../components/Button";
 import Dialog from "../components/Dialog";
 import Styles from "../styles";
@@ -93,17 +94,19 @@ const DialogHeading = styled.h2`
 `;
 
 const OrderDetails = styled(Dialog)``;
+
 const OrderDetailsWrapper = styled.div`
   text-align: left;
   margin-top: 2.5rem;
 `;
+
 const ModalOrderDate = styled.div`
   font-weight: bold;
 `;
+
 const ModalOrderNumber = styled.div``;
 const ModalOrderTime = styled.div``;
 const OrderMethod = styled.div``;
-const OrderLocation = styled.div``;
 
 const ReorderButton = styled(Button)`
   white-space: pre;
@@ -184,6 +187,7 @@ const RecentOrder = ({ id, createdAt, items }) => {
   );
   const { userEmail, userID } = React.useContext(UserContext);
   const { selectedLocale } = React.useContext(LocaleContext);
+  const { trackClick } = React.useContext(TrackingContext);
   const [sanityItems, setSanityItems] = React.useState([]);
   const [isReordering, setIsReordering] = React.useState(false);
   const [dialogOpen, setDialogOpen] = React.useState(false);
@@ -216,7 +220,8 @@ const RecentOrder = ({ id, createdAt, items }) => {
   const modalOrderDate = format(parseISO(createdAt), "MMM d, yyyy");
   const modalOrderTime = format(parseISO(createdAt), "h:mm aa");
 
-  const handleReorderClick = async () => {
+  const handleReorderClick = async (event) => {
+    trackClick(event);
     const additions = [];
     for (const item of items) {
       const correspondingSanityItem = sanityItems.find(
@@ -236,8 +241,14 @@ const RecentOrder = ({ id, createdAt, items }) => {
     setIsReordering(true);
   };
 
-  const handleViewDetailsClick = () => {
+  const handleViewDetailsClick = (event) => {
+    trackClick(event);
     setDialogOpen(true);
+  };
+
+  const handleCloseDialogClick = (event) => {
+    trackClick(event);
+    setDialogOpen(false);
   };
 
   return (
@@ -257,7 +268,7 @@ const RecentOrder = ({ id, createdAt, items }) => {
               <>
                 ,{" "}
                 <MoreItems
-                  onClick={handleViewDetailsClick}
+                  onClick={(event) => handleViewDetailsClick(event)}
                   data-tracking-action="open-recent-order-details-dialog"
                   data-tracking-element="span"
                   data-tracking-type="purchase"
@@ -273,7 +284,7 @@ const RecentOrder = ({ id, createdAt, items }) => {
           <ViewDetailsButton
             variant="outline"
             size="lg"
-            onClick={handleViewDetailsClick}
+            onClick={(event) => handleViewDetailsClick(event)}
             $fullWidth
             data-tracking-action="open-recent-order-details-dialog"
             data-tracking-element="button"
@@ -285,7 +296,7 @@ const RecentOrder = ({ id, createdAt, items }) => {
           <ReorderButton
             variant="primary"
             size="lg"
-            onClick={handleReorderClick}
+            onClick={(event) => handleReorderClick(event)}
             $fullWidth
             data-tracking-action="reorder-recent-purchase"
             data-tracking-element="button"
@@ -297,7 +308,7 @@ const RecentOrder = ({ id, createdAt, items }) => {
         </Right>
       </Wrapper>
       <OrderDetails
-        onClick={() => setDialogOpen(false)}
+        onClick={handleCloseDialogClick}
         open={dialogOpen}
         data-tracking-action="close-recent-order-details-dialog"
         data-tracking-element="dialog"

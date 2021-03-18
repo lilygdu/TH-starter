@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { TrackingContext } from "../context/TrackingContext";
 import Styles from "../styles";
 
 const CategoryLink = styled(Link)`
@@ -36,6 +37,7 @@ const Image = styled.img`
 
 const Category = ({ name, image, lqip, id }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
+  const { trackClick } = React.useContext(TrackingContext);
 
   return (
     <CategoryLink
@@ -45,6 +47,7 @@ const Category = ({ name, image, lqip, id }) => {
       data-tracking-type="category"
       data-tracking-name={name}
       data-tracking-id={id}
+      onClick={trackClick}
     >
       <ImageWrapper>
         <Image

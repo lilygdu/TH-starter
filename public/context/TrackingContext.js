@@ -14,6 +14,7 @@ const TrackingContextProvider = ({ children }) => {
   const [userTrackingID, setUserTrackingID] = React.useState(
     localStorage.getItem("userTrackingID")
   );
+  const [pageVisitID, setPageVisitID] = React.useState(null);
 
   React.useEffect(async () => {
     const { response, data } = await createSession({
@@ -62,11 +63,38 @@ const TrackingContextProvider = ({ children }) => {
     if (response.ok) {
       setSessionID(data.session.id);
       setUserTrackingID(data.session.user_tracking_id);
+      setPageVisitID(data.pageVisitID);
     }
   }, [location]);
 
+  const trackClick = (event) => {
+    const { offsetWidth, offsetHeight } = document.body;
+    const { pageX, pageY } = event;
+    const percentX = Math.round((100 * pageX) / offsetWidth);
+    const percentY = Math.round((100 * pageY) / offsetHeight);
+    const {
+      trackingId,
+      trackingAction,
+      trackingName,
+      trackingType,
+      trackingElement,
+    } = event.currentTarget.dataset;
+    console.log({
+      percentX,
+      percentY,
+      trackingId,
+      trackingAction,
+      trackingElement,
+      trackingType,
+      trackingName,
+      pageVisitID,
+    });
+  };
+
   return (
-    <TrackingContext.Provider value={{}}>{children}</TrackingContext.Provider>
+    <TrackingContext.Provider value={{ trackClick }}>
+      {children}
+    </TrackingContext.Provider>
   );
 };
 
