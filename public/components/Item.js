@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { CartContext } from "../context/CartContext";
 import { LocaleContext } from "../context/LocaleContext";
+import { TrackingContext } from "../context/TrackingContext";
 import Styles from "../styles";
 import Button from "./Button";
 
@@ -75,9 +76,15 @@ const AddToOrderButton = styled(Button)`
 const Item = ({ name, image, lqip, id, price, calories }) => {
   const { addToCart } = React.useContext(CartContext);
   const { selectedLocale } = React.useContext(LocaleContext);
+  const { trackClick } = React.useContext(TrackingContext);
   const [imageLoaded, setImageLoaded] = React.useState(false);
 
   const displayPrice = `${selectedLocale.currency}${(price / 100).toFixed(2)}`;
+
+  const handleClick = (event, { name, image, price, id }) => {
+    trackClick(event);
+    addToCart({ name, image, price, id });
+  };
 
   return (
     <ItemWrapper>
@@ -102,7 +109,7 @@ const Item = ({ name, image, lqip, id, price, calories }) => {
         <AddToOrderButton
           variant="primary"
           size="md"
-          onClick={() => addToCart({ name, image, price, id })}
+          onClick={(event) => handleClick(event, { name, image, price, id })}
           className="add-to-order"
           data-tracking-action="add-item-to-cart"
           data-tracking-element="button"

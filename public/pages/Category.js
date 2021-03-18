@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { TrackingContext } from "../context/TrackingContext";
 import Styles from "../styles";
 import LoadingAnimation from "../components/LoadingAnimation";
-import Button from "../components/Button";
 import Item from "../components/Item";
 import { fetchCategory } from "../utils/category";
 import { Link } from "react-router-dom";
@@ -86,6 +86,7 @@ const LoadingContainer = styled.div`
 const Category = () => {
   const { categoryID } = useParams();
   const [category, setCategory] = React.useState({ name: "", items: [] });
+  const { trackClick } = React.useContext(TrackingContext);
 
   React.useEffect(async () => {
     setCategory(await fetchCategory(categoryID));
@@ -97,7 +98,12 @@ const Category = () => {
         <title>Tim Hortons - {category.name}</title>
       </Helmet>
       <Main>
-        <MainMenuButton to="/">
+        <MainMenuButton
+          to="/"
+          onClick={trackClick}
+          data-tracking-action="navigate-back-to-main-menu"
+          data-tracking-element="link"
+        >
           <Arrow>
             <i className="fas fa-arrow-left"></i>
           </Arrow>

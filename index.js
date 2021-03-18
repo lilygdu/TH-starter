@@ -1,10 +1,11 @@
-import express from "express";
+import express, { request } from "express";
 import dirname from "es-dirname";
 import stripeLibrary from "stripe";
 import requestIp from "request-ip";
 import path from "path";
 import db from "./db.js";
 import { createOrUpdateSession } from "./session.js";
+import { type } from "os";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,7 +20,62 @@ app.use(express.json());
 app.use(express.static("dist"));
 app.use(requestIp.mw());
 
-app.post("/page_view", async (request, response) => {
+app.post("/click_event", async (request, response) => {
+  const {
+    sessionID,
+    loggedInUserID,
+    userTrackingID,
+    pageName,
+    percentX,
+    percentY,
+    trackingID,
+    trackingAction,
+    trackingElement,
+    trackingType,
+    trackingName,
+    pageVisitID,
+  } = request.body;
+  const { clientIp } = request;
+  const session = await createOrUpdateSession({
+    sessionID,
+    loggedInUserID,
+    userTrackingID,
+    clientIp,
+  });
+  // is the current page visit still active?
+  let result = await db.query(
+    `SELECT id FROM page_visits 
+    WHERE id = $1 AND AGE(NOW(), visited_at) < '15 minutes';`,
+    [pageVisitID]
+  );
+  // if not, make a new page visit
+  if (result.rows.length === 0) {
+    result = await db.query(
+      `INSERT INTO page_visits (session_id, page_name)
+      VALUES ($1, $2) RETURNING id;`,
+      [session.id, pageName]
+    );
+  }
+  // guaranteed to be within the last 15 minutes
+  const newPageVisitID = result.rows[0].id;
+  await db.query(
+    `INSERT INTO click_events (page_visit_id, click_percent_x, click_percent_y, action, element, name, tracking_type, tracking_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`,
+    [
+      newPageVisitID,
+      percentX,
+      percentY,
+      trackingAction,
+      trackingElement,
+      trackingName,
+      trackingType,
+      trackingID,
+    ]
+  );
+  response.json({ session, pageVisitID: newPageVisitID });
+});
+
+app.post("/page_visit", async (request, response) => {
   const {
     loggedInUserID,
     sessionID,
@@ -35,13 +91,14 @@ app.post("/page_view", async (request, response) => {
     userTrackingID,
     clientIp,
   });
-  await db.query(
+  const result = await db.query(
     `INSERT INTO page_visits (session_id, page_name, abandoned_cart, stripe_purchase_id)
-    VALUES ($1, $2, $3, $4);`,
+    VALUES ($1, $2, $3, $4) RETURNING id;`,
     [session.id, pageName, isCartAbandoned, stripePurchaseID]
   );
+  const pageVisitID = result.rows[0].id;
 
-  response.json({ session });
+  response.json({ session, pageVisitID });
 });
 
 app.post("/session", async (request, response) => {

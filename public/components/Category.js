@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import slugify from "slugify";
+import { TrackingContext } from "../context/TrackingContext";
 import Styles from "../styles";
 
 const CategoryLink = styled(Link)`
@@ -36,15 +38,17 @@ const Image = styled.img`
 
 const Category = ({ name, image, lqip, id }) => {
   const [imageLoaded, setImageLoaded] = React.useState(false);
+  const { trackClick } = React.useContext(TrackingContext);
 
   return (
     <CategoryLink
-      to={`/category/${id}`}
+      to={`/category/${slugify(name, { lower: true })}/${id}`}
       data-tracking-action="navigate-to-category"
       data-tracking-element="link"
       data-tracking-type="category"
       data-tracking-name={name}
       data-tracking-id={id}
+      onClick={trackClick}
     >
       <ImageWrapper>
         <Image

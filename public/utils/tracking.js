@@ -12,7 +12,7 @@ export const createSession = async ({ userID, sessionID, userTrackingID }) => {
   return { response, data };
 };
 
-export const createPageView = async ({
+export const createPageVisit = async ({
   sessionID,
   pageName,
   stripePurchaseID,
@@ -20,7 +20,7 @@ export const createPageView = async ({
   userTrackingID,
   userID,
 }) => {
-  const response = await fetch("/page_view", {
+  const response = await fetch("/page_visit", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -30,6 +30,42 @@ export const createPageView = async ({
       isCartAbandoned,
       userTrackingID,
       loggedInUserID: userID,
+    }),
+  });
+  const data = await response.json();
+  return { response, data };
+};
+
+export const createClickEvent = async ({
+  pageName,
+  sessionID,
+  userID,
+  userTrackingID,
+  percentX,
+  percentY,
+  trackingID,
+  trackingAction,
+  trackingElement,
+  trackingType,
+  trackingName,
+  pageVisitID,
+}) => {
+  const response = await fetch("/click_event", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      sessionID,
+      pageName,
+      loggedInUserID: userID,
+      userTrackingID,
+      percentX,
+      percentY,
+      trackingID,
+      trackingAction,
+      trackingElement,
+      trackingType,
+      trackingName,
+      pageVisitID,
     }),
   });
   const data = await response.json();

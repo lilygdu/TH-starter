@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useHistory, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { TrackingContext } from "../context/TrackingContext";
 import Styles from "../styles";
 import Dialog from "../components/Dialog";
 import BaseButton from "../components/Button";
@@ -81,6 +82,7 @@ const Account = () => {
   } = React.useContext(UserContext);
   const { clearCart } = React.useContext(CartContext);
   const { locales, setSelectedLocale } = React.useContext(LocaleContext);
+  const { trackClick } = React.useContext(TrackingContext);
   const history = useHistory();
   const confirmButtonRef = React.useRef();
 
@@ -90,6 +92,7 @@ const Account = () => {
 
   const handleAccountOptionsLinkClick = (event) => {
     event.preventDefault();
+    trackClick(event);
     setDialogOpen(true);
   };
 
@@ -99,13 +102,26 @@ const Account = () => {
     }
   };
 
-  const signOut = () => {
+  const handleSignOutClick = (event) => {
+    trackClick(event);
     localStorage.clear();
     setUserEmail(null);
     setUserID(null);
     setSelectedLocale(locales[0]);
     clearCart();
     history.push("/signin");
+  };
+
+  const handleCloseDialogClick = (event) => {
+    if (event.target === event.currentTarget) {
+      trackClick(event);
+      setDialogOpen(false);
+    }
+  };
+
+  const handleCloseDialogButtonClick = (event) => {
+    trackClick(event);
+    setDialogOpen(false);
   };
 
   return (
@@ -140,6 +156,7 @@ const Account = () => {
                 to="/orders"
                 data-tracking-action="navigate-to-orders"
                 data-tracking-element="link"
+                onClick={trackClick}
               >
                 <AccountOptionsText>Recent Orders</AccountOptionsText>
                 <i className="fas fa-chevron-right"></i>
@@ -171,7 +188,7 @@ const Account = () => {
         </AccountOptions>
       </Main>
       <Dialog
-        onClick={() => setDialogOpen(false)}
+        onClick={handleCloseDialogClick}
         open={dialogOpen}
         onTransitionEnd={handleDialogTransition}
         data-tracking-action="close-sign-out-dialog"
@@ -187,7 +204,7 @@ const Account = () => {
             <ModalButton
               variant="primary"
               size="lg"
-              onClick={signOut}
+              onClick={handleSignOutClick}
               ref={confirmButtonRef}
               data-tracking-action="confirm-sign-out"
               data-tracking-element="button"
@@ -200,7 +217,7 @@ const Account = () => {
             <ModalButton
               variant="outline"
               size="lg"
-              onClick={() => setDialogOpen(false)}
+              onClick={handleCloseDialogButtonClick}
               data-tracking-action="close-sign-out-dialog"
               data-tracking-element="button"
               data-tracking-type="account"

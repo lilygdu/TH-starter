@@ -39,7 +39,7 @@ const App = () => (
               <Route path="/confirm-otp" exact>
                 <ConfirmOTP />
               </Route>
-              <Route path="/category/:categoryID">
+              <Route path="/category/:categoryName/:categoryID">
                 <Category />
               </Route>
               <Route path="/confirmation" exact>

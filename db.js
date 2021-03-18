@@ -70,6 +70,21 @@ pool.query(`
     CONSTRAINT fk_session
     FOREIGN KEY (session_id) REFERENCES sessions (id)
   );
+
+  CREATE TABLE IF NOT EXISTS click_events(
+    id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,    
+    page_visit_id uuid NOT NULL,
+    clicked_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    click_percent_x INTEGER NOT NULL,
+    click_percent_y INTEGER NOT NULL,
+    action VARCHAR(256) NOT NULL,
+    element VARCHAR(256) NOT NULL,
+    name VARCHAR(256),
+    tracking_type VARCHAR(256),
+    tracking_id VARCHAR(256),
+    CONSTRAINT fk_page_visit
+    FOREIGN KEY (page_visit_id) REFERENCES page_visits (id)
+  );
 `);
 
 export default pool;

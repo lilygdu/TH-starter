@@ -1,7 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "./UserContext";
-import { createSession, createPageView } from "../utils/tracking";
+import {
+  createSession,
+  createPageVisit,
+  createClickEvent,
+} from "../utils/tracking";
 
 export const TrackingContext = React.createContext({});
 
@@ -14,6 +18,7 @@ const TrackingContextProvider = ({ children }) => {
   const [userTrackingID, setUserTrackingID] = React.useState(
     localStorage.getItem("userTrackingID")
   );
+  const [pageVisitID, setPageVisitID] = React.useState(null);
 
   React.useEffect(async () => {
     const { response, data } = await createSession({
@@ -51,7 +56,7 @@ const TrackingContextProvider = ({ children }) => {
       : query.get("cart_abandoned") === "true"
       ? true
       : null;
-    const { response, data } = await createPageView({
+    const { response, data } = await createPageVisit({
       sessionID,
       pageName: location.pathname,
       isCartAbandoned,
@@ -62,11 +67,47 @@ const TrackingContextProvider = ({ children }) => {
     if (response.ok) {
       setSessionID(data.session.id);
       setUserTrackingID(data.session.user_tracking_id);
+      setPageVisitID(data.pageVisitID);
     }
   }, [location]);
 
+  const trackClick = async (event) => {
+    const { offsetWidth, offsetHeight } = document.body;
+    const { pageX, pageY } = event;
+    const percentX = Math.round((100 * pageX) / offsetWidth);
+    const percentY = Math.round((100 * pageY) / offsetHeight);
+    const {
+      trackingId: trackingID,
+      trackingAction,
+      trackingName,
+      trackingType,
+      trackingElement,
+    } = event.currentTarget.dataset;
+    const { response, data } = await createClickEvent({
+      pageName: location.pathname,
+      sessionID,
+      userID,
+      userTrackingID,
+      percentX,
+      percentY,
+      trackingID,
+      trackingAction,
+      trackingElement,
+      trackingType,
+      trackingName,
+      pageVisitID,
+    });
+    if (response.ok) {
+      setSessionID(data.session.id);
+      setUserTrackingID(data.session.user_tracking_id);
+      setPageVisitID(data.pageVisitID);
+    }
+  };
+
   return (
-    <TrackingContext.Provider value={{}}>{children}</TrackingContext.Provider>
+    <TrackingContext.Provider value={{ trackClick }}>
+      {children}
+    </TrackingContext.Provider>
   );
 };
 
