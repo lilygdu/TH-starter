@@ -4,6 +4,7 @@ import Styles from "../styles";
 import Dialog from "../components/Dialog";
 import Button from "../components/Button";
 import { LocaleContext } from "../context/LocaleContext";
+import { TrackingContext } from "../context/TrackingContext";
 
 const Modal = styled.div`
   background-color: ${Styles.color.locale.modal.background};
@@ -72,6 +73,7 @@ const LocaleDialog = ({ isOpen, closeDialog }) => {
   const { locales, selectedLocale, setSelectedLocale } = React.useContext(
     LocaleContext
   );
+  const { trackClick } = React.useContext(TrackingContext);
 
   const [formSelectedLocale, setFormSelectedLocale] = React.useState(
     selectedLocale
@@ -87,14 +89,20 @@ const LocaleDialog = ({ isOpen, closeDialog }) => {
     closeDialog();
   };
 
-  const handleDialogClick = (event) => {
+  const handleCloseLocaleDialogClick = (event) => {
     if (event.target === event.currentTarget) {
+      trackClick(event);
       closeDialog();
     }
   };
 
   return (
-    <Dialog onClick={handleDialogClick} open={isOpen}>
+    <Dialog
+      onClick={handleCloseLocaleDialogClick}
+      open={isOpen}
+      data-tracking-action="close-locale-dialog"
+      data-tracking-element="dialog"
+    >
       <Modal>
         <Row>
           <DialogHeading>Select Language and Region</DialogHeading>
@@ -118,7 +126,13 @@ const LocaleDialog = ({ isOpen, closeDialog }) => {
               </RadioWrapper>
             </Row>
           ))}
-          <ModalButton variant="primary" size="lg">
+          <ModalButton
+            variant="primary"
+            size="lg"
+            data-tracking-action="submit-locale-form"
+            data-tracking-element="button"
+            onClick={trackClick}
+          >
             Apply
           </ModalButton>
         </form>

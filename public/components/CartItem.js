@@ -123,6 +123,13 @@ const CartItem = ({ item }) => {
   };
 
   const handleDialogCloseClick = (event) => {
+    if (event.target === event.currentTarget) {
+      trackClick(event);
+      setRemoveDialogOpen(false);
+    }
+  };
+
+  const handleDialogButtonCloseClick = (event) => {
     trackClick(event);
     setRemoveDialogOpen(false);
   };
@@ -227,7 +234,7 @@ const CartItem = ({ item }) => {
               data-tracking-type="item"
               data-tracking-name={item.name}
               data-tracking-id={item.id}
-              onClick={handleDialogCloseClick}
+              onClick={handleDialogButtonCloseClick}
             >
               Cancel
             </ModalButton>

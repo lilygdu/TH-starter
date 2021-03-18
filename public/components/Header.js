@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { UserContext } from "../context/UserContext";
 import { CartContext } from "../context/CartContext";
 import { LocaleContext } from "../context/LocaleContext";
+import { TrackingContext } from "../context/TrackingContext";
 import Button from "./Button";
 import Logo from "url:../images/th-logo.svg";
 import Styles from "../styles";
@@ -135,6 +136,7 @@ const AppHeader = () => {
   const { isLoggedIn } = React.useContext(UserContext);
   const { cartVisible, setCartVisible, items } = React.useContext(CartContext);
   const { selectedLocale } = React.useContext(LocaleContext);
+  const { trackClick } = React.useContext(TrackingContext);
   const [isLocaleDialogOpen, setIsLocaleDialogOpen] = React.useState(false);
 
   const cartButton = React.useRef(null);
@@ -148,6 +150,16 @@ const AppHeader = () => {
   let totalItemsInCart = 0;
   items.forEach((item) => (totalItemsInCart += item.quantity));
 
+  const handleToggleCartVisibility = (event) => {
+    trackClick(event);
+    setCartVisible(!cartVisible);
+  };
+
+  const handleOpenLocaleDialogClick = (event) => {
+    trackClick(event);
+    setIsLocaleDialogOpen(!isLocaleDialogOpen);
+  };
+
   return (
     <>
       <Header>
@@ -155,7 +167,15 @@ const AppHeader = () => {
           <HeaderLeftNav>
             <NavList>
               <NavListItem>
-                <NavLink to="/">Order</NavLink>
+                <NavLink
+                  to="/"
+                  onClick={trackClick}
+                  data-tracking-action="navigate-to-menu"
+                  data-tracking-element="link"
+                  data-tracking-type="nav"
+                >
+                  Order
+                </NavLink>
               </NavListItem>
               <NavListItem>
                 <NavLink to="#">Catering</NavLink>
@@ -167,23 +187,43 @@ const AppHeader = () => {
               </NavListItem>
             </NavList>
           </HeaderLeftNav>
-          <HeaderLogoLink to="/">
+          <HeaderLogoLink
+            to="/"
+            onClick={trackClick}
+            data-tracking-action="navigate-to-menu"
+            data-tracking-element="link"
+            data-tracking-type="logo"
+          >
             <HeaderLogoImage src={Logo} alt="logo" />
           </HeaderLogoLink>
           <HeaderRight>
             {isLoggedIn ? (
-              <Button to="/account" variant="primary" size="sm">
+              <Button
+                to="/account"
+                variant="primary"
+                size="sm"
+                onClick={trackClick}
+                data-tracking-action="navigate-to-account"
+                data-tracking-element="link"
+              >
                 <i className="far fa-user"></i>
               </Button>
             ) : (
-              <Button to="/signin" variant="inverse" size="md">
+              <Button
+                to="/signin"
+                variant="inverse"
+                size="md"
+                onClick={trackClick}
+                data-tracking-action="navigate-to-signin"
+                data-tracking-element="link"
+              >
                 Log In
               </Button>
             )}
             <Button
               variant="primary"
               size="md"
-              onClick={() => setCartVisible(!cartVisible)}
+              onClick={handleToggleCartVisibility}
               ref={cartButton}
             >
               <i className="fas fa-shopping-bag"></i>{" "}
@@ -197,7 +237,9 @@ const AppHeader = () => {
             <ChangeServiceMode>Change</ChangeServiceMode>
           </HeaderBottomLeft>
           <HeaderBottomRight
-            onClick={() => setIsLocaleDialogOpen(!isLocaleDialogOpen)}
+            onClick={handleOpenLocaleDialogClick}
+            data-tracking-action="open-locale-dialog"
+            data-tracking-element="button"
           >
             <i className="fas fa-globe"></i>
             {selectedLocale.key}
