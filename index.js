@@ -1,11 +1,11 @@
-import express, { request } from "express";
+import express from "express";
 import dirname from "es-dirname";
 import stripeLibrary from "stripe";
 import requestIp from "request-ip";
+import enforce from "express-sslify";
 import path from "path";
 import db from "./db.js";
 import { createOrUpdateSession } from "./session.js";
-import { type } from "os";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -19,6 +19,9 @@ const emailRegex = new RegExp(/^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$/);
 app.use(express.json());
 app.use(express.static("dist"));
 app.use(requestIp.mw());
+if (process.env.NODE_ENV === "production") {
+  app.use(enforce.HTTPS());
+}
 
 app.post("/click_event", async (request, response) => {
   const {
