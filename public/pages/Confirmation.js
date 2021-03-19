@@ -69,7 +69,7 @@ const OrderPlacedHeading = styled.h1`
 const OrderInstructions = styled.p`
   color: ${Styles.color.confirmationpage.graytext};
   font-size: 0.9rem;
-  line-height: 1.1rem;
+  line-height: 1.1;
 `;
 
 const OrderNumber = styled.p`
@@ -113,7 +113,7 @@ const OrderedItem = styled.div`
   margin: 1rem;
   text-align: left;
   padding: 0.8rem;
-  line-height: 0.6rem;
+  line-height: 1;
 `;
 
 const OrderedItemName = styled.h4`

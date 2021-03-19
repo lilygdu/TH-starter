@@ -34,9 +34,14 @@ const ItemBottom = styled.div`
   margin: 0 0 -0.5rem;
 `;
 
+const ItemName = styled.span`
+  padding-right: 0.5rem;
+`;
+
 const Price = styled.span`
   font-size: 0.9rem;
   color: ${Styles.color.cartitem.price};
+  padding-left: 0.5rem;
 `;
 
 const RemoveButton = styled.button`
@@ -154,7 +159,7 @@ const CartItem = ({ item }) => {
     <>
       <ItemWrapper>
         <ItemTop>
-          <span>{item.name}</span>
+          <ItemName>{item.name}</ItemName>
           <Price>
             {selectedLocale.currency}
             {formatCents(item.quantity * item.price)}
