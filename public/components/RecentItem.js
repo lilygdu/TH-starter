@@ -100,6 +100,7 @@ const RecentItem = ({ sanityID }) => {
         variant="outline"
         size="md"
         onClick={(event) => handleClick(event, item)}
+        className="add-to-order"
         data-tracking-action="add-recent-item-to-cart"
         data-tracking-element="button"
         data-tracking-type="item"
