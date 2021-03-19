@@ -51,6 +51,7 @@ const Image = styled.img`
   bottom: 0;
   right: 0;
   left: 0;
+  opacity: ${({ isHidden }) => (isHidden ? 0 : 1)};
 `;
 
 const ButtonWrapper = styled.div`
