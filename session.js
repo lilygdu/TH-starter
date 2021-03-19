@@ -19,6 +19,19 @@ export const createOrUpdateSession = async ({
     // the session is older than 15 minutes
     differenceInMinutes(now, parseJSON(session.last_known_activity_at)) > 15
   ) {
+    if (!session) {
+      console.log(`No session with ID ${sessionID}`);
+    } else if (
+      differenceInMinutes(now, parseJSON(session.last_known_activity_at)) > 15
+    ) {
+      console.log(
+        `session ${sessionID} is ${differenceInMinutes(
+          now,
+          parseJSON(session.last_known_activity_at)
+        )} minutes old`
+      );
+    }
+
     if (userTrackingID) {
       result = await db.query(
         `INSERT INTO sessions (logged_in_user_id, ip_address, user_tracking_id) 

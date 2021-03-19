@@ -31,13 +31,25 @@ pool.query(`
     account_locked BOOLEAN DEFAULT FALSE NOT NULL
   );
 
+  CREATE TABLE IF NOT EXISTS sessions(
+    id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_tracking_id uuid NOT NULL DEFAULT uuid_generate_v4(),
+    logged_in_user_id uuid REFERENCES th_users (id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    last_known_activity_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    ip_address cidr NOT NULL
+  );
+
   CREATE TABLE IF NOT EXISTS purchases(
     id SERIAL NOT NULL PRIMARY KEY,
+    session_id uuid NOT NULL,
     stripe_id VARCHAR(256) UNIQUE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
     customer_id uuid NOT NULL,
     CONSTRAINT fk_th_user
-    FOREIGN KEY (customer_id) REFERENCES th_users (id)
+    FOREIGN KEY (customer_id) REFERENCES th_users (id),
+    CONSTRAINT fk_session
+    FOREIGN KEY (session_id) REFERENCES sessions (id)
   );
 
   CREATE TABLE IF NOT EXISTS purchased_items(
@@ -49,15 +61,6 @@ pool.query(`
     quantity INTEGER NOT NULL,
     CONSTRAINT fk_purchase
     FOREIGN KEY (purchase_id) REFERENCES purchases (id)
-  );
-
-  CREATE TABLE IF NOT EXISTS sessions(
-    id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
-    user_tracking_id uuid NOT NULL DEFAULT uuid_generate_v4(),
-    logged_in_user_id uuid REFERENCES th_users (id),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    last_known_activity_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    ip_address cidr NOT NULL
   );
 
   CREATE TABLE IF NOT EXISTS page_visits(
