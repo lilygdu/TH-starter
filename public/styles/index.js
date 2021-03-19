@@ -200,6 +200,20 @@ export default {
           border: palette.red.three,
         },
       },
+      secondary: {
+        background: palette.white,
+        border: palette.white,
+        text: palette.brown.three,
+        hover: {
+          background: palette.brown.one,
+          border: palette.brown.one,
+        },
+        active: {
+          background: palette.brown.three,
+          text: palette.white,
+          border: palette.brown.three,
+        },
+      },
       outline: {
         background: palette.white,
         border: palette.red.three,
