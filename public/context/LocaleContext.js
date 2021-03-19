@@ -1,6 +1,9 @@
 import React from "react";
 
-export const LocaleContext = React.createContext({});
+export const LocaleContext = React.createContext({
+  selectedLocale: {},
+  locales: [],
+});
 
 // move to sanity
 const supportedLocales = [
