@@ -109,7 +109,9 @@ const Cart = ({ open }) => {
   const { items, cartVisible, setCartVisible } = React.useContext(CartContext);
   const { userEmail, userID, isLoggedIn } = React.useContext(UserContext);
   const { selectedLocale } = React.useContext(LocaleContext);
-  const { trackClick } = React.useContext(TrackingContext);
+  const { trackClick, sessionID, userTrackingID } = React.useContext(
+    TrackingContext
+  );
   const [showCartShadow, setShowCartShadow] = React.useState(false);
   const cartTop = React.useRef();
   const history = useHistory();
@@ -123,6 +125,8 @@ const Cart = ({ open }) => {
         userID,
         items,
         currencyCode: selectedLocale.currencyCode,
+        sessionID,
+        userTrackingID,
       });
     } else {
       history.push("/signin");

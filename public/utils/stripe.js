@@ -9,12 +9,21 @@ export const initiateCheckout = async ({
   userID,
   items,
   currencyCode,
+  userTrackingID,
+  sessionID,
 }) => {
   const stripe = await stripePromise;
   const response = await fetch("/checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userEmail, userID, items, currencyCode }),
+    body: JSON.stringify({
+      userEmail,
+      userID,
+      items,
+      currencyCode,
+      userTrackingID,
+      sessionID,
+    }),
   });
   const { id } = await response.json();
   await stripe.redirectToCheckout({ sessionId: id });

@@ -1,11 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { UserContext } from "./UserContext";
-import {
-  createSession,
-  createPageVisit,
-  createClickEvent,
-} from "../utils/tracking";
+import { createPageVisit, createClickEvent } from "../utils/tracking";
 
 export const TrackingContext = React.createContext({});
 
@@ -19,18 +15,6 @@ const TrackingContextProvider = ({ children }) => {
     localStorage.getItem("userTrackingID")
   );
   const [pageVisitID, setPageVisitID] = React.useState(null);
-
-  React.useEffect(async () => {
-    const { response, data } = await createSession({
-      userID,
-      userTrackingID,
-      sessionID,
-    });
-    if (response.ok) {
-      setSessionID(data.session.id);
-      setUserTrackingID(data.session.user_tracking_id);
-    }
-  }, []);
 
   React.useEffect(() => {
     if (sessionID) {
@@ -105,7 +89,7 @@ const TrackingContextProvider = ({ children }) => {
   };
 
   return (
-    <TrackingContext.Provider value={{ trackClick }}>
+    <TrackingContext.Provider value={{ trackClick, sessionID, userTrackingID }}>
       {children}
     </TrackingContext.Provider>
   );

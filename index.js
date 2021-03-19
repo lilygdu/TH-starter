@@ -110,20 +110,6 @@ app.post("/page_visit", async (request, response) => {
   response.json({ session, pageVisitID });
 });
 
-app.post("/session", async (request, response) => {
-  const { loggedInUserID, sessionID, userTrackingID } = request.body;
-  const { clientIp } = request;
-
-  const session = await createOrUpdateSession({
-    sessionID,
-    userTrackingID,
-    clientIp,
-    loggedInUserID,
-  });
-
-  response.json({ session });
-});
-
 app.get("/sessions/:sessionID", async (request, response) => {
   const { sessionID } = request.params;
   try {
@@ -218,11 +204,26 @@ app.get("/users/:userID/recent_orders", async (request, response) => {
 
 app.post("/checkout", async (request, response) => {
   try {
-    const { userEmail, userID, items, currencyCode } = request.body;
+    const {
+      userEmail,
+      userID,
+      items,
+      currencyCode,
+      userTrackingID,
+      sessionID,
+    } = request.body;
+    const { clientIp } = request;
+
+    const session = await createOrUpdateSession({
+      sessionID,
+      loggedInUserID: userID,
+      userTrackingID,
+      clientIp,
+    });
 
     const purchaseResult = await db.query(
-      `INSERT INTO purchases (customer_id) VALUES($1) RETURNING id;`,
-      [userID]
+      `INSERT INTO purchases (customer_id, session_id) VALUES($1, $2) RETURNING id;`,
+      [userID, session.id]
     );
 
     const purchaseID = purchaseResult.rows[0].id;
@@ -235,7 +236,7 @@ app.post("/checkout", async (request, response) => {
       );
     }
 
-    const session = await stripe.checkout.sessions.create({
+    const stripeSession = await stripe.checkout.sessions.create({
       customer_email: userEmail,
       payment_method_types: ["card"],
       metadata: {
@@ -257,7 +258,7 @@ app.post("/checkout", async (request, response) => {
       success_url: `${baseUrl}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}?cart_abandoned=true`,
     });
-    response.json({ id: session.id });
+    response.json({ id: stripeSession.id });
   } catch (error) {
     response.status(422).json({ message: error.message });
   }
