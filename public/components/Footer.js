@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Styles from "../styles";
+import { LocaleContext } from "../context/LocaleContext";
 
 const Footer = styled.footer`
   padding: 0 5rem 3rem 5rem;
@@ -71,7 +72,11 @@ const SocialsLink = styled.a`
   }
 `;
 
-const AppFooter = () => (
+const AppFooter = () => {
+  const { selectedLocale } = React.useContext(LocaleContext);
+};
+
+return (
   <Footer>
     <FooterGrid>
       <FooterTile>
@@ -123,7 +128,8 @@ const AppFooter = () => (
       <BottomRow>TM & © Tim Hortons, 2020</BottomRow>
       <BottomRow></BottomRow>
       <BottomRow>
-        <i className="fas fa-globe"></i> EN/CA
+        <i className="fas fa-globe"></i>
+        {selectedLocale.key}
       </BottomRow>
     </FooterGrid>
   </Footer>
