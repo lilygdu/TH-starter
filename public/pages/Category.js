@@ -7,7 +7,7 @@ import Styles from "../styles";
 import LoadingAnimation from "../components/LoadingAnimation";
 import Item from "../components/Item";
 import { fetchCategory } from "../utils/category";
-import { Link } from "react-router-dom";
+import Button from "../components/Button";
 
 const Main = styled.main`
   max-width: 80rem;
@@ -17,36 +17,12 @@ const Main = styled.main`
   padding: 0 1rem;
 `;
 
-const MainMenuButton = styled(Link)`
+const MainMenuButton = styled(Button)`
   position: absolute;
-  text-decoration: none;
   top: 1.2rem;
   left: 0rem;
   margin-left: 4rem;
-  background-color: ${Styles.color.button.inverse.background};
-  border-color: ${Styles.color.button.inverse.border};
-  color: ${Styles.color.button.inverse.text};
-  padding: 0.5rem 1rem;
-  border-radius: 9999rem;
-  display: flex;
-  gap: 1rem;
-  justify-content: space-between;
-  align-items: center;
-
-  &:focus {
-    outline: none;
-    box-shadow: ${Styles.boxShadow.button};
-  }
-
-  &:hover {
-    background-color: ${Styles.color.button.inverse.hover.background};
-    border-color: ${Styles.color.button.inverse.hover.border};
-  }
-  &:active {
-    background-color: ${Styles.color.button.inverse.active.background};
-    color: ${Styles.color.button.inverse.active.text};
-    border-color: ${Styles.color.button.inverse.active.border};
-  }
+  width: 8rem;
 
   @media only screen and (max-width: ${Styles.breakpoint}) {
     display: none;
@@ -101,6 +77,8 @@ const Category = () => {
         <MainMenuButton
           to="/"
           onClick={trackClick}
+          variant="secondary"
+          size="md"
           data-tracking-action="navigate-back-to-main-menu"
           data-tracking-element="link"
         >
