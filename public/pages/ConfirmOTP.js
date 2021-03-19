@@ -27,7 +27,7 @@ const VerifyCodeHeading = styled.h1`
 
   @media only screen and (max-width: ${Styles.breakpoint}) {
     font-size: 1.9rem;
-    margin-top: 1.5rem;
+    margin: 1.5rem 0;
   }
 `;
 const CodeSentHeading = styled.h2`
@@ -40,7 +40,7 @@ const CodeSentHeading = styled.h2`
   height: 3rem;
 
   @media only screen and (max-width: ${Styles.breakpoint}) {
-    font-size: 1.625rem;
+    font-size: 1.3rem;
     margin-top: -0.9rem;
     margin-bottom: 1.7rem;
   }
@@ -68,6 +68,10 @@ const Code = styled.input`
   &:focus {
     border: 1px solid ${Styles.color.input.invalid};
     outline: 0;
+  }
+
+  @media only screen and (max-width: ${Styles.breakpoint}) {
+    width: 20rem !important;
   }
 `;
 
