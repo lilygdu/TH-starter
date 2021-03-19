@@ -113,7 +113,7 @@ const OrderedItem = styled.div`
   margin: 1rem;
   text-align: left;
   padding: 0.8rem;
-  line-height: 0.6rem;
+  line-height: 1rem;
 `;
 
 const OrderedItemName = styled.h4`
