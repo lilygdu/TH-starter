@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Styles from "../styles";
+import { LocaleContext } from "../context/LocaleContext";
 
 const Footer = styled.footer`
   padding: 0 5rem 3rem 5rem;
@@ -26,6 +27,9 @@ const FooterTile = styled.div`
 
 const BottomRow = styled.div`
   margin-top: 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 `;
 
 const FooterHeading = styled.h5`
@@ -71,62 +75,69 @@ const SocialsLink = styled.a`
   }
 `;
 
-const AppFooter = () => (
-  <Footer>
-    <FooterGrid>
-      <FooterTile>
-        <FooterHeading>Careers</FooterHeading>
-        Come join the team
-        <br />
-        <MainFooterLink href="#">Browse Opportunities</MainFooterLink>
-      </FooterTile>
-      <FooterTile>
-        <FooterHeading>Community</FooterHeading>
-        Make a true difference <br />
-        <MainFooterLink href="#">Learn More</MainFooterLink>
-      </FooterTile>
-      <FooterTile>
-        <FooterHeading>Find a Tim Hortons</FooterHeading>
-        We can't wait to serve you <br />
-        <MainFooterLink href="#">Store Locator</MainFooterLink>
-      </FooterTile>
-      <FooterTile>
-        <BottomFooterLink href="#">Franchising</BottomFooterLink>
-        <BottomFooterLink href="#">Investors</BottomFooterLink>
-        <BottomFooterLink href="#">Contact Us</BottomFooterLink>
-        <BottomFooterLink href="#">Frequently Asked Questions</BottomFooterLink>
-      </FooterTile>
-      <FooterTile>
-        <BottomFooterLink href="#">Privacy Policy</BottomFooterLink>
-        <BottomFooterLink href="#">Terms of Service</BottomFooterLink>
-        <BottomFooterLink href="#">Trademarks</BottomFooterLink>
-        <BottomFooterLink href="#">Notice Accessibility</BottomFooterLink>
-        <BottomFooterLink href="#">Diagnostics</BottomFooterLink>
-      </FooterTile>
-      <FooterTile>
-        <FooterHeading>Connect with Us</FooterHeading>
-        <SocialsTile>
-          <SocialsLink href="#">
-            <i className="fab fa-facebook-f"></i>
-          </SocialsLink>
-          <SocialsLink href="#">
-            <i className="fab fa-twitter"></i>
-          </SocialsLink>
-          <SocialsLink href="#">
-            <i className="fab fa-youtube"></i>
-          </SocialsLink>
-          <SocialsLink href="#">
-            <i className="fab fa-instagram"></i>
-          </SocialsLink>
-        </SocialsTile>
-      </FooterTile>
-      <BottomRow>TM & © Tim Hortons, 2020</BottomRow>
-      <BottomRow></BottomRow>
-      <BottomRow>
-        <i className="fas fa-globe"></i> EN/CA
-      </BottomRow>
-    </FooterGrid>
-  </Footer>
-);
+const AppFooter = () => {
+  const { selectedLocale } = React.useContext(LocaleContext);
+
+  return (
+    <Footer>
+      <FooterGrid>
+        <FooterTile>
+          <FooterHeading>Careers</FooterHeading>
+          Come join the team
+          <br />
+          <MainFooterLink href="#">Browse Opportunities</MainFooterLink>
+        </FooterTile>
+        <FooterTile>
+          <FooterHeading>Community</FooterHeading>
+          Make a true difference <br />
+          <MainFooterLink href="#">Learn More</MainFooterLink>
+        </FooterTile>
+        <FooterTile>
+          <FooterHeading>Find a Tim Hortons</FooterHeading>
+          We can't wait to serve you <br />
+          <MainFooterLink href="#">Store Locator</MainFooterLink>
+        </FooterTile>
+        <FooterTile>
+          <BottomFooterLink href="#">Franchising</BottomFooterLink>
+          <BottomFooterLink href="#">Investors</BottomFooterLink>
+          <BottomFooterLink href="#">Contact Us</BottomFooterLink>
+          <BottomFooterLink href="#">
+            Frequently Asked Questions
+          </BottomFooterLink>
+        </FooterTile>
+        <FooterTile>
+          <BottomFooterLink href="#">Privacy Policy</BottomFooterLink>
+          <BottomFooterLink href="#">Terms of Service</BottomFooterLink>
+          <BottomFooterLink href="#">Trademarks</BottomFooterLink>
+          <BottomFooterLink href="#">Notice Accessibility</BottomFooterLink>
+          <BottomFooterLink href="#">Diagnostics</BottomFooterLink>
+        </FooterTile>
+        <FooterTile>
+          <FooterHeading>Connect with Us</FooterHeading>
+          <SocialsTile>
+            <SocialsLink href="#">
+              <i className="fab fa-facebook-f"></i>
+            </SocialsLink>
+            <SocialsLink href="#">
+              <i className="fab fa-twitter"></i>
+            </SocialsLink>
+            <SocialsLink href="#">
+              <i className="fab fa-youtube"></i>
+            </SocialsLink>
+            <SocialsLink href="#">
+              <i className="fab fa-instagram"></i>
+            </SocialsLink>
+          </SocialsTile>
+        </FooterTile>
+        <BottomRow>TM & © Tim Hortons, 2020</BottomRow>
+        <BottomRow></BottomRow>
+        <BottomRow>
+          <i className="fas fa-globe"></i>
+          {selectedLocale.key}
+        </BottomRow>
+      </FooterGrid>
+    </Footer>
+  );
+};
 
 export default AppFooter;
