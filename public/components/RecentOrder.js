@@ -67,6 +67,10 @@ const Name = styled.h3`
   line-height: 1rem;
   font-weight: normal;
   margin: 0;
+  max-width: 20rem;
+  @media (max-width: ${Styles.breakpoint}) {
+    max-width: 100%;
+  }
 `;
 
 const MoreItems = styled.span`
